@@ -48,6 +48,12 @@ Page({
 
     },
     onReady: function () {
+       this.getCasesfromnet();
+    },
+    /**
+     * 从服务器请求案件的全部信息
+     */
+    getCasesfromnet: function () {
         const that = this;
         // 请求案件
         app.showBusy("正在请求数据……");
@@ -68,7 +74,7 @@ Page({
                 });
             },
             fail: function () {
-                app.showModel('error','请检查网络');
+                app.showModel('error', '请检查网络');
                 // console.log("main::fail")
                 that.setData({
                     hasContent: false,
@@ -89,5 +95,9 @@ Page({
             // 将案件的唯一标识传递过去
             url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id,
         })
+    },
+    onPullDownRefresh: function () {
+        this.getCasesfromnet();
+        wx.stopPullDownRefresh();
     }
 })

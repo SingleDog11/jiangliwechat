@@ -83,7 +83,7 @@ Page({
     //首先判断是进行修改还是新增。直接再评论去查看有没有跟本账号一样
     var openidformapp = app.globalData.openid;
     var isnew = this.isNew(openidformapp);
-    console.log(isnew);
+    // console.log(isnew);
     var urltemp = "";
     urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.Ver_id+
     '&isnew=' + isnew ;
@@ -102,7 +102,7 @@ Page({
   },
   // 查看满意度曲线
   seeChart: function (e) {
-    console.log(e);
+    // console.log(e);
     var casetemp = e.currentTarget.dataset.case;
     // 传递参数,此时应该传递一个最满意的点。
     wx.navigateTo({

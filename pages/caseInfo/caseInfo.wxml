@@ -26,7 +26,7 @@
     <!-- 案件的信息 -->
     <view class='accuser'>
       <image src="../../images/accuser.png" mode="aspectFill" class='icon'></image>
-      <view class='info'> 投诉人：{{caseInfo.Accuser_client}} 元</view>
+      <view class='info'> 投诉人：{{caseInfo.Accuser_client}} </view>
     </view>
     <view class='accuser'>
       <image src="../../images/accusered.png" mode="aspectFill" class='icon'></image>

@@ -16,6 +16,7 @@
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#FFF",
     "navigationBarTitleText": "讲理",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "enablePullDownRefresh" : true
   }
 }

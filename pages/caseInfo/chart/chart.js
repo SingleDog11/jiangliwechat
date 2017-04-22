@@ -18,7 +18,7 @@ Page({
     averageAmount: 0,
   },
   touchHandler: function (e) {
-    console.log(lineChart.getCurrentDataIndex(e));
+    // console.log(lineChart.getCurrentDataIndex(e));
     lineChart.showToolTip(e, {
       // background: '#7cb5ec'
     });
@@ -47,7 +47,7 @@ Page({
         rightx = points[i][0];
         maxy = points[i][1];
       }
-      console.log(points[i]);
+      // console.log(points[i]);
     }
     return rightx;
   },
@@ -117,7 +117,7 @@ Page({
     }
     var simulationData = this.createSimulationData(points);
 
-    console.log(simulationData);
+    // console.log(simulationData);
     lineChart = new wxCharts({
       canvasId: 'lineCanvas',
       type: 'line',

@@ -2,6 +2,7 @@ var constants = require('./lib/constants');
 var login = require('./lib/login');
 var Session = require('./lib/session');
 var request = require('./lib/request');
+var Cachecase = require('./lib/casecache');
 
 var exports = module.exports = {
     login: login.login,

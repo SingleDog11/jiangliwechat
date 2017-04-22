@@ -13,39 +13,66 @@ Page({
     showTopTips: false,
     errormsg: "数据不规范",
     wordnum: 0,
+
+    hasCache: false,
+    // 案件数据
+
+    title: "",
+    defendant: "",
+    claim: "",
+    statement: "",
+    Accuser: "",
   },
   onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
+
+    var casecache = qcloud.getCaseCache();
+    if (casecache) {
+      this.setData({
+        title: casecache.title,
+        defendant: casecache.defendant,
+        claim: casecache.claim,
+        statement: casecache.statement,
+        Accuser: casecache.Accuser,
+        wordnum : casecache.statement.length,
+      });
+    }
+    else {
+      this.setData({
+        Accuser: app.globalData.userInfo.nickName,
+      })
+    }
   },
+
   formSubmit: function (e) {
     var value = e.detail.value;
     // 数据是否有为空的
     var result = value.title.trim() != "" &&
       value.defendant.trim() != "" &&
       value.claim.trim() != "" &&
-      value.statement.trim() != ""&&
-      value.Accuser.trim() != ""&&
+      value.statement.trim() != "" &&
+      value.Accuser.trim() != "" &&
       parseFloat(value.claim) != 0;
 
     if (this.data.showTopTips || !result) {
       app.showModel("数据有误", "请检查数据是否未填或金额输入不能为0");
     }
     else {
-      value.Accuser = app.globalData.userInfo.nickName;
+      value.issuer = app.globalData.userInfo.nickName;
       app.showBusy("正在提交...");
       qcloud.request({
         url: config.requestPutNewCase,
         login: app.globalData.hasLogin,
         data: value,
         success: function (res) {
-          console.log(res);
+          // console.log(res);
           if (res.data.isok) {
             app.showSuccess("数据已经提交");
             // 导航回到主页面
+            qcloud.clearCaseCache();
             wx.navigateBack();
           }
-          else{
-            app.showModel('提交失败！',"服务器出问题了");
+          else {
+            app.showModel('提交失败！', "服务器出问题了");
           }
         },
         fail: function (error) {
@@ -54,13 +81,7 @@ Page({
       });
     }
   },
-  // 检查数据是否为空
-  justInTimeCheckData: function (e) {
 
-    this.setData({
-      showTopTips: e.detail.value.trim() == "",
-    })
-  },
   // 检查金额数据部位空切不能是字符串。
   justInTimeCheckDataAndNum: function (e) {
 
@@ -87,5 +108,56 @@ Page({
     this.setData({
       wordnum: count,
     })
+  },
+  /**
+  * 改变字数变化，赋值理由到变量
+  */
+  justInTimeCountAndInput: function (e) {
+    var value = e.detail.value;
+    this.setData({
+      wordnum: value.length,
+      statement: value
+    })
+  },
+  /**
+  * 应诉人--赋值到js变量中
+  */
+  justInTimeSyDefendant: function (e) {
+    this.setData({
+      showTopTips: e.detail.value.trim() == "",
+      defendant: e.detail.value,
+    })
+  },
+  /**
+   * 投诉人--赋值到js变量中
+   */
+  justInTimeSyAccuser: function (e) {
+    this.setData({
+      Accuser: e.detail.value,
+      showTopTips: e.detail.value.trim() == "",
+    })
+  },
+
+  /**
+   * 标题--赋值到js变量中
+   */
+  justInTimeSyTitle: function (e) {
+    this.setData({
+      title: e.detail.value,
+      showTopTips: e.detail.value.trim() == "",
+    })
+  },
+   /**
+   * ，如果每个部分都有数据则缓存起来。
+   */
+  onCache: function () {
+    qcloud.setCaseCache({
+      title: this.data.title,
+      Accuser: this.data.Accuser,
+      defendant: this.data.defendant,
+      claim: this.data.claim,
+      statement: this.data.statement
+    });
+    wx.navigateBack();
   }
 })
