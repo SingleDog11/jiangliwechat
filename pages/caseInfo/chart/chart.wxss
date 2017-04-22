@@ -1,0 +1,10 @@
+/* pages/caseInfo/chart/chart.wxss */
+@import "../../sharecomponants/lib/weui.wxss";  
+
+.userinfo-nickname {
+  color: #aaa;
+}
+.weui-cell {
+  display:  flex ;
+  justify-content: space-between;
+}

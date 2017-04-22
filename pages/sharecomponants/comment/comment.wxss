@@ -1,0 +1,116 @@
+/* sharecomponants/comment/comment.wxss */
+
+.comments {
+  background-color: #fff;
+  margin-top: 30rpx;
+  padding-left: 20rpx;
+}
+
+.comments .conut {
+  color: #111;
+  font-size: 28rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-bottom: 3rpx solid #f0f0f0;
+}
+
+.comments .comment {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding-top: 20rpx;
+}
+
+.comments .comment .cover {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 60rpx;
+  margin-left: 10rpx;
+  margin-right: 14rpx;
+  flex-shrink: 0;
+}
+
+.comments .comment .info {
+  flex: 1;
+  padding-bottom: 20rpx;
+  border-bottom: 3rpx solid #f0f0f0;
+  margin-right: 10rpx;
+}
+
+.comments .comment .info .name {
+  color: #111;
+  font-size: 32rpx;
+  font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.1em;
+}
+
+.comments .comment .info .msg {
+  color: #111;
+  font-size: 26rpx;
+  margin-top: 4rpx;
+  line-height: 36rpx;
+}
+
+.comments .comment .info .picture {
+  margin-top: 16rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.comments .comment .info .picture image {
+  width: 120rpx;
+  height: 120rpx;
+  display: inline-block;
+  margin-right: 40rpx;
+}
+
+.border_top_bottom {
+  border-bottom: 3rpx solid #ddd;
+  border-top: 3rpx solid #ddd;
+}
+
+.group {
+  padding-left: 20rpx;
+  background-color: #fff;
+  margin-top: 20rpx;
+}
+
+.group .title {
+  border-bottom: 3rpx solid #ddd;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #111;
+  font-size: 25rpx;
+}
+.group .line{
+    margin-top: 10rpx;
+    border: 1rpx solid #ddd;
+}
+.group .perdot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.group .perdot .name {
+  font-family: Arial, "Microsoft YaHei", "宋体", sans-serif;
+  width: 400rpx;
+  color: #ff6b3a;
+  font-size: 15rpx;
+  margin-top: 10rpx;
+}
+
+.group .perdot .value {
+  font-weight: bold;
+  width: 200rpx;
+  color: #ff6b3a;
+  font-size: 32rpx;
+  text-align: right;
+  margin-right: 16rpx;
+}

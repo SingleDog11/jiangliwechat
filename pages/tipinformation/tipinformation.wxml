@@ -1,0 +1,37 @@
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">《讲理平台投诉发布规则及注意事项》</view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-article">
+            <view class="weui-article__h1">
+                一、讲理平台是公益性的网络媒体投诉服务平台，我们将采用大众评审的方式，为 每一个矛盾每一起纠纷提供最公正最公正的群众道德意见，共当事双方及相关人员参考决策。为此，您发布投诉帖时，请务必留意：
+            </view>
+            <view class="weui-article__section">
+
+                <view class="weui-article__p">
+                    1、依法、据实。不得捏造事实、诽谤他人、泄露他人隐私。同时也注意保护自己的隐私。
+                </view>
+                <view class="weui-article__p">
+                    2、谢绝以删帖作交易换取投诉解决。即便投诉解决后，您也不要找我们删帖。
+                </view>
+                <view class="weui-article__p">
+                    3、请填写真实的联系方式，尤其是电话和电子信箱。以便我们能及时与您联系。
+                </view>
+                <view class="weui-article__p">
+                    4、为便于被投诉方回应，请提供准确的被投诉方名称、地址、订单号、账号等信息。
+                </view>
+                <view class="weui-article__p">
+                    5、发帖时可以提交图片、视频，作为最直观的投诉证据。
+                </view>
+                <view class="weui-article__p">
+                    6、请勿重复发帖。后续相关信息（包括图片），您只需使用原账号在原帖评论框提交，即可继续显示在投诉正文区域。
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="weui-flex">
+        <button class="weui-flex__item" type="default" bindtap="btnback">返回</button>
+        <button class="weui-flex__item" type="primary" bindtap="btnagree">同意</button>
+    </view>
+</view>

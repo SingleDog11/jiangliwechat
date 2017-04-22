@@ -1,0 +1,77 @@
+@import '../sharecomponants/case/case.wxss';
+
+page {
+  background-color: #f0f0f0;
+}
+
+.search {
+  background-color: #fff;
+  border-radius: 70rpx;
+  margin: 20rpx 40rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0 30rpx;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.search icon {
+  margin-right: 10rpx;
+  height: 18px;
+}
+
+.search input {
+  flex: 1;
+  flex-wrap: nowrap;
+  vertical-align: middle;
+  height: 70rpx;
+  display: inline-block;
+  font-size: 26rpx;
+}
+
+.funcs {
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20rpx 0 0rpx 0;
+}
+
+.funcs .func {
+  width: 25%;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.funcs .func image {
+  width: 100rpx;
+  height: 100rpx;
+  text-align: center;
+}
+
+.funcs .func .name {
+  text-align: center;
+  color: #666;
+  font-size: 26rpx;
+  margin-top: 10rpx;
+}
+
+.maylike {
+  background-color: #fff;
+  margin-top: 30rpx;
+  padding-top: 20rpx;
+}
+
+.maylike .title {
+  color: #808080;
+  font-size: 28rpx;
+  margin-left: 28rpx;
+  margin-bottom: -10rpx;
+}
+.page-section-ctn {
+  align-content: center ; 
+  text-align: center ;
+}

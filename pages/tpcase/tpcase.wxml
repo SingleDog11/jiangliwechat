@@ -1,0 +1,29 @@
+<import src='../sharecomponants/star/star.wxml' />
+<import src='../sharecomponants/case/case.wxml' />
+<view class='pagecontainer'>
+
+  <!-- 搜索框 -->
+
+  <view class='search'>
+    <icon type="search" color="#4c4c4c" size="18"></icon>
+    <input type="text" maxlength="100" placeholder="请输入搜索的案件" placeholder-style="color:#999999" />
+  </view>
+
+  <!-- 案件列表  -->
+  <view class='wrap' wx:if="{{hasContent}}">
+    <scroll-view class='scroller' style="width:{{width}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">
+      <block wx:for='{{caseslist}}' wx:for-item='case' wx:key='*this'>
+        <template is="case" data="{{case:case , flag:funcIdentity == '02'}}" />
+      </block>
+    </scroll-view>
+
+
+    <view class="page-body">
+      <view class="page-section page-section-gap" wx:if="{{!hasContent}}">
+        <view class="page-section-ctn">
+          <image class="image" mode="aspectFit" src="../../images/cry.png" />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

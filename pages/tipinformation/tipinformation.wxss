@@ -1,0 +1,13 @@
+@import '../sharecomponants/lib/weui.wxss';
+page{
+    background-color: #EDEDED;
+}
+.page__title{
+    margin-top: 40rpx ;
+    text-align: center;
+    font-weight: bold;
+}
+.weui-article__h1 , .weui-article__p{
+    font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif;
+    font-size: 28rpx ;
+}

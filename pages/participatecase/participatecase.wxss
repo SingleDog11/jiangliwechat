@@ -1,0 +1,10 @@
+/* pages/participatecase/participatecase.wxss */
+@import "../sharecomponants/lib/weui.wxss";  
+.mystyle{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #E9967A;
+}
+.sliderimage{
+    align-content: center ;
+    margin-left: 40rpx ;
+}

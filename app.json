@@ -1,0 +1,21 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/tipinformation/tipinformation",
+    "pages/caseInfo/caseInfo",    
+    "pages/tpcase/tpcase",    
+    "pages/caseInfo/chart/chart",
+    "pages/participatecase/participatecase",    
+    "pages/newcase/newcase",
+    "pages/main/main",
+    "pages/personinfo/person",
+    "pages/logs/logs",
+    "pages/sharecomponants/comment/comment"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#FFF",
+    "navigationBarTitleText": "讲理",
+    "navigationBarTextStyle":"black"
+  }
+}

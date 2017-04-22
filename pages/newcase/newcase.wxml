@@ -1,0 +1,65 @@
+<view class="page__hd">
+  <view class="page__desc">增加案件</view>
+</view>
+<view class="page__bd">
+  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示:{{errormsg}}</view>
+  <view class="weui-cells__title">请填写...</view>
+  <view class="weui-cells weui-cells_after-title">
+    <form catchsubmit="formSubmit">
+
+      <!-- 填写案件名称 -->
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">案件名称</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input focus="true" bindblur="justInTimeCheckData" maxlength="40" class="weui-input" name="title" placeholder="简短的输入案件核心内容" />
+        </view>
+      </view>
+
+      <!-- 输入投诉人姓名 -->
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">投诉人</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur="justInTimeCheckData" class="weui-input" name="Accuser" placeholder="输入投诉人" />
+        </view>
+      </view>
+
+      <!-- 输入应诉人姓名 -->
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">应诉人</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur="justInTimeCheckData" class="weui-input" name="defendant" placeholder="输入应诉人" />
+        </view>
+      </view>
+
+      <!-- 输入要索赔的金额 -->
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">索赔金额</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input type="digit" bindinput="justInTimeCheckDataAndNum" class="weui-input" name="claim" placeholder="输入索赔金额" />
+        </view>
+      </view>
+
+      <!-- 输入申诉的理由 -->
+      <view class="weui-cells__title">请申诉人申诉</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea maxlength="200" bindblur="justInTimeCheckData" bindinput="justInTimeCount" class="accuserarea" name="statement" placeholder="请输入理由" style="height: 3.3em" />
+            <view class="weui-textarea-counter">{{wordnum}}/200</view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-btn-area">
+        <button disabled="{{}}" type="primary" formType="submit">确定</button>
+      </view>
+    </form>
+  </view>
+</view>

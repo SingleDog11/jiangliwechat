@@ -1,0 +1,62 @@
+<template name='comment'>
+  <view class='comments'>
+
+    <!-- 裁决信息标头 -->
+    <view class='conut'>裁决信息({{count ? count : "0"}})</view>
+
+    <!-- 对每一条裁决信息循环输出 -->
+    <block wx:for='{{comments.comments}}' wx:for-item='comment' wx:for-index='index' wx:key='comment.Participator_id'>
+      <view class='comment'>
+
+        <!-- 该裁决用户的头像(先用本地图片代替) -->
+        <image class='cover' src="{{comment.avatarUrl}}" mode="aspectFill"></image>
+
+        <!-- 该裁决用户的姓名和评论 -->
+        <view class='info'>
+          <view class='name'>{{comment.name}}</view>
+
+          <!-- 三点的详细信息 -->
+          <view class='group border_top_bottom'>
+            <view wx:if="{{comment.Amountpaid != 0}}">
+              <view class='title'>需要赔偿的三点</view>
+              <view class='perdot'>
+                <view class='name'>最好赔偿：</view>
+                <view class='value'>{{comment.Amountpaid}}</view>
+              </view>
+              <view class='perdot'>
+                <view class='name'>不赔偿的满意度：</view>
+                <view class='value'>{{comment.Satisfaction}}</view>
+              </view>
+              <view class='perdot'>
+                <view class='name'>赔偿{{comment.Amountpaid * 2}}元的的满意度为：</view>
+                <view class='value'>{{comment.Supportsatisfaction}}</view>
+              </view>
+              <view class="line"></view>
+              <view class="title">赋值说明：</view>
+              <view class='msg'>{{comment.Reason}}</view>
+              <view class="line"></view>
+            </view>
+            <view wx:if="{{comment.Amountpaid == 0}}">
+              <view class='title'>互不赔偿的方式</view>
+              <view class='perdot'>
+                <view class='name'>赔偿[{{comments.Claim}} 元]的满意度是：</view>
+                <view class='value'>{{comment.Supportsatisfaction}}</view>
+              </view>
+            </view>
+
+            <view class="title">个人满意度曲线：</view>
+            <button class="weui-btn" type="primary" plain="true" bindtap="seeChart" data-case="{{comment}}">
+              点击查看
+            </button>
+
+            <!-- 改裁决用户的满意度曲线(先用本地图片代替) -->
+
+            <!--<view class='picture'>
+              <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler"></canvas>
+            </view>-->
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>

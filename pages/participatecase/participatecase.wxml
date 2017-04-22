@@ -1,0 +1,110 @@
+<!--pages/participatecase/participatecase.wxml-->
+<view class="pagecontainer">
+  <view class="page__bd">
+    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示</view>
+
+    <!-- 赋值方式 -->
+    <view class="weui-cells__title">赋值方式</view>
+    <view class="weui-cells weui-cells_after-title">
+      <radio-group bindchange="radioChange">
+        <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+          <view class="weui-cell__bd">{{item.name}}</view>
+          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+          </view>
+        </label>
+      </radio-group>
+    </view>
+
+    <!-- 是否赔偿
+    <view class="weui-cells__title" wx:if="{{isShowTwo}}">是否赔偿</view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{isShowTwo}}">
+      <radio-group bindchange="radioPayChange">
+        <label class="weui-cell weui-check__label" wx:for="{{radioPayItems}}" wx:key="value">
+          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+          <view class="weui-cell__bd">{{item.name}}</view>
+          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+          </view>
+        </label>
+      </radio-group>
+    </view>
+ -->
+
+    <!-- 显示三点赋值 -->
+
+    <!-- 第一个赋值，条件：赔偿条件 不等于 2 -->
+    <view class="weui-cells__title">你认为最合理的赔偿金额为：</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__bd">
+          <input type="number" class="weui-input" placeholder="请输入金额" bindblur="bindnumberinput" />
+        </view>
+      </view>
+    </view>
+    
+    <view wx:if="{{payType != '2'}}">
+
+      <!-- 第二个赋值，条件：赔偿条件 不等于 2-->
+      <view class="weui-cells__title">如果不赔偿，你的满意度为：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <slider value="100" bindchange="slider2change" min="0" max="200" />
+          </view>
+          <view class="mystyle">{{satisfication}}</view>
+        </view>
+        <view class="sliderimage">
+          <image src="../../images/slider.png" mode="widthFix"></image>
+        </view>
+      </view>
+
+      <!-- 第三个赋值，条件：赔偿条件 不等于 2 -->
+      <view class="weui-cells__title">如果赔偿金额是 [{{rationalpay*2}} 元] 你的满意度是：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <slider value="100" bindchange="slider3change" min="0" max="200" />
+          </view>
+          <view class="mystyle">{{doublesatisfication}}</view>
+        </view>
+        <view class="sliderimage">
+          <image src="../../images/slider.png" mode="widthFix"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 第四个赋值，条件：赔偿条件 等于 2 -->
+    <view wx:if="{{payType == '2'}}">
+      <view class="weui-cells__title">如果赔偿金额是 [{{originalpay}} 元] 你的满意度是：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <slider value="100" bindchange="slider3change" min="0" max="200" />
+          </view>
+          <view class="mystyle">{{doublesatisfication}}</view>
+        </view>
+        <view class="sliderimage">
+          <image src="../../images/slider.png" mode="widthFix"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 输入理由 -->
+    <view class="weui-cells__title">请描述理由（选填）</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea bindinput="justInTimeCount" class="accuserarea" name="reason" placeholder="请输入理由" style="height: 3.3em" />
+          <view class="weui-textarea-counter">{{wordnum}}/200</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 确认提交 -->
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="postinfo">确定</button>
+    </view>
+  </view>
+</view>

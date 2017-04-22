@@ -1,0 +1,35 @@
+<view class="container">
+    <canvas canvas-id="lineCanvas" disable-scroll="false" class="canvas" bindtouchstart="touchHandler"></canvas>
+    <text class="userinfo-nickname">满意度曲线图</text>
+
+    <view class="page__bd">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">满意的金额</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <view class="weui-label">{{userAmount}} 元</view>
+                </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">曲线满意金额</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <view class="weui-label">{{pictureAmount}} 元</view>
+                </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">平均金额</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <view class="weui-label">{{averageAmount}} 元</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

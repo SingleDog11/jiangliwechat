@@ -1,0 +1,147 @@
+@import '../sharecomponants/comment/comment.wxss';
+page {
+  background-color: #f0f0f0;
+  padding-bottom: 90rpx;
+}
+
+.caseInfo {
+  padding: 15rpx;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 10rpx;
+}
+
+.caseInfo image {
+  width: 180rpx;
+  height: 150rpx;
+  flex-shrink: 0;
+}
+
+.caseInfo .info {
+  height: 150rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10rpx;
+  margin-left: 10rpx;
+}
+
+.caseInfo .info .name {
+  color: #111;
+  font-size: 40rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.caseInfo .info .star_members {
+  color: #111;
+  font-size: 28rpx;
+}
+
+.caseInfo .info .star_members .star-rating {
+  display: inline-block;
+  margin-right: 6rpx;
+}
+
+.caseInfo .info .star_members image {
+  width: 28rpx;
+  height: 27rpx;
+  margin-right: 4rpx;
+}
+
+.caseInfo .info .author_state {
+  display: flex;
+  flex-direction: row;
+  color: #777;
+  font-size: 28rpx;
+  flex-wrap: nowrap;
+}
+
+.caseInfo .info .author_state .author {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.caseInfo .info .author_state .state {
+  background-color: #3cb371;
+  color: #fff;
+}
+
+.accuser {
+  background-color: #fff;
+  height: 90rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-top: 4rpx;
+}
+
+.accuser .icon {
+  width: 34rpx;
+  height: 34rpx;
+  margin-left: 20rpx;
+}
+
+.accuser .info {
+  flex: 1;
+  color: #333;
+  font-size: 26rpx;
+  margin: 0 10rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accuser .arrow_left {
+  height: 30rpx;
+  width: 21rpx;
+  margin-right: 20rpx;
+}
+
+.laa {
+  border-top: 3rpx solid #f0f0f0;
+  color: #111;
+  font-size: 24rpx;
+  text-align: center;
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.laa image {
+  width: 26rpx;
+  height: 26rpx;
+  margin-left: 6rpx;
+  vertical-align: middle;
+}
+
+.judge {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  border-top: 3rpx solid #ddd;
+  height: 120rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+
+.judge .gojudge {
+  background-color: #f63;
+  padding: 22rpx 34rpx;
+  color: #fff;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+  border-radius: 4rpx;
+}

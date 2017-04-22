@@ -1,0 +1,34 @@
+<import src="../sharecomponants/case/case.wxml" />
+
+<view class="page">
+  <view class="search">
+    <icon type="search" color="#4c4c4c" size="18" />
+    <input type="text" maxlength="100" placeholder="输入要搜索的案件" placeholder-style="color:#999999" />
+  </view>
+  <scroll-view class='scroller' style="width:{{width}}px;height:{{height}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">
+    <view class="funcs">
+      <view class="func" wx:for="{{functions}}" wx:for-item='item' wx:key='item.id' bindtap="funClick" data-id="{{item.id}}" data-nexturl="{{item.nexturl}}">
+        <image src="{{item.url}}" mode="aspectFill"></image>
+        <view class="name">{{item.name}}</view>
+      </view>
+    </view>
+
+    <view class='maylike' wx:if="{{hasContent}}">
+      <view class='title'>最近动态</view>
+      <view class='cases'>
+        <block wx:for="{{cases}}" wx:for-item='case' wx:key='*this'>
+          <template is="case" data="{{case:case,flag:false}}" />
+        </block>
+      </view>
+    </view>
+    <view class="page-body">
+      <view class="page-section page-section-gap" wx:if="{{!hasContent}}">
+        <view class="page-section-ctn">
+          <image class="image" mode="aspectFit" src="../../images/cry.png" />
+        </view>
+      </view>
+    </view>
+
+
+  </scroll-view>
+</view>
