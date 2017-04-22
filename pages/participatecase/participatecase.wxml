@@ -43,9 +43,8 @@
         </view>
       </view>
     </view>
-    
-    <view wx:if="{{payType != '2'}}">
 
+    <view wx:if="{{payType != '2' && dotType == '2'}}">
       <!-- 第二个赋值，条件：赔偿条件 不等于 2-->
       <view class="weui-cells__title">如果不赔偿，你的满意度为：</view>
       <view class="weui-cells weui-cells_after-title">

@@ -108,9 +108,7 @@ var login = function login(options) {
                         sessionId: result.data,
                         userInfo: userInfo,
                     }
-                }; 
-                console.log(result);
-                // console.log(data);
+                };  
                 if (data.session.sessionId != "error" && data.session.sessionId != "") {
                     Session.set(data.session);
                     options.success(data.session.sessionId);
@@ -130,12 +128,11 @@ var login = function login(options) {
         });
     });
 
-    var session = Session.get();
-    // console.log(session);
+    var session = Session.get(); 
     if (session) {
         wx.checkSession({
             success: function () {
-                options.success(session.sessionId);
+                doLogin();
             },
 
             fail: function () {           

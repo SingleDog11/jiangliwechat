@@ -1,16 +1,20 @@
 var constants = require('./lib/constants');
 var login = require('./lib/login');
 var Session = require('./lib/session');
-var request = require('./lib/request'); 
+var request = require('./lib/request');
 
 var exports = module.exports = {
     login: login.login,
     setLoginUrl: login.setLoginUrl,
-    LoginError: login.LoginError, 
-    clearSession: Session.clear, 
-    getSession : Session.get ,
+    LoginError: login.LoginError,
+    clearSession: Session.clear,
+    getSession: Session.get,
     request: request.request,
-    RequestError: request.RequestError, 
+    RequestError: request.RequestError,
+
+    setCaseCache: Cachecase.set,
+    getCaseCache: Cachecase.get,
+    clearCaseCache: Cachecase.clear,
 };
 
 // 导出错误类型码

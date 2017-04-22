@@ -67,6 +67,7 @@ Page({
     const that = this;
     app.showBusy("正在获取……");
     qcloud.request({
+      login:app.globalData.hasLogin,
       url: config.requestGetChart,
       data: {
         caseid: caseid,

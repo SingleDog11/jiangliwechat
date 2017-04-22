@@ -30,6 +30,7 @@ Page({
     var casetemp = that.data.caseInfo;
     // 请求该案件下的裁决相关数据
     qcloud.request({
+      login:app.globalData.hasLogin,
       url: config.requestCommentsByCaseId,
       data: { "id": casetemp.Ver_id },
       // 请求成功后返回的数据

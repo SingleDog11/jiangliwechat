@@ -28,6 +28,8 @@ Page({
     caseinfo: {},
 
     // 赋值类型
+    dotType: 1,
+    // 赔偿类型
     payType: 0,
 
     // 合理赔偿
@@ -42,19 +44,19 @@ Page({
     reason: "",
 
     radioItems: [
-      { name: '单点赋值', value: '0' },
-      { name: '三点赋值', value: '1', checked: true }
+      { name: '单点赋值', value: '1' },
+      { name: '三点赋值', value: '2', checked: true }
     ],
     radioPayItems: [
       { name: '必须赔偿', value: '1', checked: true, type: "赔偿" },
-      { name: '互不赔偿', value: '2' }, 
+      { name: '互不赔偿', value: '2' },
     ],
 
   },
   onLoad: function (options) {
 
     var isnew = options.isnew;
-    console.log(isnew);
+    // console.log(isnew);
     if (isnew == 'false') {
       // 这是修改界面，提示用户.
       app.showModel('warn', '您已经裁决过，通过此界面您可以更新您的裁决。');
@@ -67,7 +69,10 @@ Page({
     }
     // 页面初始化 options 带来本案件的id
     var casetemp = app.globalData.caseslist.getCaseById(options.caseinfoid)[0];
-    //console.log(casetemp);
+    // 得到了案件的发起者,修改标题栏。
+    wx.setNavigationBarTitle({
+      title: "针对" + casetemp.Accuser_client + "的案件进行裁决",
+    });
     this.setData({
       caseinfo: casetemp,
       originalpay: casetemp.Claim,
@@ -81,8 +86,8 @@ Page({
     if (e.detail.value == 0) {
       //如果输入的金额为0，
       this.radioPayChange({
-        detail :{
-          value : 2,
+        detail: {
+          value: 2,
         }
       })
     }
@@ -103,6 +108,7 @@ Page({
     }
     this.setData({
       radioItems: radioItems,
+      dotType: e.detail.value,
     });
   },
 
@@ -162,10 +168,11 @@ Page({
     const that = this;
     app.showBusy("正在提交...");
     qcloud.request({
+      login:app.globalData.hasLogin,
       url: config.requestPutNewComments,
       data: {
         caseid: that.data.caseinfo.Ver_id,
-        ptvalution: 2,// 赋值方式 2，代表三点赋值
+        ptvalution: that.data.dotType,// 赋值方式 2，代表三点赋值
         ptPunish: that.data.payType, // 惩罚方式
         ptSatifyPay: that.data.rationalpay,
         ptSatifynoPay: that.data.satisfication,

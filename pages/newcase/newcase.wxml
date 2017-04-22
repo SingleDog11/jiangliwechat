@@ -58,7 +58,7 @@
         </view>
       </view>
       <view class="weui-btn-area">
-        <button disabled="{{}}" type="primary" formType="submit">确定</button>
+        <button type="primary" formType="submit">确定</button>
       </view>
     </form>
   </view>
