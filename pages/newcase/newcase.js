@@ -10,6 +10,9 @@ var app = getApp();
 
 Page({
   data: {
+    // 判断是否为草稿
+    isDraft: false,
+
     showTopTips: false,
     errormsg: "数据不规范",
     wordnum: 0,
@@ -24,7 +27,8 @@ Page({
     Accuser: "",
   },
   onLoad: function (options) {
-
+    // 判断是否为草稿
+    this.data.isDraft = options.draft;
     /**
      * 这里是将缓存打印出来，也可以当作参数来使用
      */
@@ -47,6 +51,15 @@ Page({
   },
 
   formSubmit: function (e) {
+
+    var urltemp = "";
+    if (this.data.isDraft) {
+      // 如果是草稿，就进行草稿提交
+      urltemp = config.requestPutDraftok;
+    }
+    else {
+      urltemp = config.requestPutNewCase;
+    }
     var value = e.detail.value;
     // 数据是否有为空的
     var result = value.title.trim() != "" &&
@@ -64,7 +77,7 @@ Page({
       value.state = 0;
       app.showBusy("正在提交...");
       qcloud.request({
-        url: config.requestPutNewCase,
+        url: urltemp,
         login: app.globalData.hasLogin,
         data: value,
         success: function (res) {
@@ -166,13 +179,13 @@ Page({
     });
     wx.navigateBack();*/
     var value = {
-      title:this.data.title,
+      title: this.data.title,
       Accuser: this.data.Accuser,
       defendant: this.data.defendant,
       claim: this.data.claim,
       statement: this.data.statement,
-      state : -1,// 草稿
-      issuer : app.globalData.userInfo.nickName,
+      state: -1,// 草稿
+      issuer: app.globalData.userInfo.nickName,
     }
     app.showBusy("正在提交...");
     qcloud.request({

@@ -65,7 +65,7 @@ Page({
      */
     caseDetail(event) {
         // console.log("案件信息：");
-        var casetemp = this.getCaseById(event.currentTarget.dataset.id);
+        var casetemp = this.getCaseById(event.currentTarget.dataset.id)[0];
         console.log(casetemp);
 
         if (casetemp.State == -1) {
@@ -79,7 +79,7 @@ Page({
                 statement: casetemp.Statement
             });
             wx.navigateTo({
-                url: '../newcase/newcase',
+                url: '../newcase/newcase?draft=true',
             })
         }
         else {

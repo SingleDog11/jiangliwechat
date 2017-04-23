@@ -62,7 +62,7 @@
       </view>
       <view class="weui-btn-area">
         <button type="primary" formType="submit">确定并发布</button> 
-        <button type="default" bindtap = "onCache" >保存为草稿</button>
+        <button type="default" bindtap = "onCache" wx:if="{{!isDraft}}" >保存为草稿</button>
       </view>
     </form>
   </view>
