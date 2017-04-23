@@ -3,7 +3,7 @@ var login = require('./lib/login');
 var Session = require('./lib/session');
 var request = require('./lib/request');
 var Cachecase = require('./lib/casecache');
-
+var Cachedetail = require('./lib/detailcache');
 var exports = module.exports = {
     login: login.login,
     setLoginUrl: login.setLoginUrl,
@@ -16,6 +16,12 @@ var exports = module.exports = {
     setCaseCache: Cachecase.set,
     getCaseCache: Cachecase.get,
     clearCaseCache: Cachecase.clear,
+
+    setDetailCache: Cachedetail.set,
+    getDetailCache: Cachedetail.get,
+    clearDetailCache: Cachedetail.clear,
+
+    
 };
 
 // 导出错误类型码

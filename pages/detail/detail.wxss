@@ -1,0 +1,11 @@
+/* pages/detail/detail.wxss */
+@import '../sharecomponants/lib/weui.wxss';
+
+.page__title{
+    margin-top: 40rpx ; 
+    font-weight: bold;
+}
+.weui-article__h1 , .weui-article__p{
+    font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif;
+    font-size: 28rpx ;
+}

@@ -1,6 +1,6 @@
 // 业务服务器的域名
-//var host = 'https://98171334.qcloud.la';
-var host = 'http://localhost:55739';
+var host = 'https://98171334.qcloud.la';
+// var host = 'http://localhost:55739';
 
 // 域名相关配置
 var config = {

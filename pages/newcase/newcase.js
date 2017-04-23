@@ -28,13 +28,16 @@ Page({
   },
   onLoad: function (options) {
     // 判断是否为草稿
-    this.data.isDraft = options.draft;
+    this.setData({
+      isDraft:options.draft,
+    });
     /**
      * 这里是将缓存打印出来，也可以当作参数来使用
      */
     var casecache = qcloud.getCaseCache();
-    console.log(options.draft);
-    if (this.data.isDraft== true && casecache) {
+    // console.log(options.draft);
+    // console.log(casecache);
+    if (options.draft=="true" && casecache) {
       this.setData({
         verid: casecache.verid,
         title: casecache.title,
@@ -56,7 +59,7 @@ Page({
   formSubmit: function (e) {
 
     var urltemp = "";
-    if (this.data.isDraft == true) {
+    if (this.data.isDraft == "true") {
       // 如果是草稿，就进行草稿提交
       urltemp = config.requestPutDraftok;
     }
@@ -186,7 +189,7 @@ Page({
       issuer: app.globalData.userInfo.nickName,
     } 
     var urltemp = ""; 
-    if (this.data.isDraft == true) {
+    if (this.data.isDraft == "true") {
       // 如果是草稿，就进行草稿提交
       urltemp = config.requestPutDraftok;
     }

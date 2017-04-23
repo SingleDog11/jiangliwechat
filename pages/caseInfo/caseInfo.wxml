@@ -15,7 +15,7 @@
           <template is='star' data="{{count:5}}" /> 参与人：{{caseInfo.NumOfpar}}
         </view>
         <view class='author_state'>
-          <view class='author'> 索求赔偿： {{caseInfo.Claim}}</view> 
+          <view class='author'> 索求赔偿： {{caseInfo.Claim}}</view>
           <view class='state' wx:if="{{caseInfo.State == '0'}}">状态：待审核</view>
           <view class='state' wx:if="{{caseInfo.State == '1'}}">状态：待裁决</view>
           <view class='state' wx:if="{{caseInfo.State == '2'}}">状态：已完成</view>
@@ -35,13 +35,15 @@
 
     <!-- 隐藏的代表的投诉人和应诉人的申诉信息 -->
     <view class="detail" wx:if="{{seeAllInfo}}">
-      <view class="accuser">
+      <view class="accuser" bindtap='openDetail' data-id='1'>
         <image src="../../images/accuser.png" mode="aspectFill" class='icon'></image>
         <view class='info'> 投诉人陈述：{{caseInfo.Statement}}</view>
+        <image src="../../images/arrow_left.png" class='arrow_left'></image>
       </view>
-      <view class="accuser">
+      <view class="accuser" bindtap='openDetail'>
         <image src="../../images/accusered.png" mode="aspectFill" class='icon'></image>
         <view class='info'> 应诉人陈述：{{caseInfo.Statement}}</view>
+        <image src="../../images/arrow_left.png" class='arrow_left'></image>
       </view>
     </view>
 

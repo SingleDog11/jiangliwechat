@@ -67,7 +67,6 @@ Page({
         // console.log("案件信息：");
         var casetemp = this.getCaseById(event.currentTarget.dataset.id)[0];
         console.log(casetemp);
-
         if (casetemp.State == -1) {
             // 这是点击草稿案件所进入的页面
             // 设置参数
@@ -105,7 +104,7 @@ Page({
                     caseslist: res.data,
                     hasContent: res.data.length != 0,
                 });
-                 console.log(that.data.caseslist);
+                //  console.log(that.data.caseslist);
             },
             fail: function (e) {
                 app.showModel("Error", e);

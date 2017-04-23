@@ -19,6 +19,7 @@ Page({
     var caseInfoId = options.caseinfoid;
     // 从全局的案件列表中获取到该案件
     var caseinfo = app.globalData.caseslist.getCaseById(caseInfoId)[0];
+    console.log(caseinfo);
     this.setData({
       caseInfo: caseinfo,
     })
@@ -30,7 +31,7 @@ Page({
     var casetemp = that.data.caseInfo;
     // 请求该案件下的裁决相关数据
     qcloud.request({
-      login:app.globalData.hasLogin,
+      login: app.globalData.hasLogin,
       url: config.requestCommentsByCaseId,
       data: { "id": casetemp.Ver_id },
       // 请求成功后返回的数据
@@ -66,8 +67,8 @@ Page({
    * 判断是新增还是修改
    */
   isNew: function (name) {
-    var comments = this.data.caseInfo.comments; 
-    for (var i = 0; i < comments.length; i++) { 
+    var comments = this.data.caseInfo.comments;
+    for (var i = 0; i < comments.length; i++) {
       if (comments[i].openid == name) {
         //表示修改
         return false;
@@ -85,8 +86,8 @@ Page({
     var isnew = this.isNew(openidformapp);
     // console.log(isnew);
     var urltemp = "";
-    urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.Ver_id+
-    '&isnew=' + isnew ;
+    urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.Ver_id +
+      '&isnew=' + isnew;
     wx.navigateTo({
       url: urltemp,
       success: function (res) {
@@ -100,7 +101,9 @@ Page({
       }
     })
   },
-  // 查看满意度曲线
+  /**
+   * 查看满意度曲线
+   */
   seeChart: function (e) {
     // console.log(e);
     var casetemp = e.currentTarget.dataset.case;
@@ -117,6 +120,22 @@ Page({
       complete: function () {
         // complete
       }
+    })
+  },
+  /**
+   * 处理点击案件详细申诉情况
+   */
+  openDetail: function (e) {
+    // console.log(e);
+    // 存缓存
+    qcloud.setDetailCache({
+      speaker: this.data.caseInfo.Accuser_client,
+      time: this.data.caseInfo.data,
+      content: this.data.caseInfo.Statement,
+      turn: 1,
+    })
+    wx.navigateTo({
+      url: "../detail/detail",
     })
   }
 })
