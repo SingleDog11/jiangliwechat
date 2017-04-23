@@ -13,6 +13,8 @@ var app = getApp();
 
 Page({
   data: {
+    // 图片宽度
+    imageWidth: 0,
 
     // 显示第2个问题。
     isShowTwo: true,
@@ -28,7 +30,7 @@ Page({
     caseinfo: {},
 
     // 赋值类型
-    dotType: 1,
+    dotType: 2,
     // 赔偿类型
     payType: 0,
 
@@ -93,6 +95,7 @@ Page({
     }
     else {
       this.setData({
+        payType : 1,
         isShowTwo: true,
         rationalpay: Number(e.detail.value),
       })
@@ -123,8 +126,7 @@ Page({
     this.setData({
       radioPayItems: radioPayItems,
       payType: payType,
-      satisfication: 0,
-      rationalpay: 0,
+      satisfication: 0, 
     });
   },
   // 第一个满意度
@@ -152,11 +154,10 @@ Page({
       wordnum: count,
     })
   },
-  // 检查数据是否为空
+  // 检查理由是否为空
   justInTimeCheckData: function (e) {
     // console.log(e);
-    this.setData({
-      showTopTips: e.detail.value.trim() == "",
+    this.setData({ 
       reason: e.detail.value,
     })
   },
@@ -168,7 +169,7 @@ Page({
     const that = this;
     app.showBusy("正在提交...");
     qcloud.request({
-      login:app.globalData.hasLogin,
+      login: app.globalData.hasLogin,
       url: config.requestPutNewComments,
       data: {
         caseid: that.data.caseinfo.Ver_id,
@@ -194,5 +195,15 @@ Page({
         app.showModel("提交失败", e);
       }
     })
+  },
+  /**
+   * 图片加载的时候获取屏幕宽度
+   */
+  imageLoad : function()
+  {
+    this.setData({
+      imageWidth : wx.getSystemInfoSync().windowWidth ,
+    })
+    console.log(this.data.imageWidth);
   },
 })

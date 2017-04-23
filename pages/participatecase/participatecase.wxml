@@ -55,7 +55,7 @@
           <view class="mystyle">{{satisfication}}</view>
         </view>
         <view class="sliderimage">
-          <image src="../../images/slider.png" mode="widthFix"></image>
+          <image src="../../images/slider.png" mode="widthFix" style="width:{{imageWidth}}px" bindload="imageLoad"></image>
         </view>
       </view>
 
@@ -69,7 +69,7 @@
           <view class="mystyle">{{doublesatisfication}}</view>
         </view>
         <view class="sliderimage">
-          <image src="../../images/slider.png" mode="widthFix"></image>
+          <image src="../../images/slider.png" mode="widthFix" style="width:{{imageWidth}}px" bindload="imageLoad"></image>
         </view>
       </view>
     </view>
@@ -85,7 +85,7 @@
           <view class="mystyle">{{doublesatisfication}}</view>
         </view>
         <view class="sliderimage">
-          <image src="../../images/slider.png" mode="widthFix"></image>
+          <image src="../../images/slider.png" mode="widthFix" style="width:{{imageWidth}}px" bindload="imageLoad"></image>
         </view>
       </view>
     </view>
@@ -95,7 +95,7 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
-          <textarea bindinput="justInTimeCount" class="accuserarea" name="reason" placeholder="请输入理由" style="height: 3.3em" />
+          <textarea bindinput="justInTimeCount" bindblur="justInTimeCheckData" class="accuserarea" name="reason" placeholder="请输入理由" style="height: 3.3em" />
           <view class="weui-textarea-counter">{{wordnum}}/200</view>
         </view>
       </view>

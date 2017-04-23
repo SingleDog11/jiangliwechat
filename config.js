@@ -26,6 +26,9 @@ var config = {
 
     // 获取个人参与的案件
     requestGetMyCase: `https://${host}/values/GetVerByUserID`,
+    
+    // 将某案件的草稿改为提交状态
+    requestPutDraftok: `https://${host}/values/PutDraftOk`,
     // 上传图片的接口
     uploadFileUrl: "",
 

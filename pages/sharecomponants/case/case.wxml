@@ -15,6 +15,7 @@
       <view class='author_state'>
         <view class='author'>发起人：{{case.issuer}}</view>
 
+        <view class='state' wx:if="{{case.State == '-1'}}">状态：草稿</view>
         <view class='state' wx:if="{{case.State == '0'}}">状态：待审核</view>
         <view class='state' wx:if="{{case.State == '1'}}">状态：待裁决</view>
         <view class='state' wx:if="{{case.State == '2'}}">状态：已完成</view>

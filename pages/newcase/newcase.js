@@ -25,6 +25,9 @@ Page({
   },
   onLoad: function (options) {
 
+    /**
+     * 这里是将缓存打印出来，也可以当作参数来使用
+     */
     var casecache = qcloud.getCaseCache();
     if (casecache) {
       this.setData({
@@ -33,7 +36,7 @@ Page({
         claim: casecache.claim,
         statement: casecache.statement,
         Accuser: casecache.Accuser,
-        wordnum : casecache.statement.length,
+        wordnum: casecache.statement.length,
       });
     }
     else {
@@ -58,6 +61,7 @@ Page({
     }
     else {
       value.issuer = app.globalData.userInfo.nickName;
+      value.state = 0;
       app.showBusy("正在提交...");
       qcloud.request({
         url: config.requestPutNewCase,
@@ -87,9 +91,10 @@ Page({
 
     var value = e.detail.value;
     var result = isNaN(parseFloat(value));
-    console.log(parseFloat(value));
+    // console.log(parseFloat(value));
     this.setData({
       showTopTips: e.detail.value.trim() == "" && result,
+      claim: parseFloat(value),
     })
 
     if (result) {
@@ -147,10 +152,11 @@ Page({
       showTopTips: e.detail.value.trim() == "",
     })
   },
-   /**
-   * ，如果每个部分都有数据则缓存起来。
-   */
+  /**
+  * 提交未草稿的话……。
+  */
   onCache: function () {
+    /* 先取消掉
     qcloud.setCaseCache({
       title: this.data.title,
       Accuser: this.data.Accuser,
@@ -158,6 +164,36 @@ Page({
       claim: this.data.claim,
       statement: this.data.statement
     });
-    wx.navigateBack();
+    wx.navigateBack();*/
+    value = {
+      title:this.data.title,
+      Accuser: this.data.Accuser,
+      defendant: this.data.defendant,
+      claim: this.data.claim,
+      statement: this.data.statement,
+      state : -1,// 草稿
+    }
+    app.showBusy("正在提交...");
+    qcloud.request({
+      url: config.requestPutNewCase,
+      login: app.globalData.hasLogin,
+      data: value,
+      success: function (res) {
+        // console.log(res);
+        if (res.data.isok) {
+          app.showSuccess("数据已经提交");
+          // 导航回到主页面
+          qcloud.clearCaseCache();
+          wx.navigateBack();
+        }
+        else {
+          app.showModel('提交失败！', "服务器出问题了");
+        }
+      },
+      fail: function (error) {
+        app.showModel("提交失败！", error);
+      }
+    });
+
   }
 })

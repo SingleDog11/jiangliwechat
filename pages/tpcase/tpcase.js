@@ -14,7 +14,15 @@ Page({
         hasContent: false,
         funcIdentity: '00',
         btnMsg: '查看全部',
-        caseslist: []
+        caseslist: [],
+    },
+    /**
+     * 通过id获取案件
+     */
+    getCaseById: function (id) {
+        return this.data.caseslist.filter(function (item) {
+            return (item.Ver_id == id)
+        })
     },
     onLoad: function (options) {
         this.setData({
@@ -37,7 +45,7 @@ Page({
             this.getMycases();
         }
         else {
-             wx.setNavigationBarTitle({
+            wx.setNavigationBarTitle({
                 title: '已经完成的案件',
                 success: function (res) {
                 }
@@ -57,10 +65,28 @@ Page({
      */
     caseDetail(event) {
         // console.log("案件信息：");
-        // console.log(event);
-        wx.navigateTo({
-            url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id,
-        })
+        var casetemp = this.getCaseById(event.currentTarget.dataset.id);
+        console.log(casetemp);
+
+        if (casetemp.State == -1) {
+            // 这是点击草稿案件所进入的页面
+            // 设置参数
+            qcloud.setCaseCache({
+                title: casetemp.Complain_title,
+                Accuser: casetemp.Accuser_client,
+                defendant: casetemp.Defendant_client,
+                claim: casetemp.Claim,
+                statement: casetemp.Statement
+            });
+            wx.navigateTo({
+                url: '../newcase/newcase',
+            })
+        }
+        else {
+            wx.navigateTo({
+                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id,
+            })
+        }
     },
     /**
      * 请求我发布的案件的信息
@@ -78,7 +104,7 @@ Page({
                     caseslist: res.data,
                     hasContent: res.data.length != 0,
                 });
-                console.log(that.data.caseslist);
+                // console.log(that.data.caseslist);
             },
             fail: function (e) {
                 app.showModel("Error", e);
