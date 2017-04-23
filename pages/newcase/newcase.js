@@ -106,6 +106,10 @@ Page({
             app.showSuccess("数据已经提交");
             qcloud.clearCaseCache();
             // 导航回到主页面 
+            // console.log(that.data.isfabu == 'true' ? 2: 1);
+            // 更新全局变量
+            app.globalData.caseslist.updateList();
+            // console.log(app.globalData)
             wx.navigateBack();
           }
           else {

@@ -44,43 +44,21 @@ Page({
         // 案件信息
         cases: [],
     },
-    onLoad: function () {
-
+    onLoad: function () { 
     },
-    onReady: function () {
-       this.getCasesfromnet();
+    onShow: function () {
+        this.getCasesfromnet();
     },
     /**
      * 从服务器请求案件的全部信息
      */
-    getCasesfromnet: function () {
-        const that = this;
-        // 请求案件
-        app.showBusy("正在请求数据……");
-        qcloud.request({
-            login: app.globalData.hasLogin,
-            url: config.requestCaseByState,
-            data: {
-                state: -2,// 1 请求全部案件
-            },
-            success: function (res) {
-                // console.log(res);
-                // 这里获取到的案件赋值给 本地的case
-                app.showSuccess("请求成功");
-                app.globalData.caseslist.list = res.data;
-                that.setData({
-                    cases: res.data,
-                    hasContent: !res.data.length == 0
-                });
-            },
-            fail: function () {
-                app.showModel('error', '请检查网络');
-                // console.log("main::fail")
-                that.setData({
-                    hasContent: false,
-                })
-            }
-        });
+    getCasesfromnet: function () {  
+        var list = app.globalData.caseslist.list;
+        console.log(list);
+        this.setData({
+            cases: list,
+            hasContent: list.length != 0,
+        })
     },
     funClick(event) {
         const id = event.currentTarget.dataset.id;

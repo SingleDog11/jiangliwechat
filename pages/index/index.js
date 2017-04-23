@@ -39,6 +39,8 @@ Page({
           // 修改全局变量hasLogin
           app.globalData.hasLogin = true;
           app.globalData.openid = result;
+          // 请求数据 
+          app.globalData.caseslist.updateList();
           // 跳转到主页面
           wx.redirectTo({
             url: '../main/main',

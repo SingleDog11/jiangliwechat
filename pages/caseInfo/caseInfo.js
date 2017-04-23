@@ -8,6 +8,7 @@ const app = getApp();
 
 Page({
   data: {
+    caseInfoId: 0,
     isowner: false,
     width: app.systemInfo.windowWidth,
     height: app.systemInfo.windowHeight,
@@ -19,37 +20,39 @@ Page({
   onLoad: function (options) {
     // 判断是否为主人权限
     var isownertemp = options.isowner;
-
     var caseInfoId = options.caseinfoid;
-    // 从全局的案件列表中获取到该案件
-    var caseinfo = app.globalData.caseslist.getCaseById(caseInfoId)[0];
-    console.log(isownertemp);
     this.setData({
       isowner: isownertemp,
-      caseInfo: caseinfo,
+      caseInfoId: caseInfoId,
     })
   },
   onShow: function () {
     var that = this;
     var comments = [];
-
-    var casetemp = that.data.caseInfo;
+    var caseinfo = app.globalData.caseslist.getCaseById(this.data.caseInfoId)[0];
+    // console.log(caseinfo)
     // 请求该案件下的裁决相关数据
     qcloud.request({
       login: app.globalData.hasLogin,
       url: config.requestCommentsByCaseId,
-      data: { "id": casetemp.Ver_id },
+      data: { "id": caseinfo.Ver_id },
       // 请求成功后返回的数据
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         comments = res.data == "null" ? [] : res.data
-        casetemp.comments = comments;
-
+        caseinfo.comments = comments;
+        // console.log(caseinfo);
         that.setData({
-          caseInfo: casetemp,
+          caseInfo: caseinfo,
         })
       },
       fail: function () {
+        // console.log("fail")
+      },
+      complete: function () {
+        that.setData({
+          caseInfo:caseinfo,
+        })
       }
     });
   },

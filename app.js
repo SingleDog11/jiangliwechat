@@ -77,6 +77,25 @@ App({
           return (item.Ver_id == id)
         })
       },
+      updateList: function (e) {
+        const that = this ;
+        qcloud.request({
+          login: true,
+          url: config.requestCaseByState,
+          data: {
+            state: -2,// 1 请求全部案件
+          },
+          success: function (res) { 
+            that.list = res.data; 
+            return that.list ;
+          },
+          fail: function () {
+            app.showModel('error', '请检查网络');
+            // console.log("main::fail")
+            return that.list;
+          }
+        });
+      },
     },
 
   },

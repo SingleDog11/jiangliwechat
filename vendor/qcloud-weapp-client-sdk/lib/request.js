@@ -86,7 +86,7 @@ function request(options) {
                 {
                     callFail("无法请求到数据,请检查请求地址！");
                     return ;
-                } 
+                }  
                 var data = response.data;
                 // 如果响应的数据里面包含 SDK Magic ID，表示被服务端 SDK 处理过，此时一定包含登录态失败的信息
                 if (data && data[constants.WX_SESSION_MAGIC_ID]) {
@@ -113,6 +113,8 @@ function request(options) {
                 }
                 if (data)
                     callSuccess.apply(null, arguments);
+                else 
+                    complete.apply(null,arguments);
             },
 
             fail: callFail,
