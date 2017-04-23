@@ -1,6 +1,6 @@
 // 业务服务器的域名
-var host = 'https://98171334.qcloud.la';
-//var host = 'http://localhost:55739';
+//var host = 'https://98171334.qcloud.la';
+var host = 'http://localhost:55739';
 
 // 域名相关配置
 var config = {
@@ -17,18 +17,20 @@ var config = {
 
     // 请求提交新案件
     requestPutNewCase: `${host}/values/addVerdict`,
-
+    // 请求提交新案件使用post
+    requestPutNewCaseByPost: `${host}/values/addVerdictBypost`,
     // 请求提交新的裁决
     requestPutNewComments: `${host}/values/putParticipateData`,
+
 
     // 获取某客户的满意度曲线
     requestGetChart: `${host}/values/GetQXP`,
 
     // 获取个人参与的案件
     requestGetMyCase: `${host}/values/GetVerByUserID`,
-    
+
     // 将某案件的草稿改为提交状态
-    requestPutDraftok: `${host}/values/PutDraftOk`,
+    requestPutDraftok: `${host}/values/DraftToVerdict`,
     // 上传图片的接口
     uploadFileUrl: "",
 

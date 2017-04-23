@@ -32,7 +32,7 @@ Page({
     /**
      * 判断到底是点击的是完成案件还是参与案件
      */
-    onReady() {
+    onShow() {
         var filterlist = [];
         if (this.data.funcIdentity == '02') {
             // 设置标题栏文字
@@ -72,6 +72,7 @@ Page({
             // 这是点击草稿案件所进入的页面
             // 设置参数
             qcloud.setCaseCache({
+                verid : casetemp.Ver_id ,
                 title: casetemp.Complain_title,
                 Accuser: casetemp.Accuser_client,
                 defendant: casetemp.Defendant_client,
@@ -104,7 +105,7 @@ Page({
                     caseslist: res.data,
                     hasContent: res.data.length != 0,
                 });
-                // console.log(that.data.caseslist);
+                 console.log(that.data.caseslist);
             },
             fail: function (e) {
                 app.showModel("Error", e);

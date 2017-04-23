@@ -12,7 +12,6 @@ Page({
   data: {
     // 判断是否为草稿
     isDraft: false,
-
     showTopTips: false,
     errormsg: "数据不规范",
     wordnum: 0,
@@ -20,6 +19,7 @@ Page({
     hasCache: false,
     // 案件数据
 
+    verid: "",
     title: "",
     defendant: "",
     claim: "",
@@ -33,8 +33,10 @@ Page({
      * 这里是将缓存打印出来，也可以当作参数来使用
      */
     var casecache = qcloud.getCaseCache();
-    if (casecache) {
+    console.log(options.draft);
+    if (this.data.isDraft== true && casecache) {
       this.setData({
+        verid: casecache.verid,
         title: casecache.title,
         defendant: casecache.defendant,
         claim: casecache.claim,
@@ -47,19 +49,20 @@ Page({
       this.setData({
         Accuser: app.globalData.userInfo.nickName,
       })
-    }
+    } 
   },
+
 
   formSubmit: function (e) {
 
     var urltemp = "";
-    if (this.data.isDraft) {
+    if (this.data.isDraft == true) {
       // 如果是草稿，就进行草稿提交
       urltemp = config.requestPutDraftok;
     }
     else {
-      urltemp = config.requestPutNewCase;
-    }
+      urltemp = config.requestPutNewCaseByPost;
+    } 
     var value = e.detail.value;
     // 数据是否有为空的
     var result = value.title.trim() != "" &&
@@ -75,17 +78,20 @@ Page({
     else {
       value.issuer = app.globalData.userInfo.nickName;
       value.state = 0;
+      value.Verid = this.data.verid;
       app.showBusy("正在提交...");
       qcloud.request({
         url: urltemp,
         login: app.globalData.hasLogin,
         data: value,
+        method: "post",
+        header: { "content-type": "application/x-www-form-urlencoded" },
         success: function (res) {
           // console.log(res);
           if (res.data.isok) {
             app.showSuccess("数据已经提交");
-            // 导航回到主页面
             qcloud.clearCaseCache();
+            // 导航回到主页面 
             wx.navigateBack();
           }
           else {
@@ -168,17 +174,9 @@ Page({
   /**
   * 提交未草稿的话……。
   */
-  onCache: function () {
-    /* 先取消掉
-    qcloud.setCaseCache({
-      title: this.data.title,
-      Accuser: this.data.Accuser,
-      defendant: this.data.defendant,
-      claim: this.data.claim,
-      statement: this.data.statement
-    });
-    wx.navigateBack();*/
-    var value = {
+  onCache: function () { 
+    var values = {
+      Verid: this.data.verid,
       title: this.data.title,
       Accuser: this.data.Accuser,
       defendant: this.data.defendant,
@@ -186,12 +184,23 @@ Page({
       statement: this.data.statement,
       state: -1,// 草稿
       issuer: app.globalData.userInfo.nickName,
+    } 
+    var urltemp = ""; 
+    if (this.data.isDraft == true) {
+      // 如果是草稿，就进行草稿提交
+      urltemp = config.requestPutDraftok;
     }
+    else {
+      urltemp = config.requestPutNewCaseByPost;
+    }
+    console.log(urltemp);
     app.showBusy("正在提交...");
     qcloud.request({
-      url: config.requestPutNewCase,
+      url: urltemp,
       login: app.globalData.hasLogin,
-      data: value,
+      data: values,
+      method: "post",
+      header: { "content-type": "application/x-www-form-urlencoded" },
       success: function (res) {
         // console.log(res);
         if (res.data.isok) {
