@@ -11,17 +11,61 @@ const app = getApp();
 
 Page({
     data: {
+        selectedNav: '01',
+
         hasContent: false,
         funcIdentity: '00',
         btnMsg: '查看全部',
         caseslist: [],
+
+        // 
+        backlist: [],
+
+        // 筛选接口
+        showspinner: false,
+        spinners: [],
+        sort: [
+            {
+                name: '全部',
+                id: 'b00'
+            },
+            {
+                name: '我的草稿',
+                id: 'b01'
+            },
+            {
+                name: '审核中案件',
+                id: 'b02'
+            },
+            {
+                name: '裁决中案件',
+                id: 'b03'
+            },
+            {
+                name: '已完成案件',
+                id: 'b04'
+            },
+            {
+                name: '参与裁决案件',
+                id: 'b05'
+            },
+
+        ],
     },
     /**
      * 通过id获取案件
      */
     getCaseById: function (id) {
-        return this.data.caseslist.filter(function (item) {
+        return this.data.backlist.filter(function (item) {
             return (item.Ver_id == id)
+        })
+    },
+    /**
+     * 通过状态获取案件列表
+     */
+    getCaseByState: function (state) {
+        return this.data.backlist.filter(function(item){
+            return (item.State == state)
         })
     },
     onLoad: function (options) {
@@ -71,7 +115,7 @@ Page({
             // 这是点击草稿案件所进入的页面
             // 设置参数
             qcloud.setCaseCache({
-                verid : casetemp.Ver_id ,
+                verid: casetemp.Ver_id,
                 title: casetemp.Complain_title,
                 Accuser: casetemp.Accuser_client,
                 defendant: casetemp.Defendant_client,
@@ -79,12 +123,12 @@ Page({
                 statement: casetemp.Statement
             });
             wx.navigateTo({
-                url: '../newcase/newcase?draft=true',
+                url: '../newcase/newcase?draft=true&hasfabu=false',
             })
         }
         else {
             wx.navigateTo({
-                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id,
+                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id + '&isowner=true',
             })
         }
     },
@@ -101,7 +145,8 @@ Page({
             success: function (res) {
                 app.showSuccess("请求成功");
                 that.setData({
-                    caseslist: res.data,
+                    backlist: res.data,
+                    caseslist : res.data,
                     hasContent: res.data.length != 0,
                 });
                 //  console.log(that.data.caseslist);
@@ -114,4 +159,81 @@ Page({
             }
         });
     },
+    /**
+     * 显示案件分类列表
+     */
+    navitation(event) {
+        let id = event.currentTarget.dataset.id;
+        const that = this;
+        console.log(id);
+        if (id == that.data.selectedNav) {
+            id = '00';
+            that.setData({
+                showspinner: false,
+            })
+        } else {
+            that.setData({
+                showspinner: true,
+            })
+        }
+        that.setData({
+            selectedNav: id,
+        })
+        let temps = that.data.spinners;
+        if (id == '02') {
+            temps = that.data.sort;
+        } else if (id == '01') {
+            temps = that.data.nearby;
+        }
+        that.setData({
+            spinners: temps,
+        })
+    },
+    /**
+     * 单击spinner的事件  
+     */
+    spinnerclick(event) {
+
+        console.log(event);
+        const that = this;
+        var id = event.currentTarget.dataset.id;
+        var templist = this.chooserightcaselist(id);
+        // 判断id
+        that.setData({
+            caseslist : templist,
+            showspinner: false,
+            selectedNav: '01',
+        })
+    },
+    /**
+     * 通过id获取正确状态的list
+     */
+    chooserightcaselist: function (id) {
+        switch (id) {
+            case 'b00': {
+                // 全部案件
+                return this.data.backlist;
+            }
+            case 'b01': {
+                // 我的草稿
+                return this.getCaseByState('-1');
+            }
+            case 'b02': {
+                // 审核中的案件
+                return this.getCaseByState('0');                
+            }
+            case 'b03': {
+                // 裁决中的案件
+                return this.getCaseByState('1');                
+            }
+            case 'b04': {
+                // 已完成的案件
+                return this.getCaseByState('2');                
+            }
+            case 'b05': {
+                // 参与的案件
+
+            }
+        }
+    }
 })

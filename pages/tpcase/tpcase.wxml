@@ -8,6 +8,10 @@
     <icon type="search" color="#4c4c4c" size="18"></icon>
     <input type="text" maxlength="100" placeholder="请输入搜索的案件" placeholder-style="color:#999999" />
   </view>
+  <view class='navitem sort' bindtap='navitation' data-id='02'>
+    全部分类
+    <image src="{{selectedNav === '02' ? '../../images/arrow_up.png' : '../../images/arrow_down.png'}}"></image>
+  </view>
 
   <!-- 案件列表  -->
   <view class='wrap' wx:if="{{hasContent}}">
@@ -17,6 +21,13 @@
       </block>
     </scroll-view>
 
+    <view class='spinner' wx:if='{{showspinner}}'>
+      <view class='items'>
+        <block wx:for="{{spinners}}" wx:for-item='item' wx:key="item.id">
+          <view class='item' bindtap='spinnerclick' data-id="{{item.id}}">{{item.name}}</view>
+        </block>
+      </view>
+    </view>
 
     <view class="page-body">
       <view class="page-section page-section-gap" wx:if="{{!hasContent}}">

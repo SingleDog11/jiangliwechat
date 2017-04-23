@@ -21,7 +21,7 @@ Page({
   },
   btnagree:function(){
     wx.redirectTo({
-      url:"../newcase/newcase?draft=false",
+      url:"../newcase/newcase?draft=false&hasfabu=false",
     })
   },
 })

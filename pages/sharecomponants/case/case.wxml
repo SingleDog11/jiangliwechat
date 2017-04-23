@@ -2,7 +2,7 @@
 <template name='case'>
   <view class='case' bindtap='caseDetail' data-id="{{case.Ver_id}}" wx:if="{{flag || case.State != 0 && case.State != -1}}">
     <!--<image src="{{case.photo}}" mode="aspectFill"></image>-->
-    <image src="../../../images/cup.png" mode="aspectFill"></image>
+    <image src="../../../images/cup.png" mode="aspectFit"></image>
     <view class='info'>
       <view class='name'>{{case.Complain_title}}</view>
       <view class='star_publictime'>

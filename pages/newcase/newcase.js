@@ -10,6 +10,8 @@ var app = getApp();
 
 Page({
   data: {
+    // 判断是否为已发布案件
+    isfabu: false ,
     // 判断是否为草稿
     isDraft: false,
     showTopTips: false,
@@ -28,7 +30,9 @@ Page({
   },
   onLoad: function (options) {
     // 判断是否为草稿
+    // console.log(options)
     this.setData({
+      isfabu : options.hasfabu,
       isDraft:options.draft,
     });
     /**

@@ -8,6 +8,7 @@ const app = getApp();
 
 Page({
   data: {
+    isowner: false,
     width: app.systemInfo.windowWidth,
     height: app.systemInfo.windowHeight,
 
@@ -16,11 +17,15 @@ Page({
     caseInfo: {},
   },
   onLoad: function (options) {
+    // 判断是否为主人权限
+    var isownertemp = options.isowner;
+
     var caseInfoId = options.caseinfoid;
     // 从全局的案件列表中获取到该案件
     var caseinfo = app.globalData.caseslist.getCaseById(caseInfoId)[0];
-    console.log(caseinfo);
+    console.log(isownertemp);
     this.setData({
+      isowner: isownertemp,
       caseInfo: caseinfo,
     })
   },
@@ -137,5 +142,21 @@ Page({
     wx.navigateTo({
       url: "../detail/detail",
     })
-  }
+  },
+  /**
+   * 修改本案件的信息
+   */
+  gochange: function (e) {
+    qcloud.setCaseCache({
+      verid: this.data.caseInfo.Ver_id,
+      title: this.data.caseInfo.Complain_title,
+      Accuser: this.data.caseInfo.Accuser_client,
+      defendant: this.data.caseInfo.Defendant_client,
+      claim: this.data.caseInfo.Claim,
+      statement: this.data.caseInfo.Statement
+    });
+    wx.navigateTo({
+      url: '../newcase/newcase?draft=true&hasfabu=true',
+    })
+  },
 })

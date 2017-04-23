@@ -1,1 +1,4 @@
-{"navigationBarTitleText": "发起案件"}
+{
+    "navigationBarTitleText": "发起案件",
+    "enablePullDownRefresh" : false     
+}

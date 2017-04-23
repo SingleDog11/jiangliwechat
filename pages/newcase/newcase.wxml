@@ -55,14 +55,14 @@
         <view class="weui-cell">
           <view class="weui-cell__bd">
             <textarea maxlength="2000" bindblur="justInTimeCheckData" bindinput="justInTimeCountAndInput" class="accuserarea" name="statement"
-              placeholder="请输入理由" style="height: 3.3em" value="{{statement}}" />
+              placeholder="请输入理由" style="height: 10em" value="{{statement}}"  auto-height/>
             <view class="weui-textarea-counter">{{wordnum}}/2000</view>
           </view>
         </view>
       </view>
       <view class="weui-btn-area">
         <button type="primary" formType="submit">确定并发布</button> 
-        <button type="default" bindtap = "onCache">保存为草稿</button>
+        <button type="default" bindtap = "onCache" wx:if="{{isfabu=='false'}}">保存为草稿</button>
       </view>
     </form>
   </view>

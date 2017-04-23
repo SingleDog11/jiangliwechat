@@ -1,7 +1,7 @@
 @import '../sharecomponants/comment/comment.wxss';
 page {
   background-color: #f0f0f0;
-  padding-bottom: 90rpx;
+  padding-bottom: 120rpx;
 }
 
 .caseInfo {
@@ -143,5 +143,13 @@ page {
   color: #fff;
   font-size: 30rpx;
   margin-right: 20rpx;
+  border-radius: 4rpx;
+}
+.judge .other {
+  background-color: #f63;
+  padding: 22rpx 34rpx;
+  color: #fff;
+  font-size: 30rpx;
+  margin-right: 60rpx;
   border-radius: 4rpx;
 }
