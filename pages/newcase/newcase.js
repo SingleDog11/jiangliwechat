@@ -165,13 +165,14 @@ Page({
       statement: this.data.statement
     });
     wx.navigateBack();*/
-    value = {
+    var value = {
       title:this.data.title,
       Accuser: this.data.Accuser,
       defendant: this.data.defendant,
       claim: this.data.claim,
       statement: this.data.statement,
       state : -1,// 草稿
+      issuer : app.globalData.userInfo.nickName,
     }
     app.showBusy("正在提交...");
     qcloud.request({
