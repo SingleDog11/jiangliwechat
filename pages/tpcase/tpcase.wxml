@@ -8,8 +8,8 @@
     <icon type="search" color="#4c4c4c" size="18"></icon>
     <input type="text" maxlength="100" placeholder="请输入搜索的案件" placeholder-style="color:#999999" />
   </view>
-  <view class='navitem sort' bindtap='navitation' data-id='02'>
-    全部分类
+  <view class='navitem sort' bindtap='navitation' data-id='02' wx:if="{{funcIdentity == '02'}}">
+    {{btnMsg}}
     <image src="{{selectedNav === '02' ? '../../images/arrow_up.png' : '../../images/arrow_down.png'}}"></image>
   </view>
 

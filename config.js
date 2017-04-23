@@ -11,6 +11,8 @@ var config = {
 
     // 参数
     requestCaseByState: `${host}/values/getCasebyStat`,
+    // 获取用户参与案件的接口
+    requestgetCaseOfClient: `${host}/values/GetVerdictOfPar`,
 
     // 获取某案件下的所有裁决评论
     requestCommentsByCaseId: `${host}/values/GetPar`,

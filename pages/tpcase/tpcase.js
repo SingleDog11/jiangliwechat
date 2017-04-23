@@ -15,9 +15,8 @@ Page({
 
         hasContent: false,
         funcIdentity: '00',
-        btnMsg: '查看全部',
+        btnMsg: '全部分类',
         caseslist: [],
-
         // 
         backlist: [],
 
@@ -64,7 +63,7 @@ Page({
      * 通过状态获取案件列表
      */
     getCaseByState: function (state) {
-        return this.data.backlist.filter(function(item){
+        return this.data.backlist.filter(function (item) {
             return (item.State == state)
         })
     },
@@ -96,7 +95,7 @@ Page({
             })
             // console.log('已完成的案件');
             filterlist = app.globalData.caseslist.getState2();
-            console.log(filterlist);
+            // console.log(filterlist);
             this.setData({
                 caseslist: filterlist,
                 hasContent: filterlist.length != 0,
@@ -110,7 +109,7 @@ Page({
     caseDetail(event) {
         // console.log("案件信息：");
         var casetemp = this.getCaseById(event.currentTarget.dataset.id)[0];
-        console.log(casetemp);
+        // console.log(casetemp);
         if (casetemp.State == -1) {
             // 这是点击草稿案件所进入的页面
             // 设置参数
@@ -137,17 +136,16 @@ Page({
      */
     getMycases: function () {
         const that = this;
-        app.showBusy("正在请求...");
         qcloud.request({
             login: app.globalData.hasLogin,
             url: config.requestGetMyCase,
 
             success: function (res) {
-                app.showSuccess("请求成功");
                 that.setData({
                     backlist: res.data,
-                    caseslist : res.data,
+                    caseslist: res.data,
                     hasContent: res.data.length != 0,
+                    btnMsg: "全部分类"
                 });
                 //  console.log(that.data.caseslist);
             },
@@ -165,7 +163,7 @@ Page({
     navitation(event) {
         let id = event.currentTarget.dataset.id;
         const that = this;
-        console.log(id);
+        // console.log(id);
         if (id == that.data.selectedNav) {
             id = '00';
             that.setData({
@@ -194,13 +192,13 @@ Page({
      */
     spinnerclick(event) {
 
-        console.log(event);
+        // console.log(event);
         const that = this;
         var id = event.currentTarget.dataset.id;
         var templist = this.chooserightcaselist(id);
         // 判断id
         that.setData({
-            caseslist : templist,
+            caseslist: templist,
             showspinner: false,
             selectedNav: '01',
         })
@@ -212,27 +210,47 @@ Page({
         switch (id) {
             case 'b00': {
                 // 全部案件
+                this.setData({
+                    btnMsg: '全部分类'
+                })
                 return this.data.backlist;
             }
             case 'b01': {
                 // 我的草稿
+                this.setData({
+                    btnMsg: '我的草稿'
+                })
                 return this.getCaseByState('-1');
             }
             case 'b02': {
                 // 审核中的案件
-                return this.getCaseByState('0');                
+                this.setData({
+                    btnMsg: '审核中的案件'
+                })
+                return this.getCaseByState('0');
             }
             case 'b03': {
                 // 裁决中的案件
-                return this.getCaseByState('1');                
+                this.setData({
+                    btnMsg: '裁决中的案件'
+                })
+                return this.getCaseByState('1');
             }
             case 'b04': {
                 // 已完成的案件
-                return this.getCaseByState('2');                
+                this.setData({
+                    btnMsg: '已完成的案件'
+                })
+                return this.getCaseByState('2');
             }
             case 'b05': {
                 // 参与的案件
-
+                qcloud.request({
+                    url: config.requestgetCaseOfClient,
+                    success: function (res) {
+                        return res.data ;
+                    }
+                })
             }
         }
     }

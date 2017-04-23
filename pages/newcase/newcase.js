@@ -11,7 +11,7 @@ var app = getApp();
 Page({
   data: {
     // 判断是否为已发布案件
-    isfabu: false ,
+    isfabu: false,
     // 判断是否为草稿
     isDraft: false,
     showTopTips: false,
@@ -32,8 +32,8 @@ Page({
     // 判断是否为草稿
     // console.log(options)
     this.setData({
-      isfabu : options.hasfabu,
-      isDraft:options.draft,
+      isfabu: options.hasfabu,
+      isDraft: options.draft,
     });
     /**
      * 这里是将缓存打印出来，也可以当作参数来使用
@@ -41,7 +41,7 @@ Page({
     var casecache = qcloud.getCaseCache();
     // console.log(options.draft);
     // console.log(casecache);
-    if (options.draft=="true" && casecache) {
+    if (options.draft == "true" && casecache) {
       this.setData({
         verid: casecache.verid,
         title: casecache.title,
@@ -56,12 +56,12 @@ Page({
       this.setData({
         Accuser: app.globalData.userInfo.nickName,
       })
-    } 
+    }
   },
 
 
   formSubmit: function (e) {
-
+    const that = this;
     var urltemp = "";
     if (this.data.isDraft == "true") {
       // 如果是草稿，就进行草稿提交
@@ -69,7 +69,7 @@ Page({
     }
     else {
       urltemp = config.requestPutNewCaseByPost;
-    } 
+    }
     var value = e.detail.value;
     // 数据是否有为空的
     var result = value.title.trim() != "" &&
@@ -84,6 +84,13 @@ Page({
     }
     else {
       value.issuer = app.globalData.userInfo.nickName;
+      // 如果是已经审核的案件进行修改
+      /*
+      if (this.data.isfabu == 'true') {
+        value.state = 1;
+      } else {
+        value.state = 0;
+      }*/
       value.state = 0;
       value.Verid = this.data.verid;
       app.showBusy("正在提交...");
@@ -181,7 +188,7 @@ Page({
   /**
   * 提交未草稿的话……。
   */
-  onCache: function () { 
+  onCache: function () {
     var values = {
       Verid: this.data.verid,
       title: this.data.title,
@@ -191,8 +198,8 @@ Page({
       statement: this.data.statement,
       state: -1,// 草稿
       issuer: app.globalData.userInfo.nickName,
-    } 
-    var urltemp = ""; 
+    }
+    var urltemp = "";
     if (this.data.isDraft == "true") {
       // 如果是草稿，就进行草稿提交
       urltemp = config.requestPutDraftok;
