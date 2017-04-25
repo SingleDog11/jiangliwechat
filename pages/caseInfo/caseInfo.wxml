@@ -59,6 +59,7 @@
   <view class='judge'>
     <view class='gojudge' bindtap='gojudge' wx:if="{{caseInfo.State == 1}}">立即裁决</view>
     <view class='other' bindtap='gochange' wx:if="{{isowner && caseInfo.State == 1}}">修改信息</view>
+    <view class='other' bindtap='groupchart' wx:if="{{isowner && caseInfo.State == 2}}">群体曲线</view>
     <view class='gojudge' wx:if="{{caseInfo.State == 2}}">已经完成的案件不可裁决</view>
     <view class='gojudge' wx:if="{{caseInfo.State == 0}}">未经审核的案件不可裁决</view>
   </view>

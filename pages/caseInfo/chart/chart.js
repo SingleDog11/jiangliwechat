@@ -12,6 +12,9 @@ const app = getApp();
 var lineChart = null;
 Page({
   data: {
+
+    isgroup: 'false',
+
     points: [],
     userAmount: 0,
     pictureAmount: 0,
@@ -56,23 +59,36 @@ Page({
     var caseid = options.perid;
     var partid = options.partid;
     var userAmount = options.amount;
-
+    var group = options.group;
     this.setData({
       userAmount: userAmount,
+      isgroup: group,
     })
 
+    var urltemp = "";
+    var data = {};
+    if (group == 'true') {
+      urltemp = confi.requestGetChart ,
+      data = {
+        caseid :caseid ,
+      }
+    }
+    else {
+      urltemp = config.requestGetGroupChart,
+      data = {
+        caseid:caseid ,
+        clid : partid ,
+      }
+    }
     // 获取满意度曲线。
     var points = [];
 
     const that = this;
     app.showBusy("正在获取……");
     qcloud.request({
-      login:app.globalData.hasLogin,
-      url: config.requestGetChart,
-      data: {
-        caseid: caseid,
-        clid: partid,
-      },
+      login: app.globalData.hasLogin,
+      url: urltemp,
+      data: data,
       success: function (res) {
         // console.log(res);
         if (res.data.success == 1) {

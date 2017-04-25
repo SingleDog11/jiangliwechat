@@ -58,7 +58,11 @@ Page({
       })
     }
   },
-
+  onReady: function (e) {
+    this.setData({
+      statement: this.data.statement,
+    })
+  },
 
   formSubmit: function (e) {
     const that = this;
@@ -104,12 +108,7 @@ Page({
           // console.log(res);
           if (res.data.isok) {
             app.showSuccess("数据已经提交");
-            qcloud.clearCaseCache();
-            // 导航回到主页面 
-            // console.log(that.data.isfabu == 'true' ? 2: 1);
-            // 更新全局变量
-            app.globalData.caseslist.updateList();
-            // console.log(app.globalData)
+            qcloud.clearCaseCache(); 
             wx.navigateBack();
           }
           else {

@@ -29,9 +29,22 @@ Page({
   onShow: function () {
     var that = this;
     var comments = [];
-    var caseinfo = app.globalData.caseslist.getCaseById(this.data.caseInfoId)[0];
-    // console.log(caseinfo)
-    // 请求该案件下的裁决相关数据
+
+    qcloud.request({
+      login: app.globalData.hasLogin,
+      url: config.requestCaseById,
+      data: { "id": that.data.caseInfoId },
+      success: function (res) {
+        // console.log(res)
+        that.getCommentsFromNet(res.data[0]);
+      }
+    })
+  },
+  /**
+   * 通过案件id获取所有评论
+   */
+  getCommentsFromNet: function (caseinfo) {
+    const that = this;
     qcloud.request({
       login: app.globalData.hasLogin,
       url: config.requestCommentsByCaseId,
@@ -39,19 +52,17 @@ Page({
       // 请求成功后返回的数据
       success: function (res) {
         // console.log(res);
-        comments = res.data == "null" ? [] : res.data
+        var comments = res.data == "null" ? [] : res.data
         caseinfo.comments = comments;
-        // console.log(caseinfo);
         that.setData({
           caseInfo: caseinfo,
         })
       },
       fail: function () {
-        // console.log("fail")
       },
       complete: function () {
         that.setData({
-          caseInfo:caseinfo,
+          caseInfo: caseinfo,
         })
       }
     });
@@ -119,15 +130,6 @@ Page({
     wx.navigateTo({
       url: './chart/chart?perid=' + casetemp.Par_id + '&partid=' + casetemp.Participator_id +
       '&amount=' + casetemp.Amountpaid,
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
     })
   },
   /**
@@ -162,4 +164,16 @@ Page({
       url: '../newcase/newcase?draft=true&hasfabu=true',
     })
   },
+  /**
+   * 查看群体曲线
+   */
+  groupchart: function (e) {
+    // console.log(e);
+    var casetemp = e.currentTarget.dataset.case;
+    // 传递参数,此时应该传递一个最满意的点。
+    wx.navigateTo({
+      url: './chart/chart?perid=' + casetemp.Par_id + '&partid=' + casetemp.Participator_id +
+      '&amount=' + casetemp.Amountpaid + '&group=true',
+    })
+  }
 })

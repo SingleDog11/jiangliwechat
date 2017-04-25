@@ -94,12 +94,25 @@ Page({
                 }
             })
             // console.log('已完成的案件');
-            filterlist = app.globalData.caseslist.getState2();
-            // console.log(filterlist);
-            this.setData({
-                caseslist: filterlist,
-                hasContent: filterlist.length != 0,
-            })
+            const that = this;
+            qcloud.request({
+                login: app.globalData.hasLogin,
+                url: config.requestCaseByState,
+                data: { state: 2 },
+                success: function (res) {
+                    that.setData({
+                        caseslist: res.data,
+                        hasContent: res.data.length != 0,
+                    });
+                    //  console.log(that.data.caseslist);
+                },
+                fail: function (e) {
+                    app.showModel("Error", e);
+                    that.setData({
+                        hasContent: false,
+                    });
+                }
+            });
         }
     },
     /**
@@ -244,11 +257,16 @@ Page({
                 return this.getCaseByState('2');
             }
             case 'b05': {
+                this.setData({
+                    btnMsg: '已参与的案件'
+                })
                 // 参与的案件
                 qcloud.request({
+                    login:app.globalData.hasLogin,
                     url: config.requestgetCaseOfClient,
                     success: function (res) {
-                        return res.data ;
+                        console.log(res);
+                        return res.data;
                     }
                 })
             }

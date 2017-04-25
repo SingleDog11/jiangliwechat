@@ -55,7 +55,7 @@
         <view class="weui-cell">
           <view class="weui-cell__bd">
             <textarea maxlength="2000" bindblur="justInTimeCheckData" bindinput="justInTimeCountAndInput" class="accuserarea" name="statement"
-              placeholder="请输入理由" fixed="true" style="height: 10em" value="{{statement}}"  auto-height/>
+              placeholder="请输入理由" fixed="true" style="height: 10em" value="{{statement}}" />
             <view class="weui-textarea-counter">{{wordnum}}/2000</view>
           </view>
         </view>

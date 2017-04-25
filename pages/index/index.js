@@ -13,17 +13,20 @@ Page({
   data: {
     // 初始化登陆地址
     loginUrl: config.loginUrl,
-
+    showbtn: false,
     motto: '登陆 讲理 小程序',
     userInfo: {}
   },
   onLoad: function () {
     var that = this
     //调用应用实例的方法获取全局数据
+    app.showBusy("拉取微信信息...");
     app.getUserInfo(function (userInfo) {
       //更新数据
+      app.showSuccess("请求成功");
       that.setData({
-        userInfo: userInfo
+        userInfo: userInfo,
+        showbtn: true,
       })
     })
   },
@@ -38,16 +41,14 @@ Page({
           app.showSuccess('登陆成功');
           // 修改全局变量hasLogin
           app.globalData.hasLogin = true;
-          app.globalData.openid = result;
-          // 请求数据 
-          app.globalData.caseslist.updateList();
+          app.globalData.openid = result; 
           // 跳转到主页面
           wx.redirectTo({
             url: '../main/main',
           })
         }
         else {
-          app.showModel('登陆失败',"请检查网络");
+          app.showModel('登陆失败', "请检查网络");
         }
       },
       fail(error) {

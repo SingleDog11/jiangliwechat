@@ -44,7 +44,7 @@ Page({
         // 案件信息
         cases: [],
     },
-    onLoad: function () { 
+    onLoad: function () {
     },
     onShow: function () {
         this.getCasesfromnet();
@@ -52,13 +52,25 @@ Page({
     /**
      * 从服务器请求案件的全部信息
      */
-    getCasesfromnet: function () {  
-        var list = app.globalData.caseslist.list;
-        console.log(list);
-        this.setData({
-            cases: list,
-            hasContent: list.length != 0,
-        })
+    getCasesfromnet: function () {
+        const that = this; 
+        qcloud.request({
+            login: true,
+            url: config.requestCaseByState,
+            data: {
+                state: 1,// 1 请求全部案件
+            },
+            success: function (res) { 
+                console.log(res)
+                that.setData({
+                    cases: res.data,
+                    hasContent: res.data.length != 0,
+                }) 
+            },
+            fail: function () {
+                app.showModel('error', '请检查网络'); 
+            }
+        }); 
     },
     funClick(event) {
         const id = event.currentTarget.dataset.id;

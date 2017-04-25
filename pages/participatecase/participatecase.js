@@ -56,7 +56,7 @@ Page({
 
   },
   onLoad: function (options) {
-
+    const that = this ;
     var isnew = options.isnew;
     // console.log(isnew);
     if (isnew == 'false') {
@@ -69,16 +69,24 @@ Page({
         }
       })
     }
-    // 页面初始化 options 带来本案件的id
-    var casetemp = app.globalData.caseslist.getCaseById(options.caseinfoid)[0];
-    // 得到了案件的发起者,修改标题栏。
-    wx.setNavigationBarTitle({
-      title: "针对" + casetemp.Accuser_client + "的案件进行裁决",
-    });
-    this.setData({
-      caseinfo: casetemp,
-      originalpay: casetemp.Claim,
+    // 页面初始化 options 带来本案件的id 
+    qcloud.request({
+      login: app.globalData.hasLogin,
+      url: config.requestCaseById,
+      data: { "id": options.caseinfoid },
+      success: function (res) {
+        // 得到了案件的发起者,修改标题栏。
+        var casetemp = res.data[0];
+        wx.setNavigationBarTitle({
+          title: "针对" + casetemp.Accuser_client + "的案件进行裁决",
+        });
+        that.setData({
+          caseinfo: casetemp,
+          originalpay: casetemp.Claim,
+        })
+      }
     })
+
   },
 
   // 输入满意金额结束后触发事件
@@ -95,7 +103,7 @@ Page({
     }
     else {
       this.setData({
-        payType : 1,
+        payType: 1,
         isShowTwo: true,
         rationalpay: Number(e.detail.value),
       })
@@ -126,7 +134,7 @@ Page({
     this.setData({
       radioPayItems: radioPayItems,
       payType: payType,
-      satisfication: 0, 
+      satisfication: 0,
     });
   },
   // 第一个满意度
@@ -148,24 +156,19 @@ Page({
 
   // 字符变化
   justInTimeCount: function (e) {
-    console.log(e);
+    // console.log(e);
     var count = e.detail.value.length;
     this.setData({
       wordnum: count,
+      reason : e.detail.value ,
     })
-  },
-  // 检查理由是否为空
-  justInTimeCheckData: function (e) {
-    // console.log(e);
-    this.setData({ 
-      reason: e.detail.value,
-    })
-  },
+  }, 
   // 点击提交
   postinfo: function () {
     if (this.data.showTopTips) {
       app.showModel("ERROR", "请遵照规范");
     }
+    console.log(this.data.reason);
     const that = this;
     app.showBusy("正在提交...");
     qcloud.request({
@@ -182,7 +185,7 @@ Page({
         reason: that.data.reason,
       },
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         if (res.data.isok) {
           app.showSuccess("提交成功");
           wx.navigateBack();
@@ -199,10 +202,9 @@ Page({
   /**
    * 图片加载的时候获取屏幕宽度
    */
-  imageLoad : function()
-  {
+  imageLoad: function () {
     this.setData({
-      imageWidth : wx.getSystemInfoSync().windowWidth ,
+      imageWidth: wx.getSystemInfoSync().windowWidth,
     })
     console.log(this.data.imageWidth);
   },

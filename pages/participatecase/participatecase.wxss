@@ -6,5 +6,4 @@
 }
 .sliderimage{
     align-content: center ;
-    margin-left: 40rpx ;
 }

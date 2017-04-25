@@ -5,6 +5,6 @@
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
   <view class="usermotto">
-    <button class="btn-login" type="primary" bindtap="btnLoginEvent" > 使用微信账号登陆 </button>
+    <button class="btn-login" type="primary" bindtap="btnLoginEvent" wx:if="{{showbtn}}" > 使用微信账号登陆 </button>
   </view>
 </view>

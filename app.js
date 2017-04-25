@@ -54,7 +54,7 @@ App({
   },
 
 
-  globalData: {
+  globalData: { 
     hasLogin: false,
     openid: null,
     cc: null,
@@ -77,17 +77,18 @@ App({
           return (item.Ver_id == id)
         })
       },
-      updateList: function (e) {
-        const that = this ;
+      /*
+      updateList: function (e) { 
+
         qcloud.request({
           login: true,
           url: config.requestCaseByState,
           data: {
             state: -2,// 1 请求全部案件
           },
-          success: function (res) { 
-            that.list = res.data; 
-            return that.list ;
+          success: function (res) {
+            that.list = res.data;
+            return that.list;
           },
           fail: function () {
             app.showModel('error', '请检查网络');
@@ -95,7 +96,7 @@ App({
             return that.list;
           }
         });
-      },
+      },*/
     },
 
   },

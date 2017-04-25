@@ -1,1 +1,4 @@
-{"navigationBarTitleText": "讲理"}
+{
+    "navigationBarTitleText": "讲理",
+    "enablePullDownRefresh": true
+}
