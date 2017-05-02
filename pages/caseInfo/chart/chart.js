@@ -68,13 +68,13 @@ Page({
     var urltemp = "";
     var data = {};
     if (group == 'true') {
-      urltemp = confi.requestGetChart ,
+      urltemp = config.requestGetGroupChart ,
       data = {
         caseid :caseid ,
       }
     }
     else {
-      urltemp = config.requestGetGroupChart,
+      urltemp = config.requestGetChart,
       data = {
         caseid:caseid ,
         clid : partid ,

@@ -55,7 +55,7 @@ Page({
      * 通过id获取案件
      */
     getCaseById: function (id) {
-        return this.data.backlist.filter(function (item) {
+        return this.data.caseslist.filter(function (item) {
             return (item.Ver_id == id)
         })
     },
@@ -122,7 +122,7 @@ Page({
     caseDetail(event) {
         // console.log("案件信息：");
         var casetemp = this.getCaseById(event.currentTarget.dataset.id)[0];
-        // console.log(casetemp);
+        console.log(casetemp);
         if (casetemp.State == -1) {
             // 这是点击草稿案件所进入的页面
             // 设置参数
@@ -139,8 +139,13 @@ Page({
             })
         }
         else {
+            var isowner = 'true' ;
+            if(app.globalData.userInfo.nickName != casetemp.issuer)
+            {
+                isowner = 'false'
+            }
             wx.navigateTo({
-                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id + '&isowner=true',
+                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id + '&isowner='+isowner,
             })
         }
     },
@@ -208,13 +213,35 @@ Page({
         // console.log(event);
         const that = this;
         var id = event.currentTarget.dataset.id;
-        var templist = this.chooserightcaselist(id);
-        // 判断id
-        that.setData({
-            caseslist: templist,
-            showspinner: false,
-            selectedNav: '01',
-        })
+        if (id == 'b05') {
+            // 我参与的案件。
+            this.setData({
+                btnMsg: '已参与的案件'
+            })
+            // 参与的案件
+            qcloud.request({
+                login: app.globalData.hasLogin,
+                url: config.requestgetCaseOfClient,
+                success: function (res) {
+                    console.log(res);
+                    that.setData({
+                        caseslist: res.data,
+                        showspinner: false,
+                        selectedNav: '01',
+                    })
+                }
+            })
+        }
+        else {
+            var templist = this.chooserightcaselist(id);
+            // 判断id
+            that.setData({
+                caseslist: templist,
+                showspinner: false,
+                selectedNav: '01',
+            })
+        }
+
     },
     /**
      * 通过id获取正确状态的list
@@ -255,20 +282,6 @@ Page({
                     btnMsg: '已完成的案件'
                 })
                 return this.getCaseByState('2');
-            }
-            case 'b05': {
-                this.setData({
-                    btnMsg: '已参与的案件'
-                })
-                // 参与的案件
-                qcloud.request({
-                    login:app.globalData.hasLogin,
-                    url: config.requestgetCaseOfClient,
-                    success: function (res) {
-                        console.log(res);
-                        return res.data;
-                    }
-                })
             }
         }
     }
