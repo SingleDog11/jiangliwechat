@@ -1,0 +1,17 @@
+<import src="../star/rating.wxml" />
+<template name="m_user">
+  <view class="m_user" bindtap="onViewTap" data-id="{{ user.id }}" data-name="{{ user.nickname }}">
+    <image class="cover" src="{{ user.avatar_url }}" background-size="cover"></image>
+    <view class="info">
+      <view class="title">
+        <text>{{ user.nickname }}</text>
+      </view>
+      <view class="desc">
+        <view>
+          <text>权重：{{ user.weight || user.headline || description }}</text>
+        </view>
+      </view> 
+      <view class="detail">发起过 {{ user.numbercase }} 案件 ⚡️</view>
+    </view>
+  </view>
+</template>

@@ -1,4 +1,4 @@
-<import src='../sharecomponants/star/star.wxml' />
+<import src='../sharecomponants/star/rating.wxml' />
 <import src='../sharecomponants/case/case.wxml' />
 <view class='pagecontainer'>
 

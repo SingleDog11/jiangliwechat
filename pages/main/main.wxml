@@ -1,26 +1,25 @@
 <import src="../sharecomponants/case/case.wxml" />
 
 <view class="page">
+  <!-- 搜索条 -->
   <view class="search">
     <icon type="search" color="#4c4c4c" size="18" />
-    <input type="text" maxlength="100" placeholder="输入要搜索的案件" placeholder-style="color:#999999" />
+    <input type="text" maxlength="100" placeholder="输入要搜索的案件" placeholder-style="color:#999999" bindtap="searchclick"/>
   </view>
-  <scroll-view class='scroller' style="width:{{width}}px;height:{{height}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">
-    <view class="funcs">
-      <view class="func" wx:for="{{functions}}" wx:for-item='item' wx:key='item.id' bindtap="funClick" data-id="{{item.id}}" data-nexturl="{{item.nexturl}}">
-        <image src="{{item.url}}" mode="aspectFill"></image>
-        <view class="name">{{item.name}}</view>
-      </view>
-    </view>
 
-    <view class='maylike' wx:if="{{hasContent}}">
-      <view class='title'>最近动态</view>
+  <scroll-view class='list' style="width:{{width}}px;height:{{height}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">
+
+    <!-- 案件动态列表 -->
+    <view class='maylike' wx:if="{{hasContent}}"> 
       <view class='cases'>
-        <block wx:for="{{cases}}" wx:for-item='case' wx:key='*this'>
+        <block wx:for="{{cases}}" wx:for-item='case' wx:key='case.basic.id'>
           <template is="case" data="{{case:case,flag:false}}" />
         </block>
       </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
     </view>
+    <!-- 无法请求到数据时 -->
     <view class="page-body">
       <view class="page-section page-section-gap" wx:if="{{!hasContent}}">
         <view class="page-section-ctn">
@@ -28,7 +27,6 @@
         </view>
       </view>
     </view>
-
 
   </scroll-view>
 </view>

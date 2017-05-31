@@ -20,8 +20,7 @@ Page({
     pictureAmount: 0,
     averageAmount: 0,
   },
-  touchHandler: function (e) {
-    // console.log(lineChart.getCurrentDataIndex(e));
+  touchHandler: function (e) { 
     lineChart.showToolTip(e, {
       // background: '#7cb5ec'
     });
@@ -49,8 +48,7 @@ Page({
       if (maxy < points[i][1]) {
         rightx = points[i][0];
         maxy = points[i][1];
-      }
-      // console.log(points[i]);
+      } 
     }
     return rightx;
   },

@@ -1,5 +1,4 @@
-// main.js
-// 请求近期的案件信息，请求10条。
+// main.js 
 // 当拉到最后一条案件信息时，使用上拉加载机制，进入到全部案件信息列表。
 // 引入配置文件
 var config = require('../../config');
@@ -14,38 +13,17 @@ Page({
         width: app.systemInfo.windowWidth,
         height: app.systemInfo.windowHeight,
 
-        // 四个功能列表
-        functions: [
-            {
-                url: '../../images/icon_person.png',
-                name: '个人信息',
-                id: '01',
-                nexturl: '../personinfo/person'
-            },
-            {
-                url: '../../images/icon_participator.png',
-                name: '我的案件',
-                id: '02',
-                nexturl: '../tpcase/tpcase'
-            },
-            {
-                url: '../../images/icon_complete.png',
-                name: '完成案件',
-                id: '03',
-                nexturl: '../tpcase/tpcase'
-            },
-            {
-                url: '../../images/icon_newcase.png',
-                name: '发布案件',
-                id: '04',
-                nexturl: '../tipinformation/tipinformation'
-            },
-        ],
+        currentPage: 1,// 当前的页码
+        searchLoading: false,
+        searchLoadingComplete: false,
+
         // 案件信息
         cases: [],
     },
-    onLoad: function () {
-    },
+
+    /**
+     * 请求获取案件
+     */
     onShow: function () {
         this.getCasesfromnet();
     },
@@ -53,41 +31,76 @@ Page({
      * 从服务器请求案件的全部信息
      */
     getCasesfromnet: function () {
-        const that = this; 
+        const that = this;
+
+        wx.showNavigationBarLoading();
         qcloud.request({
             login: true,
-            url: config.requestCaseByState,
+            url: config.requestCaseByPageAndState,
             data: {
-                state: 1,// 1 请求全部案件
+                page: that.data.currentPage, // 请求的页码
+                state: 1,// 1 请求正在裁决的案件
             },
-            success: function (res) { 
-                console.log(res)
-                that.setData({
-                    cases: res.data,
-                    hasContent: res.data.length != 0,
-                }) 
+            success: function (res) {
+                wx.hideNavigationBarLoading();
+                // console.log(res); 
+                if (res.data.length == 0) {
+                    // 如果返回的是0，则
+                    that.setData({
+                        searchLoadingComplete: true,
+                        searchLoading: false,
+                    })
+                    return;
+                }
+                else {
+                    var searchList = [];
+                    that.data.hasContent == false ? searchList = res.data : searchList = that.data.cases.concat(res.data);
+                    that.setData({
+                        cases: searchList,
+                        hasContent: searchList.length != 0,
+                        searchLoading: true, 
+                    })
+                }
             },
             fail: function () {
-                app.showModel('error', '请检查网络'); 
+                wx.hideNavigationBarLoading();
+                app.showModel('error', '请检查网络');
             }
-        }); 
-    },
-    funClick(event) {
-        const id = event.currentTarget.dataset.id;
-        var url = event.currentTarget.dataset.nexturl;
-        wx.navigateTo({
-            url: url + "?funcIdentity=" + id,
         });
     },
-    caseDetail(event) {
-        // console.log(event);
+    /**
+     * 单击search栏
+     * @param {*传递的变量} event 
+     */
+    searchclick(event) { 
         wx.navigateTo({
-            // 将案件的唯一标识传递过去
-            url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id,
-        })
+            url: "../search/search",
+        });
     },
-    onPullDownRefresh: function () {
-        this.getCasesfromnet();
-        wx.stopPullDownRefresh();
-    }
+    /**
+     * 单击案件的事件
+     * @param {*变量} e 
+     */
+    onViewTap(e) { 
+        const ds = e.currentTarget.dataset;
+        const t = ds['type'] === 'case' ? 'caseInfo/caseInfo' : 'personinfo/user';
+        console.log(`../${t}?id=${ds.id}`);
+        wx.navigateTo({
+            url: `../${t}?id=${ds.id}`,
+        });
+    }, 
+    /**
+     * 加载更多
+     */
+    loadmore: function () {
+        let that = this;
+        if (that.data.searchLoading && !that.data.searchLoadingComplete) {
+            // console.log(that.data.currentPage);
+            that.setData({
+                searchLoading: false,
+                currentPage: that.data.currentPage + 1,
+            })
+            that.getCasesfromnet();
+        }
+    },
 })

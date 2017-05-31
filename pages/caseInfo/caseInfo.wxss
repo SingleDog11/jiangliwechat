@@ -1,77 +1,160 @@
-@import '../sharecomponants/comment/comment.wxss';
+@import '../sharecomponants/involves/involves.wxss';
+@import "../sharecomponants/star/rating.wxss";
+
 page {
-  background-color: #f0f0f0;
-  padding-bottom: 120rpx;
+  background-color: #efeff4;
+    padding-bottom: 120rpx;
 }
 
-.caseInfo {
-  padding: 15rpx;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  flex-direction: row;
-  margin-left: 10rpx;
+.m-case-header {
+  overflow: hidden;
+  position: relative;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
 }
 
-.caseInfo image {
-  width: 180rpx;
-  height: 150rpx;
-  flex-shrink: 0;
+.m-case-header .cover {
+  width: 100%;
+  height: 352rpx;
+  vertical-align: bottom;
 }
 
-.caseInfo .info {
-  height: 150rpx;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10rpx;
-  margin-left: 10rpx;
+.m-case-header::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0, rgba(0, 0, 0, 0) 100%);
 }
 
-.caseInfo .info .name {
-  color: #111;
+.m-case-header .info {
+  color: #fff;
+  padding: 0 30rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.m-case-header .info .h2 {
   font-size: 40rpx;
+  font-weight: 600;
+  line-height: 1.22;
+  text-shadow: 2rpx 2rpx rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  margin-top: 218rpx;
 }
 
-.caseInfo .info .star_members {
-  color: #111;
-  font-size: 28rpx;
+.m-case-info {
+  position: relative;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
 }
 
-.caseInfo .info .star_members .star-rating {
+.m-case-info .detail {
+  margin-top: 20rpx;
+  line-height: 1;
   display: inline-block;
-  margin-right: 6rpx;
-}
-
-.caseInfo .info .star_members image {
-  width: 28rpx;
-  height: 27rpx;
-  margin-right: 4rpx;
-}
-
-.caseInfo .info .author_state {
-  display: flex;
-  flex-direction: row;
-  color: #777;
   font-size: 28rpx;
-  flex-wrap: nowrap;
+  line-height: 1;
+  color: #646464;
 }
 
-.caseInfo .info .author_state .author {
+.m-case-info .desc {
+  display: inline-block;
+  font-size: 24rpx;
+  line-height: 1;
+  color: #999;
+}
+
+.m-case-info .sep {
+  border-top: 2rpx solid #eee;
+  height: 20rpx;
+  margin-top: 20rpx;
+}
+
+.m-case-info .user {
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.m-case-info .avatar {
+  width: 50px;
+  height: 50px;
+  vertical-align: top;
+  margin-right: 12px;
+  display: inline-block;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  flex: 1;
+  border-radius: 10%;
 }
 
-.caseInfo .info .author_state .state {
-  background-color: #3cb371;
+.m-case-info .name {
+  overflow: hidden;
+  flex: 1;
+  align-items: center;
+  color: #646464;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.m-case-header .rating {
+  color: #999;
+  font-size: 22rpx;
+  margin-top: 8rpx;
+}
+
+.m-case-header .rating image {
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 7rpx;
+}
+
+.m-case-header .m-rating {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button-hover {
+  background-color: #0097a7;
+}
+
+button {
+  background-color: #4abdcc;
+  border-color: #4abdcc;
+  font-weight: 500;
   color: #fff;
 }
+
+.m-case-intro {
+  padding: 15px;
+  background-color: #fff;
+}
+
+.m-case-intro .content {
+  color: #646464;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
 
 .accuser {
   background-color: #fff;

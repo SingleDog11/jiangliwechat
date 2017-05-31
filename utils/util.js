@@ -15,7 +15,12 @@ function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+function lengthStr(str) {
+  var m = encodeURIComponent(str).match(/%[89ABab]/g);
+  return str.length + (m ? m.length : 0);
+}
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  lengthStr: lengthStr
 }

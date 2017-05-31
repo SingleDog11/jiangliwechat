@@ -4,6 +4,8 @@ var Session = require('./lib/session');
 var request = require('./lib/request');
 var Cachecase = require('./lib/casecache');
 var Cachedetail = require('./lib/detailcache');
+var Cacheuser = require('./lib/usercache');
+
 var exports = module.exports = {
     login: login.login,
     setLoginUrl: login.setLoginUrl,
@@ -21,6 +23,9 @@ var exports = module.exports = {
     getDetailCache: Cachedetail.get,
     clearDetailCache: Cachedetail.clear,
 
+    setUserCache : Cacheuser.set ,
+    getUserCache : Cacheuser.get ,
+    clearUserCache : Cacheuser.clear ,
     
 };
 

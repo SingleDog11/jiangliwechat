@@ -1,47 +1,73 @@
-<import src='../sharecomponants/star/star.wxml' />
-<import src='../sharecomponants/comment/comment.wxml' />
+<import src='../sharecomponants/star/rating.wxml' />
+<import src='../sharecomponants/involves/involves.wxml' />
 <view class='wrap'>
-
-
-
-  <!-- 裁决案件的卡片形式 -->
-  <view class='caseInfo'>
-    <!--<image src="{{caseInfo.photo}}" mode="aspectFill"></image>-->
-    <image src="../../images/cup.png" mode="aspectFill"></image>
-    <view class='info'>
-      <view class='title'>{{caseInfo.Complain_title}}</view>
-      <view class='star_members'>
-        <template is='star' data="{{count:5}}" /> 参与人：{{caseInfo.NumOfpar}}
+  <view class="m-case-header" bindtap="onViewTap" data-id="{{ case.id }}" data-type="case">
+    <image class="cover" src="../../images/pn_cover.png" mode="aspectFill"></image>
+    <view class="info">
+      <text class="h2">{{ caseInfo.basic.title }}</text>
+      <view class="rating">
+        <template is="m-rating" data="{{count: 5, size: 'm'}}" />
       </view>
-      <view class='author_state'>
-        <view class='author'> 索求赔偿： {{caseInfo.Claim}}</view>
-        <view class='state' wx:if="{{caseInfo.State == '0'}}">状态：待审核</view>
-        <view class='state' wx:if="{{caseInfo.State == '1'}}">状态：待裁决</view>
-        <view class='state' wx:if="{{caseInfo.State == '2'}}">状态：已完成</view>
+    </view>
+  </view>
+  <view class="m-case-info">
+    <!-- 投诉人 -->
+    <view class="user">
+      <image bindtap="onViewTap" class="avatar" src="{{ caseInfo.user.avatar_url }}" data-id="{{ caseInfo.user.id }}"></image>
+      <view>
+        <view bindtap="onViewTap" data-id="{{ caseInfo.user.id }}" class="name">投诉人: {{ caseInfo.user.nickname }}</view>
+        <view class="desc">
+          <text> 参与 {{ caseInfo.user.numbercase }}/ 权重 {{ caseInfo.user.weight }} </text>
+        </view>
+      </view>   
+    </view>
+    <view class="sep"></view>
+    <!-- 应诉人 -->
+    <view class="user">
+      <image bindtap="onViewTap" class="avatar" src="{{ caseInfo.respondent.avatar_url }}" data-id="{{ caseInfo.respondent.id }}"></image>
+      <view>
+        <view bindtap="onViewTap" data-id="{{ caseInfo.respondent.id }}" class="name">应诉人: {{ caseInfo.respondent.nickname }}</view>
+        <view class="desc">
+          <text> 参与 {{ caseInfo.respondent.numbercase }}/ 权重 {{ caseInfo.respondent.weight }} </text>
+        </view>
+      </view>   
+    </view>
+    <view class="sep"></view>
+    
+    <view class="detail">
+      <text>开始时间 {{ caseInfo.basic.start_at }}</text>
+    </view>
+    <view class="sep"></view>
+  </view>
+  <view class="m-case-intro">
+    <text class="h2">案件的简介</text>
+    <view class="content">
+      <view>
+        <text>{{caseInfo.basic.description}}"</text>
       </view>
     </view>
   </view>
 
-  <!-- 案件的信息 -->
-  <view class='accuser'>
-    <image src="../../images/accuser.png" mode="aspectFill" class='icon'></image>
-    <view class='info'> 投诉人：{{caseInfo.Accuser_client}} </view>
-  </view>
-  <view class='accuser'>
-    <image src="../../images/accusered.png" mode="aspectFill" class='icon'></image>
-    <view class='info'> 应诉人：{{caseInfo.Defendant_client}}</view>
-  </view>
-
   <!-- 隐藏的代表的投诉人和应诉人的申诉信息 -->
-  <view class="detail" wx:if="{{seeAllInfo}}">
+  <view class="moreinfo" wx:if="{{seeAllInfo}}">
     <view class="accuser" bindtap='openDetail' data-id='1'>
       <image src="../../images/accuser.png" mode="aspectFill" class='icon'></image>
-      <view class='info'> 投诉人陈述：{{caseInfo.Statement}}</view>
+      <view class='info'> 应诉人一轮陈述：{{caseInfo.respondentturnone}}</view>
       <image src="../../images/arrow_left.png" class='arrow_left'></image>
     </view>
     <view class="accuser" bindtap='openDetail'>
       <image src="../../images/accusered.png" mode="aspectFill" class='icon'></image>
-      <view class='info'> 应诉人陈述：{{caseInfo.Statement}}</view>
+      <view class='info'> 投诉人一轮陈述：{{caseInfo.userturnone}}</view>
+      <image src="../../images/arrow_left.png" class='arrow_left'></image>
+    </view>
+     <view class="accuser" bindtap='openDetail' data-id='1'>
+      <image src="../../images/accuser.png" mode="aspectFill" class='icon'></image>
+      <view class='info'> 应诉人二轮陈述：{{caseInfo.respondentturntwo}}</view>
+      <image src="../../images/arrow_left.png" class='arrow_left'></image>
+    </view>
+    <view class="accuser" bindtap='openDetail'>
+      <image src="../../images/accusered.png" mode="aspectFill" class='icon'></image>
+      <view class='info'> 投诉人二轮陈述：{{caseInfo.userturntwo}}</view>
       <image src="../../images/arrow_left.png" class='arrow_left'></image>
     </view>
   </view>
@@ -53,14 +79,14 @@
   </view>
 
   <!-- 下面是本案件下所有的裁决信息 -->
-  <template is='comment' data='{{comments:caseInfo,count:caseInfo.comments.length}}' />
+  <template is='involve' data='{{involves:caseInfo.involves,count:caseInfo.involves.length,orginalpay:caseInfo.orginalpay}}' />
 
   <!-- 固定的裁决列表 -->
   <view class='judge'>
-    <view class='gojudge' bindtap='gojudge' wx:if="{{caseInfo.State == 1}}">立即裁决</view>
-    <view class='other' bindtap='gochange' wx:if="{{isowner == 'true' && caseInfo.State == 1}}">修改信息</view>
-    <view class='other' bindtap='groupchart' wx:if="{{caseInfo.State == 2}}">群体曲线</view>
-    <view class='gojudge' wx:if="{{caseInfo.State == 2}}">已经完成的案件不可裁决</view>
-    <view class='gojudge' wx:if="{{caseInfo.State == 0}}">未经审核的案件不可裁决</view>
+    <view class='gojudge' bindtap='gojudge' wx:if="{{caseInfo.basic.state == 1}}">立即裁决</view>
+    <view class='other' bindtap='gochange' wx:if="{{isowner == 'true' && caseInfo.basic.state == 1}}">修改信息</view>
+    <view class='other' bindtap='groupchart' wx:if="{{caseInfo.basic.state == 2}}">群体曲线</view>
+    <view class='gojudge' wx:if="{{caseInfo.basic.state == 2}}">已经完成的案件不可裁决</view>
+    <view class='gojudge' wx:if="{{caseInfo.basic.state == 0}}">未经审核的案件不可裁决</view>
   </view>
 </view>

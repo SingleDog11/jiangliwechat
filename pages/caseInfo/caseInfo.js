@@ -1,7 +1,7 @@
 // 引入配置
 var config = require('../../config');
 
-// 引入腾讯云的sdk
+// 引入sdk
 var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 
 const app = getApp();
@@ -20,7 +20,7 @@ Page({
   onLoad: function (options) {
     // 判断是否为主人权限
     var isownertemp = options.isowner;
-    var caseInfoId = options.caseinfoid;
+    var caseInfoId = options.id;
     this.setData({
       isowner: isownertemp,
       caseInfoId: caseInfoId,
@@ -28,44 +28,18 @@ Page({
   },
   onShow: function () {
     var that = this;
-    var comments = [];
 
     qcloud.request({
       login: app.globalData.hasLogin,
       url: config.requestCaseById,
-      data: { "id": that.data.caseInfoId },
-      success: function (res) {
-        // console.log(res)
-        that.getCommentsFromNet(res.data[0]);
-      }
-    })
-  },
-  /**
-   * 通过案件id获取所有评论
-   */
-  getCommentsFromNet: function (caseinfo) {
-    const that = this;
-    qcloud.request({
-      login: app.globalData.hasLogin,
-      url: config.requestCommentsByCaseId,
-      data: { "id": caseinfo.Ver_id },
-      // 请求成功后返回的数据
+      data: { "caseId": that.data.caseInfoId },
       success: function (res) {
         // console.log(res);
-        var comments = res.data == "null" ? [] : res.data
-        caseinfo.comments = comments;
         that.setData({
-          caseInfo: caseinfo,
-        })
-      },
-      fail: function () {
-      },
-      complete: function () {
-        that.setData({
-          caseInfo: caseinfo,
-        })
+          caseInfo: res.data,
+        }) 
       }
-    });
+    })
   },
   //查看该案件的全部信息
   caseinfomore(event) {
@@ -109,15 +83,6 @@ Page({
       '&isnew=' + isnew;
     wx.navigateTo({
       url: urltemp,
-      success: function (res) {
-        // success
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
     })
   },
   /**

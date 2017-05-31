@@ -24,17 +24,17 @@
           <view class="weui-label">投诉人</view>
         </view>
         <view class="weui-cell__bd">
-          <input bindblur="justInTimeSyAccuser" class="weui-input" name="Accuser" placeholder="输入投诉人" value="{{Accuser}}" />
+          <input bindblur="justInTimeSyaccuser" class="weui-input" name="accuser" placeholder="输入投诉人" value="{{accuser}}" />
         </view>
       </view>
 
-      <!-- 输入应诉人姓名 -->
+      <!-- 选择应诉人 -->
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">应诉人</view>
         </view>
         <view class="weui-cell__bd">
-          <input bindblur="justInTimeSyDefendant" class="weui-input" name="defendant" placeholder="输入应诉人" value="{{defendant}}" />
+          <input bindtap="justInTimeSyrespondent" class="weui-input" name="respondent" placeholder="输入应诉人" value="{{respondent}}" />
         </view>
       </view>
 
@@ -44,7 +44,7 @@
           <view class="weui-label">索赔金额</view>
         </view>
         <view class="weui-cell__bd">
-          <input type="digit" bindinput="justInTimeCheckDataAndNum" class="weui-input" name="claim" placeholder="输入索赔金额" value="{{claim}}"
+          <input type="digit" bindinput="justInTimeCheckDataAndNum" class="weui-input" name="orginalpay" placeholder="输入索赔金额" value="{{orginalpay}}"
           />
         </view>
       </view>
@@ -54,8 +54,8 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea maxlength="2000" bindblur="justInTimeCheckData" bindinput="justInTimeCountAndInput" class="accuserarea" name="statement"
-              placeholder="请输入理由" fixed="true" style="height: 10em" value="{{statement}}" />
+            <textarea maxlength="2000" bindblur="justInTimeCheckData" bindinput="justInTimeCountAndInput" class="accuserarea" name="description"
+              placeholder="请输入理由" fixed="true" style="height: 10em" value="{{description}}" />
             <view class="weui-textarea-counter">{{wordnum}}/2000</view>
           </view>
         </view>

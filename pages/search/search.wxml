@@ -1,0 +1,39 @@
+<import src="../sharecomponants/case/case_small.wxml" />  
+<import src="../sharecomponants/star/rating.wxml" />
+<template name="m-case-s">
+  <view class="m-case-s" bindtap="onViewTap" data-id="{{ case.id }}" data-type="case">
+    <image class="cover" src="{{ case.cover }}" background-size="cover"></image>
+    <view class="info">
+      <view class="title">
+        <text>{{ case.title }}</text>
+      </view>
+      <view class="rating">
+        <template is="m-rating" data="{{count: 5, size: 'm'}}" />
+      </view>
+      <view class="detail">{{ case.numberOfComment }} 评论 / {{ case.numberOfJoin }} 裁决</view>
+    </view>
+  </view>
+</template>
+
+<scroll-view scroll-x="true" class="header">
+  <view class="nav">
+    <view class="{{ status == 5 ? 'selected' : ''}}" data-status="5" bindtap="onChangeTab">全部</view>
+    <view class="{{ status == 2 ? 'selected' : ''}}" data-status="2" bindtap="onChangeTab">已结束</view>
+    <view class="{{ status == 1 ? 'selected' : ''}}" data-status="1" bindtap="onChangeTab">未结束</view>
+  </view>
+</scroll-view>
+<view class="search">
+  <input class="search-input" bindinput="bindKeyInput" placeholder="输入你要搜索的内容" />
+  <icon class="search-icon" bindtap="onSearch" type="search"/>
+</view>
+<view class="suggest">
+  <block wx:for="{{ cases }}" wx:if="{{suggest}}" wx:for-item="case" wx:key="case.id">
+    <template is="m-case-s" data="{{case: case}}" />
+  </block>
+</view>
+<scroll-view class="list" style="height: {{ windowHeight - 70 / pixelRatio }}px; width: {{ windowWidth }}px;" scroll-y="true" bindscrolltolower="loadMore" lower-threshold="800">
+  <!--<view class="sep" wx:if="{{users}}"></view>-->
+  <block wx:for="{{ cases }}" wx:if="{{!suggest}}" wx:for-item="case" wx:key="case.id">
+    <template is="m_case" data="{{case: case}}" />
+  </block>
+</scroll-view>

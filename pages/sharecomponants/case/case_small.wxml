@@ -1,0 +1,24 @@
+<import src="../star/rating.wxml" />
+<template name="m_case">
+  <view class="m_case" bindtap="onViewTap" data-id="{{ case.basic.id }}" data-type="case">
+    <image class="cover" src="../../../images/pn_covertemp.png" background-size="cover" bindtap="onViewTap"></image>
+    <view class="info">
+      <view class="title">
+        <text>{{ case.basic.title }}</text>
+      </view>
+      <view class="rating">
+        <template is="m-rating" data="{{count:5, size: 'm'}}" />
+      </view>
+      <view wx:if="{{!case.hiddenUser}}" class="user">
+        <image class="avatar" src="{{ case.author.avatar_url }}"></image>
+        <view class="name">{{ case.author.nickname }}</view>
+      </view>
+      <view class="desc">
+        <view>
+          <text>{{ case.basic.outline || case.basic.description }}</text>
+        </view>
+      </view>
+      <view class="detail">{{ case.basic.numberOfComment }}个评论 / {{ case.basic.numberOfJoin }}个裁决</view>
+    </view>
+  </view>
+</template>

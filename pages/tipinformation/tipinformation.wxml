@@ -30,8 +30,7 @@
             </view>
         </view>
     </view>
-    <view class="weui-flex">
-        <button class="weui-flex__item" type="default" bindtap="btnback">返回</button>
+    <view class="weui-flex"> 
         <button class="weui-flex__item" type="primary" bindtap="btnagree">同意</button>
     </view>
 </view>

@@ -1,80 +1,227 @@
+
+@import "../../sharecomponants/star/rating.wxss";
+
 .case {
-  background-color: #fff;
-  margin-top: 10rpx;
-  padding: 20rpx;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  flex-direction: row;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
 }
 
-.case image {
-  width: 180rpx;
-  height: 180rpx;
-  flex-shrink: 0;
+.case .cover {
+  width: 100%;
+  height: 352rpx;
+  vertical-align: bottom;
+}
+
+.case::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 560rpx;
+  height: 100%;
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 0, rgba(0, 0, 0, 0) 100%);
 }
 
 .case .info {
-  height: 180rpx;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10rpx;
-  margin-left: 10rpx;
-}
-
-.case .info .name {
-  color: #111;
-  font-size: 40rpx;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.case .info .star_publictime {
-  color: #111;
-  font-size: 28rpx;
-  display: flex ;
-  flex-direction: row;
-  flex-wrap: nowrap ;
-
-}
-.case .info .star_publictime .starview {
-  overflow: hidden ;
-  white-space: nowrap ;
-  text-overflow:  ellipsis ;
-  flex: 1 ;
-}
-.case .info .star_publictime .star-rating {
-  display: inline-block;
-  margin-right: 6rpx;
-}
-
-
-.case .info .star_publictime image {
-  width: 28rpx;
-  height: 27rpx;
-  margin-right: 4rpx;
-}
-
-.case .info .author_state {
-  display: flex;
-  flex-direction: row;
-  color: #777;
-  font-size: 28rpx;
-  flex-wrap: nowrap;
-}
-
-.case .info .author_state .author {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  flex: 1;
-}
-
-.case .info .author_state .state {
-  background-color: #3CB371;
   color: #fff;
-  
+  padding: 0 30rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.case .info .titleh2 {
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 1.22;
+  text-shadow: 2rpx 2rpx rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  margin-top: 30rpx;
+}
+
+.case .detail {
+  margin-top: 36rpx;
+  padding-left: 18rpx;
+  position: relative;
+  font-size: 22rpx;
+  line-height: 1;
+  font-weight: bold;
+  text-shadow: 2rpx 4rpx 0px rgba(0, 0, 0, 0.20);
+}
+
+.case .detail view {
+  margin-bottom: 6rpx;
+}
+
+.case .detail text {
+  margin-right: 20rpx;
+}
+
+.case .detail .place {
+  font-weight: normal;
+  font-size: 16rpx;
+}
+
+.case .detail::before {
+  content: '';
+  width: 6rpx;
+  height: 100%;
+  border-right: 1rpx;
+  background-color: #4abdcc;
+  position: absolute;
+  left: 4rpx;
+  top: 2rpx;
+}
+
+.case .user {
+  position: absolute;
+  width: 100%;
+  top: 75rpx;
+  left: 300rpx;
+  line-height: 30rpx;
+  font-size: 18rpx;
+}
+
+.case .avatar {
+  width: 30rpx;
+  height: 30rpx;
+  float: left;
+  margin-right: 15rpx;
+  border-radius: 30rpx;
+  vertical-align: bottom;
+}
+
+.case .bottom {
+  position: absolute;
+  bottom: 24rpx;
+  font-size: 20rpx;
+}
+
+.case-s {
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.case-s .mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 222rpx;
+  height: 240rpx;
+  background-color: rgba(255, 255, 255, 0);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+}
+
+.case-s .cover {
+  width: 100%;
+  height: 240rpx;
+  vertical-align: bottom;
+  background-position: center center;
+}
+
+.case-s .info {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 20rpx 28rpx;
+  text-shadow: 2rpx 3rpx rgba(0, 0, 0, 0.2);
+}
+
+.case-s .title {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-left: -4rpx;
+  line-height: 50rpx;
+}
+
+.case-s .detail {
+  font-size: 30rpx;
+  position: relative;
+  height: 20rpx;
+  line-height: 20rpx;
+  padding-left: 20rpx;
+  margin-top: 4rpx;
+}
+
+.case-s .detail::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6rpx;
+  height: 20rpx;
+  background-color: #4abdcc;
+}
+
+.case-s .detail view {
+  display: inline-block;
+  margin-right: 16rpx;
+}
+
+.case-s .detail text {
+  font-weight: bold;
+}
+
+.case-s .stat {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 24rpx;
+  height: 32rpx;
+  line-height: 31rpx;
+  font-size: 20rpx;
+  padding-left: 28rpx;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.case-s .stat::before {
+  content: '';
+  width: 100%;
+  position: absolute;
+  height: 40rpx;
+  left: 0;
+  bottom: -4rpx;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.case-s .stat view {
+  position: relative;
+  display: inline-block;
+  margin-right: 30rpx;
+  padding-left: 16rpx;
+}
+
+.case-s .stat view::before {
+  content: '';
+  width: 8rpx;
+  height: 8rpx;
+  position: absolute;
+  left: 0;
+  top: 12rpx;
+  background-color: #4abdcc;
+  border-radius: 8rpx;
+}
+
+.case-s .stat text {
+  font-weight: bold;
 }

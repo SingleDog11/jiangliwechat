@@ -56,7 +56,7 @@ Page({
      */
     getCaseById: function (id) {
         return this.data.caseslist.filter(function (item) {
-            return (item.Ver_id == id)
+            return (item.basic.id == id)
         })
     },
     /**
@@ -64,56 +64,25 @@ Page({
      */
     getCaseByState: function (state) {
         return this.data.backlist.filter(function (item) {
-            return (item.State == state)
+            return (item.basic.state == state)
         })
     },
     onLoad: function (options) {
-        this.setData({
-            funcIdentity: options.funcIdentity,
-        });
     },
     /**
      * 判断到底是点击的是完成案件还是参与案件
      */
     onShow() {
         var filterlist = [];
-        if (this.data.funcIdentity == '02') {
-            // 设置标题栏文字
-            wx.setNavigationBarTitle({
-                title: '我发布的案件',
-                success: function (res) {
-                }
-            })
-            // 请求本用户的所有案件
-            this.getMycases();
-        }
-        else {
-            wx.setNavigationBarTitle({
-                title: '已经完成的案件',
-                success: function (res) {
-                }
-            })
-            // console.log('已完成的案件');
-            const that = this;
-            qcloud.request({
-                login: app.globalData.hasLogin,
-                url: config.requestCaseByState,
-                data: { state: 2 },
-                success: function (res) {
-                    that.setData({
-                        caseslist: res.data,
-                        hasContent: res.data.length != 0,
-                    });
-                    //  console.log(that.data.caseslist);
-                },
-                fail: function (e) {
-                    app.showModel("Error", e);
-                    that.setData({
-                        hasContent: false,
-                    });
-                }
-            });
-        }
+        // 设置标题栏文字
+        wx.setNavigationBarTitle({
+            title: '我发布的案件',
+            success: function (res) {
+            }
+        })
+        // 请求本用户的所有案件
+        this.getMycases();
+
     },
     /**
      * 点击某一案件，进入案件的详细信息
@@ -123,11 +92,11 @@ Page({
         // console.log("案件信息：");
         var casetemp = this.getCaseById(event.currentTarget.dataset.id)[0];
         console.log(casetemp);
-        if (casetemp.State == -1) {
+        if (casetemp.state == -1) {
             // 这是点击草稿案件所进入的页面
             // 设置参数
             qcloud.setCaseCache({
-                verid: casetemp.Ver_id,
+                id: casetemp.id,
                 title: casetemp.Complain_title,
                 Accuser: casetemp.Accuser_client,
                 defendant: casetemp.Defendant_client,
@@ -139,13 +108,12 @@ Page({
             })
         }
         else {
-            var isowner = 'true' ;
-            if(app.globalData.userInfo.nickName != casetemp.issuer)
-            {
+            var isowner = 'true';
+            if (app.globalData.userInfo.nickName != casetemp.issuer) {
                 isowner = 'false'
             }
             wx.navigateTo({
-                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id + '&isowner='+isowner,
+                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id + '&isowner=' + isowner,
             })
         }
     },
@@ -156,8 +124,8 @@ Page({
         const that = this;
         qcloud.request({
             login: app.globalData.hasLogin,
-            url: config.requestGetMyCase,
-
+            url: config.requestGetCaseListOwner,
+            data: { userid: app.globalData.userid },
             success: function (res) {
                 that.setData({
                     backlist: res.data,

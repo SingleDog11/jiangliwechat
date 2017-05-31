@@ -8,7 +8,7 @@ page {
   background-color: #fff;
   border-radius: 70rpx;
   margin: 20rpx 40rpx;
-  height: 70rpx;
+  height: 60rpx;
   line-height: 70rpx;
   display: flex;
   flex-wrap: nowrap;
@@ -31,37 +31,8 @@ page {
   font-size: 26rpx;
 }
 
-.funcs {
-  background-color: #fff;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 20rpx 0 0rpx 0;
-}
-
-.funcs .func {
-  width: 25%;
-  text-align: center;
-  margin-bottom: 30rpx;
-}
-
-.funcs .func image {
-  width: 100rpx;
-  height: 100rpx;
-  text-align: center;
-}
-
-.funcs .func .name {
-  text-align: center;
-  color: #666;
-  font-size: 26rpx;
-  margin-top: 10rpx;
-}
-
 .maylike {
   background-color: #fff;
-  margin-top: 30rpx;
   padding-top: 20rpx;
 }
 
@@ -75,3 +46,11 @@ page {
   align-content: center ; 
   text-align: center ;
 }
+.loading{  
+  padding: 10rpx;  
+  text-align: center;  
+}  
+
+.loading.complete:before{  
+  display: none;  
+}  

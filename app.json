@@ -1,22 +1,50 @@
 {
-  "pages":[
-    "pages/index/index",
+  "pages": [
+    "pages/main/main",
     "pages/detail/detail",
     "pages/tipinformation/tipinformation",
-    "pages/caseInfo/caseInfo",    
-    "pages/tpcase/tpcase",    
+    "pages/caseInfo/caseInfo",
+    "pages/tpcase/tpcase",
     "pages/caseInfo/chart/chart",
-    "pages/participatecase/participatecase",    
+    "pages/participatecase/participatecase",
     "pages/newcase/newcase",
-    "pages/main/main",
-    "pages/personinfo/person",
+    "pages/personinfo/owner",
+    "pages/search/search",
+    "pages/personinfo/user",
+    "pages/personinfo/users",    
     "pages/logs/logs",
-    "pages/sharecomponants/comment/comment"
+    "pages/sharecomponants/involves/involves"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFF",
     "navigationBarTitleText": "讲理",
-    "navigationBarTextStyle":"black" 
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#b0b0b0",
+    "selectedColor": "#4abdcc",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "iconPath": "images/explore_normal.png",
+        "selectedIconPath": "images/explore_pressed.png",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/personinfo/owner",
+        "iconPath": "images/user_normal.png",
+        "selectedIconPath": "images/user_pressed.png",
+        "text": "个人"
+      },
+      {
+        "pagePath": "pages/tipinformation/tipinformation",
+        "iconPath": "images/new_normal.png",
+        "selectedIconPath": "images/new_pressed.png",
+        "text": "发布"
+      }
+    ]
   }
 }

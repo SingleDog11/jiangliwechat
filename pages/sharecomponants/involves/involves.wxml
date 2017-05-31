@@ -1,0 +1,68 @@
+<template name='involve'>
+  <view class='involves'>
+
+    <!-- 裁决信息标头 -->
+    <view class='conut'>裁决信息({{count ? count : "0"}})</view>
+
+    <!-- 对每一条裁决信息循环输出 -->
+    <block wx:for='{{involves}}' wx:for-item='involve' wx:for-index='index' wx:key='involve.id'>
+      <view class='involve'>
+
+        <!-- 该裁决用户的头像(先用本地图片代替) -->
+        <image class='cavartar' src="{{involve.user.avatar_url}}" mode="aspectFill"></image>
+
+        <!-- 该裁决用户的姓名和评论 -->
+        <view class='info'>
+          <view class='name'>{{involve.user.nickname}}</view>
+          <view class='group'>
+
+            <!-- 三点的详细信息 -->
+            <view wx:if="{{involve.modedot == 1}}">
+              <view wx:if="{{involve.modepay == 1}}">
+                <view class='title'>需要赔偿的三点</view>
+                <view class='perdot'>
+                  <view class='name'>最好赔偿：</view>
+                  <view class='value'>{{involve.mostSatisfied}}</view>
+                </view>
+                <view class='perdot'>
+                  <view class='name'>不赔偿的满意度：</view>
+                  <view class='value'>{{involve.nonSatisfied}}</view>
+                </view>
+                <view class='perdot'>
+                  <view class='name'>赔偿{{involve.mostSatisfied * 2}}元的的满意度为：</view>
+                  <view class='value'>{{involve.doublePay}}</view>
+                </view>
+              </view>
+              <view wx:if="{{involve.modepay == 0}}">
+                <view class='title'>互不赔偿的方式</view>
+                <view class='perdot'>
+                  <view class='name'>赔偿[{{orginalpay}} 元]的满意度是：</view>
+                  <view class='value'>{{involve.nonSatisfied}}</view>
+                </view>
+              </view>
+            </view>
+
+            <!-- 单点赋值的显示方式 -->
+            <view wx:if="{{involve.modedot == 0}}">
+              <view class='title'>需要赔偿的一点</view>
+              <view class='perdot'>
+                <view class='name'>最好赔偿：</view>
+                <view class='value'>{{involve.mostSatisfied}}</view>
+              </view>
+            </view>
+            <view class="line"></view>
+            <view class="title">赋值说明：</view>
+            <view class='msg'>{{involve.assignmentExplain}}</view>
+            <view class="line"></view>
+            <view wx:if="{{involve.modedot == 1}}">
+              <view class="title">个人满意度曲线：</view>
+              <button class="weui-btn" type="primary" plain="true" bindtap="seeChart" data-case="{{involve}}">
+                点击查看
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>

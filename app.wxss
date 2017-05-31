@@ -8,6 +8,17 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+page {
+  font: 14px "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti;
+  line-height: 1.5;
+}
+.clearfix:after{
+  content : '';
+  clear: both; 
+  overflow: hidden ;
+  height:  0 ;
+  display: block;
+}
 .canvas {
   width: 100%;
   height: 200px;

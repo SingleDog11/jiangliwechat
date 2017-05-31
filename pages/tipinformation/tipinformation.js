@@ -16,11 +16,9 @@ Page({
   onUnload:function(){
     // 页面关闭
   },
-  btnback:function(){
-    wx.navigateBack();
-  },
+  
   btnagree:function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url:"../newcase/newcase?draft=false&hasfabu=false",
     })
   },

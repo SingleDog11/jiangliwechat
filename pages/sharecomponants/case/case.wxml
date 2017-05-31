@@ -1,25 +1,37 @@
-<import src='../../sharecomponants/star/star.wxml' />
+<import src='../../sharecomponants/star/rating.wxml' />
 <template name='case'>
-  <view class='case' bindtap='caseDetail' data-id="{{case.Ver_id}}" wx:if="{{flag || case.State != 0 && case.State != -1}}">
-    <!--<image src="{{case.photo}}" mode="aspectFill"></image>-->
-    <!--<image src="../../../images/cup.png" mode="aspectFit"></image>-->
-    <image src="http://www.easyicon.net/api/resizeApi.php?id=1205926&size=96" mode="aspectFit"></image>
-    <view class='info'>
-      <view class='name'>{{case.Complain_title}}</view>
-      <view class='star_publictime'>
-        <view class='starview'>
-          <template is='star' data="{{count:5}}" />
-        </view>
-        <!--<view class='public_time'> 发布时间：{{case.data}}</view>-->
-        <view class='public_time'> {{case.data}}</view>
-      </view>
-      <view class='author_state'>
-        <view class='author'>发起人：{{case.issuer}}</view>
+  <view class='case' bindtap='onViewTap' data-type="case" data-id="{{case.basic.id}}" wx:if="{{flag || case.basic.state != 0 && case.basic.state != -1}}">
 
-        <view class='state' wx:if="{{case.State == '-1'}}">状态：草稿</view>
-        <view class='state' wx:if="{{case.State == '0'}}">状态：待审核</view>
-        <view class='state' wx:if="{{case.State == '1'}}">状态：待裁决</view>
-        <view class='state' wx:if="{{case.State == '2'}}">状态：已完成</view>
+    <!--背景图-->
+    <image class="cover" src="../../../images/pn_cover.png" mode="aspectFill"></image>
+
+    <view class='info'>
+      <view class='titleh2'>{{case.basic.title}}</view>
+      <view class='rating'>
+        <template is='m-rating' data="{{count:5 , size:'s'}}" />
+
+        <!-- 发起人的头像和姓名 -->
+        <view catchtap="onViewTap" data-id="{{case.author.id}}" data-type="user" class="user">
+          <image class="avatar" src="{{case.author.avatar_url}}"></image>
+          <view class="name">by {{case.author.nickname}}</view>
+        </view>
+
+      </view>
+      <view class="detail">
+        <view>
+          <text> 发布时间 : {{case.basic.start_at}}</text>
+        </view>
+      </view>
+      <view class="detail">
+        <view class='author_state'>
+          <view class='state' wx:if="{{case.basic.state == '-1'}}">状态：草稿</view>
+          <view class='state' wx:if="{{case.basic.state == '0'}}">状态：待审核</view>
+          <view class='state' wx:if="{{case.basic.state == '1'}}">状态：待裁决</view>
+          <view class='state' wx:if="{{case.basic.state == '2'}}">状态：已完成</view>
+        </view>
+      </view>
+      <view class="bottom">
+        {{ case.basic.numberOfComment }}个评论 / {{ case.basic.numberOfJoin }}个裁决
       </view>
     </view>
   </view>

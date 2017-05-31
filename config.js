@@ -1,28 +1,43 @@
 // 业务服务器的域名
-var host = 'https://98171334.qcloud.la';
-// var host = 'http://localhost:55739';
-
+// var host = 'https://98171334.qcloud.la';
+var host = 'http://localhost:9305';
+// 
 // 域名相关配置
 var config = {
     host,
     // 登陆使用的地址
     //loginUrl : "${host}/home/login",
-    loginUrl: `${host}/values/Login`,
+    loginUrl: `${host}/api/Account/Login`,
+
+    /**
+     * 通过用户id获取用户
+     */
+    requestGetUserById : `${host}/api/Account/GetUserById`,
+    /**
+     * 通过昵称获取用户列表
+     */
+    requestGetUsersByNickname : `${host}/api/Account/GetUsersByNickname`,
+    
+    // 通过案件的页数和状态获取案件
+    requestCaseByPageAndState : `${host}/api/caseapi/GetPieceByPageAndState`,
+    // 通过案件的关键词获取案件
+    requestCaseByKeyWord :`${host}/api/caseapi/GetPieceByKeyWord`,
+    // 通过案件的关键词获取建议案件
+    requestCaseOfSuggest : `${host}/api/caseapi/GetPieceBySuggest`,
 
     // 通过案件id获取案件的详细内容
-    requestCaseById: `${host}/values/GetSingle`,
-    // 参数
+    requestCaseById: `${host}/api/caseapi/GetCaseDetailById`,
+
+    // 请求提交新案件使用post
+    requestPutNewCaseByPost: `${host}/api/caseapi/CreateCase`,
+
+
     requestCaseByState: `${host}/values/getCasebyStat`,
     // 获取用户参与案件的接口
     requestgetCaseOfClient: `${host}/values/GetVerdictOfPar`,
 
     // 获取某案件下的所有裁决评论
     requestCommentsByCaseId: `${host}/values/GetPar`,
-
-    // 请求提交新案件
-    requestPutNewCase: `${host}/values/addVerdict`,
-    // 请求提交新案件使用post
-    requestPutNewCaseByPost: `${host}/values/addVerdictBypost`,
     // 请求提交裁决
     requestPutNewComments: `${host}/values/putParticipateData`,
 
@@ -31,7 +46,7 @@ var config = {
     requestGetChart: `${host}/values/GetQXP`,
 
     // 获取个人参与的案件
-    requestGetMyCase: `${host}/values/GetVerByUserID`,
+    requestGetCaseListOwner: `${host}/api/caseapi/GetCaseListOfOwner`,
 
     // 将某案件的草稿改为提交状态
     requestPutDraftok: `${host}/values/DraftToVerdict`,

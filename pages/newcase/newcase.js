@@ -21,12 +21,13 @@ Page({
     hasCache: false,
     // 案件数据
 
-    verid: "",
+    id: "",
     title: "",
-    defendant: "",
-    claim: "",
-    statement: "",
-    Accuser: "",
+    respondentid: '',
+    respondent: "",
+    orginalpay: "",
+    description: "",
+    accuser: "",
   },
   onLoad: function (options) {
     // 判断是否为草稿
@@ -39,31 +40,46 @@ Page({
      * 这里是将缓存打印出来，也可以当作参数来使用
      */
     var casecache = qcloud.getCaseCache();
-    // console.log(options.draft);
-    // console.log(casecache);
     if (options.draft == "true" && casecache) {
       this.setData({
-        verid: casecache.verid,
+        id: casecache.id,
         title: casecache.title,
-        defendant: casecache.defendant,
-        claim: casecache.claim,
-        statement: casecache.statement,
-        Accuser: casecache.Accuser,
-        wordnum: casecache.statement.length,
+        respondent: casecache.respondent,
+        orginalpay: casecache.orginalpay,
+        description: casecache.description,
+        accuser: casecache.accuser,
+        wordnum: casecache.description.length,
       });
     }
     else {
+      // console.log(app.globalData.userInfo);
       this.setData({
-        Accuser: app.globalData.userInfo.nickName,
+        accuser: app.globalData.userInfo.nickName,
       })
     }
   },
+  /**
+   * 重新设置描述
+   */
   onReady: function (e) {
     this.setData({
-      statement: this.data.statement,
+      description: this.data.description,
     })
   },
-
+  /**
+   * 当从用户选择页面返回本页面
+   */
+  onShow: function (e) {
+    var usercache = qcloud.getUserCache();
+    // console.log(usercache);
+    if (usercache) {
+      this.setData({
+          respondentid : usercache.id,
+          respondent : usercache.nickname,
+      });
+      qcloud.clearUserCache();
+    }
+  },
   formSubmit: function (e) {
     const that = this;
     var urltemp = "";
@@ -75,28 +91,27 @@ Page({
       urltemp = config.requestPutNewCaseByPost;
     }
     var value = e.detail.value;
+    // console.log(value);
     // 数据是否有为空的
     var result = value.title.trim() != "" &&
-      value.defendant.trim() != "" &&
-      value.claim.trim() != "" &&
-      value.statement.trim() != "" &&
-      value.Accuser.trim() != "" &&
-      parseFloat(value.claim) != 0;
+      value.respondent.trim() != "" &&
+      value.orginalpay.trim() != "" &&
+      value.description.trim() != "" &&
+      value.accuser.trim() != "" &&
+      parseFloat(value.orginalpay) != 0;
 
     if (this.data.showTopTips || !result) {
       app.showModel("数据有误", "请检查数据是否未填或金额输入不能为0");
     }
     else {
       value.issuer = app.globalData.userInfo.nickName;
-      // 如果是已经审核的案件进行修改
-      /*
-      if (this.data.isfabu == 'true') {
-        value.state = 1;
-      } else {
-        value.state = 0;
-      }*/
+
       value.state = 0;
-      value.Verid = this.data.verid;
+      // 投诉人和应诉人的id
+
+      value.respondentid = 2,
+        value.accuserid = 1,
+        value.id = this.data.id;
       app.showBusy("正在提交...");
       qcloud.request({
         url: urltemp,
@@ -106,9 +121,10 @@ Page({
         header: { "content-type": "application/x-www-form-urlencoded" },
         success: function (res) {
           // console.log(res);
-          if (res.data.isok) {
+          if (res.data) {
             app.showSuccess("数据已经提交");
-            qcloud.clearCaseCache(); 
+            qcloud.clearCaseCache();
+            // wx.redirectTo({url:"../main/main"});
             wx.navigateBack();
           }
           else {
@@ -129,8 +145,7 @@ Page({
     var result = isNaN(parseFloat(value));
     // console.log(parseFloat(value));
     this.setData({
-      showTopTips: e.detail.value.trim() == "" && result,
-      claim: parseFloat(value),
+      orginalpay: parseFloat(value),
     })
 
     if (result) {
@@ -157,25 +172,23 @@ Page({
     var value = e.detail.value;
     this.setData({
       wordnum: value.length,
-      statement: value
+      description: value
     })
   },
   /**
-  * 应诉人--赋值到js变量中
+  * 应诉人选择
   */
-  justInTimeSyDefendant: function (e) {
-    this.setData({
-      showTopTips: e.detail.value.trim() == "",
-      defendant: e.detail.value,
-    })
+  justInTimeSyrespondent: function (e) { 
+    wx.navigateTo({
+      url: '../personinfo/users',
+    });
   },
   /**
    * 投诉人--赋值到js变量中
    */
-  justInTimeSyAccuser: function (e) {
+  justInTimeSyaccuser: function (e) {
     this.setData({
-      Accuser: e.detail.value,
-      showTopTips: e.detail.value.trim() == "",
+      accuser: e.detail.value,
     })
   },
 
@@ -185,7 +198,6 @@ Page({
   justInTimeSyTitle: function (e) {
     this.setData({
       title: e.detail.value,
-      showTopTips: e.detail.value.trim() == "",
     })
   },
   /**
@@ -193,12 +205,12 @@ Page({
   */
   onCache: function () {
     var values = {
-      Verid: this.data.verid,
+      id: this.data.id,
       title: this.data.title,
-      Accuser: this.data.Accuser,
-      defendant: this.data.defendant,
-      claim: this.data.claim,
-      statement: this.data.statement,
+      accuser: this.data.accuser,
+      respondent: this.data.respondent,
+      orginalpay: this.data.orginalpay,
+      description: this.data.description,
       state: -1,// 草稿
       issuer: app.globalData.userInfo.nickName,
     }

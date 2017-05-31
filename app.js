@@ -1,7 +1,8 @@
 
 // 引入配置
 var config = require('./config');
-
+// 引入常量
+var Constants = require('./utils/constants');
 // 引入腾讯云的sdk
 var qcloud = require('./vendor/qcloud-weapp-client-sdk/index');
 
@@ -12,22 +13,89 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs);
+    /**
+     * 获取系统的信息
+     */
     wx.getSystemInfo({
       success: function (res) {
         that.systemInfo = res;
       }
     })
-
     // 设置 登陆 路径
-    console.log(config.loginUrl);
+    // console.log(config.loginUrl);
     qcloud.setLoginUrl(config.loginUrl);
+    // 获取userinfo
+    that.getUserInfo(function (userInfo) {
+      that.Login(userInfo);
+    }
+    );
+    // 登陆
+
   },
-  onShow: function () {
-    console.log("App Show");
+
+  /**
+   * 全局变量
+   */
+  globalData: {
+    hasLogin: false,
+    openid: null,
+    userid: null, 
+    cc: null,
+    userInfo: null,
   },
-  onHide: function () {
-    console.log("APP Hide");
+
+  /**
+   * 获取用户的个人信息
+   */
+  getUserInfo: function (cb) {
+    var that = this
+    if (this.globalData.openid) {
+      typeof cb == "function" && cb(this.globalData.openid)
+    }
+    else if (this.globalData.userInfo) {
+      typeof cb == "function" && cb(this.globalData.userInfo)
+    }
+    else {
+      //调用登录接口
+      wx.login({
+        success: function (res) {
+          wx.getUserInfo({
+            success: function (res) {
+              that.globalData.userInfo = res.userInfo
+              typeof cb == "function" && cb(that.globalData.userInfo)
+            }
+          })
+        }
+      })
+    }
   },
+  /**
+   * 拉取openid
+   * 拉取用户id
+   */
+  Login: function (ui) {
+    const that = this;
+    qcloud.login({
+      data: ui,
+      method:"post",
+      success(result) {
+        console.log(result)
+        if (result != "error") {
+          // 修改全局变量hasLogin
+          that.globalData.hasLogin = true;
+          that.globalData.openid = result.openid;
+          that.globalData.userid = result.userid;
+        }
+        else {
+          console.log("server fail");
+        }
+      },
+      fail(error) {
+        console.log("login fail");
+      }
+    });
+  },
+
   // 一些提示信息
   // 显示繁忙提示
   showBusy: text => wx.showToast({
@@ -53,84 +121,5 @@ App({
     });
   },
 
-
-  globalData: { 
-    hasLogin: false,
-    openid: null,
-    cc: null,
-    userInfo: null,
-    caseslist: {
-      list: [],
-      getState1: function () {
-        return this.list.filter(function (item) {
-          // console.log(item);
-          return (item.State == '1');
-        })
-      },
-      getState2: function () {
-        return this.list.filter(function (item) {
-          return (item.State == '2');
-        })
-      },
-      getCaseById: function (id) {
-        return this.list.filter(function (item) {
-          return (item.Ver_id == id)
-        })
-      },
-      /*
-      updateList: function (e) { 
-
-        qcloud.request({
-          login: true,
-          url: config.requestCaseByState,
-          data: {
-            state: -2,// 1 请求全部案件
-          },
-          success: function (res) {
-            that.list = res.data;
-            return that.list;
-          },
-          fail: function () {
-            app.showModel('error', '请检查网络');
-            // console.log("main::fail")
-            return that.list;
-          }
-        });
-      },*/
-    },
-
-  },
-
-  getUserInfo: function (cb) {
-    var that = this
-    if (this.globalData.openid) {
-      typeof cb == "function" && cb(this.globalData.openid)
-    }
-    else if (this.globalData.userInfo) {
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    }
-    else {
-      //调用登录接口
-      wx.login({
-        success: function (res) {
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              // 输出个人信息
-
-              /*         console.log('nickname:' + res.userInfo.nickName)
-                       console.log('avatarUrl:' + res.userInfo.avatarUrl)
-                       console.log('gender:' + res.userInfo.gender)
-                       console.log('province:' + res.userInfo.province)
-                       console.log('city:' + res.userInfo.city)
-                       console.log('country:' + res.userInfo.country)
-         */
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
-        }
-      })
-    }
-  },
 
 })
