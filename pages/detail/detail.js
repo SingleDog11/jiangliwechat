@@ -8,42 +8,45 @@ var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 const app = getApp();
 
 Page({
-  data:{
-    // 申诉内容的人
-    speaker : "",
-    // 申诉的时间
-    time : "",
-    // 申诉的第几轮
-    turn : "",
+  data: {
+    cid: 0,
+    msg: "",
+  },
+  onLoad: function (options) {
+    console.log(options.id);
+    var cid = options.id;
+    this.setData({ cid: cid });
+  },
 
-    // 内容
-    content : "",  
-  },
-  onLoad:function(options){
-    // 页面初始化 options为页面跳转所带来的参数
-    // 取出缓存中的详细信息
-    var detail = qcloud.getDetailCache();
-    if(detail)
-    {
-      this.setData({
-        speaker : detail.speaker ,
-        time : detail.time,
-        turn : detail.turn ,
-        content : detail.content ,
-      })
+  /**
+   * 保存提交
+   */
+  onSubmit: function (e) {
+    var msg = e.detail.value.content;
+    if (msg.trim() == "") {
+      app.showModel("数据有误", "不能提交空数据");
+      return;
     }
+    this.setData({ msg });
+    this.saveData();
   },
-  onReady:function(){
-    // 页面渲染完成
+  /**
+   * 数据上传到数据库
+   */
+  saveData: function () {
+    const that = this;
+    qcloud.request({
+      login: app.globalData.hasLogin,
+      url: config.requestSetAppeal,
+      data: { cid: that.data.cid, msg: that.data.msg },
+      success: function (res) {
+        /**
+         * 返回上一个页面
+         */
+        console.log(res)
+        wx.navigateBack();
+      }
+    })
   },
-  onShow:function(){
-    // 页面显示
-  },
-  onHide:function(){
-    // 页面隐藏
-  },
-  onUnload:function(){
-    // 页面关闭
-    qcloud.clearDetailCache();
-  }
+
 })

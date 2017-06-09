@@ -13,8 +13,7 @@ Page({
     data: {
         selectedNav: '01',
 
-        hasContent: false,
-        funcIdentity: '00',
+        hasContent: false, 
         btnMsg: '全部分类',
         caseslist: [],
         // 
@@ -88,7 +87,7 @@ Page({
      * 点击某一案件，进入案件的详细信息
      * @param {点击事件的参数} event 
      */
-    caseDetail(event) {
+    onViewTap (event) {
         // console.log("案件信息：");
         var casetemp = this.getCaseById(event.currentTarget.dataset.id)[0];
         console.log(casetemp);
@@ -96,24 +95,18 @@ Page({
             // 这是点击草稿案件所进入的页面
             // 设置参数
             qcloud.setCaseCache({
-                id: casetemp.id,
-                title: casetemp.Complain_title,
-                Accuser: casetemp.Accuser_client,
-                defendant: casetemp.Defendant_client,
-                claim: casetemp.Claim,
-                statement: casetemp.Statement
+                id: casetemp.basic.id, 
             });
             wx.navigateTo({
                 url: '../newcase/newcase?draft=true&hasfabu=false',
             })
         }
-        else {
-            var isowner = 'true';
-            if (app.globalData.userInfo.nickName != casetemp.issuer) {
-                isowner = 'false'
-            }
+        /**
+         * 浏览案件
+         */
+        else {  
             wx.navigateTo({
-                url: '../caseInfo/caseInfo?caseinfoid=' + event.currentTarget.dataset.id + '&isowner=' + isowner,
+                url: '../caseInfo/caseInfo?id=' + event.currentTarget.dataset.id ,
             })
         }
     },

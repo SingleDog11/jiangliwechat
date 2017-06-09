@@ -18,6 +18,7 @@ Page({
     errormsg: "数据不规范",
     wordnum: 0,
 
+    files: [],
     hasCache: false,
     // 案件数据
 
@@ -28,6 +29,7 @@ Page({
     orginalpay: "",
     description: "",
     accuser: "",
+    imageSrc: null,
   },
   onLoad: function (options) {
     // 判断是否为草稿
@@ -40,16 +42,34 @@ Page({
      * 这里是将缓存打印出来，也可以当作参数来使用
      */
     var casecache = qcloud.getCaseCache();
+    const that = this;
     if (options.draft == "true" && casecache) {
       this.setData({
         id: casecache.id,
-        title: casecache.title,
-        respondent: casecache.respondent,
-        orginalpay: casecache.orginalpay,
-        description: casecache.description,
-        accuser: casecache.accuser,
-        wordnum: casecache.description.length,
       });
+      /**
+       * 请求草稿信息-- 从网络请求
+       */
+      qcloud.request({
+        login: app.globalData.hasLogin,
+        url: config.requestCaseById,
+        data: { "caseId": that.data.id },
+        success: function (res) {
+          // console.log(res);
+          var caseinfo = res.data;
+          that.setData({
+            title: caseinfo.basic.title,
+            respondentid: caseinfo.respondent.id,
+            respondent: caseinfo.respondent.nickname,
+            orginalpay: caseinfo.orginalpay,
+            description: caseinfo.basic.description,
+            accuser: caseinfo.user.nickname,
+            accuserid: caseinfo.user.id,
+            imageSrc: caseinfo.imageSrc,
+          });
+        }
+      })
+
     }
     else {
       // console.log(app.globalData.userInfo);
@@ -58,6 +78,7 @@ Page({
       })
     }
   },
+
   /**
    * 重新设置描述
    */
@@ -74,28 +95,20 @@ Page({
     // console.log(usercache);
     if (usercache) {
       this.setData({
-          respondentid : usercache.id,
-          respondent : usercache.nickname,
+        respondentid: usercache.id,
+        respondent: usercache.nickname,
       });
       qcloud.clearUserCache();
     }
   },
+  /**
+   * 发布案件信息
+   */
   formSubmit: function (e) {
     const that = this;
-    var urltemp = "";
-    if (this.data.isDraft == "true") {
-      // 如果是草稿，就进行草稿提交
-      urltemp = config.requestPutDraftok;
-    }
-    else {
-      urltemp = config.requestPutNewCaseByPost;
-    }
-    var value = e.detail.value;
-    // console.log(value);
-    // 数据是否有为空的
+    var value = that.data;
     var result = value.title.trim() != "" &&
       value.respondent.trim() != "" &&
-      value.orginalpay.trim() != "" &&
       value.description.trim() != "" &&
       value.accuser.trim() != "" &&
       parseFloat(value.orginalpay) != 0;
@@ -104,40 +117,53 @@ Page({
       app.showModel("数据有误", "请检查数据是否未填或金额输入不能为0");
     }
     else {
-      value.issuer = app.globalData.userInfo.nickName;
-
-      value.state = 0;
-      // 投诉人和应诉人的id
-
-      value.respondentid = 2,
-        value.accuserid = 1,
-        value.id = this.data.id;
+      var transdata = {
+        issuer: app.globalData.userInfo.nickname,
+        title: value.title,
+        respondent: value.respondent,
+        respondentid: value.respondentid,
+        originalpay: value.orginalpay,
+        description: value.description,
+        accuser: value.accuser,
+        state: 0,
+        accuserid: app.globalData.userid,
+      }
+      // console.log(transdata);
       app.showBusy("正在提交...");
-      qcloud.request({
-        url: urltemp,
-        login: app.globalData.hasLogin,
-        data: value,
-        method: "post",
-        header: { "content-type": "application/x-www-form-urlencoded" },
-        success: function (res) {
-          // console.log(res);
-          if (res.data) {
-            app.showSuccess("数据已经提交");
-            qcloud.clearCaseCache();
-            // wx.redirectTo({url:"../main/main"});
-            wx.navigateBack();
-          }
-          else {
-            app.showModel('提交失败！', "服务器出问题了");
-          }
-        },
-        fail: function (error) {
-          app.showModel("提交失败！", error);
-        }
-      });
+      that.uploadtest(transdata, e.url);
     }
   },
-
+  /**
+   * 测试函数-上传文件
+   * @param {*表单数据} formdata 
+   */
+  uploadtest(formdata, url) {
+    let that = this;
+    console.log(that.data.imageSrc);
+    wx.uploadFile({
+      url: url,
+      filePath: that.data.imageSrc,
+      name: "file",
+      header: {
+        'content-type': 'multipart/form-data'
+      },
+      formData: formdata,
+      success: function (res) {
+        // console.log(res);
+        if (res.statusCode == 200) {
+          app.showSuccess("数据已经提交");
+          qcloud.clearCaseCache();
+          wx.navigateBack();
+        }
+        else {
+          app.showModel('提交失败！', "服务器出问题了");
+        }
+      },
+      fail: function (error) {
+        app.showModel("提交失败！", error);
+      }
+    })
+  },
   // 检查金额数据部位空切不能是字符串。
   justInTimeCheckDataAndNum: function (e) {
 
@@ -175,10 +201,12 @@ Page({
       description: value
     })
   },
+   
   /**
   * 应诉人选择
   */
-  justInTimeSyrespondent: function (e) { 
+  searchrespondent: function (e) {
+    console.log("选择应诉人……");
     wx.navigateTo({
       url: '../personinfo/users',
     });
@@ -201,6 +229,39 @@ Page({
     })
   },
   /**
+   * 新案件提交 or 草稿修改提交 or 案件修改提交
+   */
+  submit: function () {
+    var url = "";
+    if (this.data.isDraft == "true" && this.data.isfabu == "true") {
+      /**
+       * 已经发布的案件进行修改
+       *    -- 待审核状态
+       *    -- 修改案件接口
+       */
+      url = config.requestChangeCase
+    }
+    else if (this.data.isDraft == "true" && this.data.isfabu == "false") {
+      /**
+       * 已经发布的草稿进行修改
+       *    -- 待审核状态
+       *    -- 修改案件接口
+       */
+      url = config.requestChangeCase;
+    }
+    else {
+      /**
+       * 新发布的案件
+       *    -- 待审核状态
+       *    -- 新发布案件状态
+       */
+      url = config.requestCreateNewCaseByPost;
+    }
+    this.formSubmit({
+      url: url,
+    })
+  },
+  /**
   * 提交未草稿的话……。
   */
   onCache: function () {
@@ -209,43 +270,60 @@ Page({
       title: this.data.title,
       accuser: this.data.accuser,
       respondent: this.data.respondent,
+      respondentid: this.data.respondentid,
+      accuserid: this.data.accuserid,
       orginalpay: this.data.orginalpay,
       description: this.data.description,
       state: -1,// 草稿
       issuer: app.globalData.userInfo.nickName,
     }
-    var urltemp = "";
-    if (this.data.isDraft == "true") {
-      // 如果是草稿，就进行草稿提交
-      urltemp = config.requestPutDraftok;
-    }
-    else {
-      urltemp = config.requestPutNewCaseByPost;
-    }
-    console.log(urltemp);
-    app.showBusy("正在提交...");
-    qcloud.request({
-      url: urltemp,
-      login: app.globalData.hasLogin,
-      data: values,
-      method: "post",
-      header: { "content-type": "application/x-www-form-urlencoded" },
+    this.uploadtest(values, config.requestCreateNewCaseByPost);
+  },
+  /**
+   * 预览图片
+   */
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.files // 需要预览的图片http链接列表
+    })
+  },
+  /**
+   * 上传图片
+   */
+  chooseWxImage: function (type) {
+    var that = this;
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: [type], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
-        // console.log(res);
-        if (res.data.isok) {
-          app.showSuccess("数据已经提交");
-          // 导航回到主页面
-          qcloud.clearCaseCache();
-          wx.navigateBack();
-        }
-        else {
-          app.showModel('提交失败！', "服务器出问题了");
-        }
-      },
-      fail: function (error) {
-        app.showModel("提交失败！", error);
+        // console.log(res)
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        that.setData({
+          imageSrc: res.tempFilePaths[0]
+        });
+        // console.log(that.data.imageSrc)
       }
-    });
+    })
+  },
+  /**
+   * 选择图片方式
+   */
+  chooseImageTap: function () {
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['从相册中选择', '拍照'],
+      itemColor: "#f7982a",
+      success: function (res) {
+        if (!res.cancel) {
+          if (res.tapIndex == 0) {
+            that.chooseWxImage('album')
+          } else if (res.tapIndex == 1) {
+            that.chooseWxImage('camera')
+          }
+        }
+      }
+    })
+  },
 
-  }
 })

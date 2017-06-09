@@ -73,7 +73,7 @@
         </view>
       </view>
     </view>
-
+    <!-- 互不赔偿 单点赋值 -->
     <!-- 第四个赋值，条件：赔偿条件 等于 2 -->
     <view wx:if="{{payType == '2'}}">
       <view class="weui-cells__title">如果赔偿金额是 [{{originalpay}} 元] 你的满意度是：</view>

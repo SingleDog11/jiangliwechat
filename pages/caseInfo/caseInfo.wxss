@@ -15,7 +15,7 @@ page {
 
 .m-case-header .cover {
   width: 100%;
-  height: 352rpx;
+  height: 300rpx;
   vertical-align: bottom;
 }
 
@@ -48,15 +48,13 @@ page {
   font-size: 40rpx;
   font-weight: 600;
   line-height: 1.22;
-  text-shadow: 2rpx 2rpx rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
+  text-shadow: 2rpx 2rpx rgba(0, 0, 0, 0.4); 
+  overflow: hidden;   
+  -webkit-line-clamp: 3;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  margin-top: 218rpx;
-}
-
+  margin-top: 70rpx;
+} 
 .m-case-info {
   position: relative;
   background-color: #fff;
@@ -118,19 +116,30 @@ page {
   color: #999;
   font-size: 22rpx;
   margin-top: 8rpx;
-}
-
-.m-case-header .rating image {
-  width: 26rpx;
-  height: 26rpx;
-  margin-right: 7rpx;
+  display: flex; 
+  line-height: 30rpx; 
 }
 
 .m-case-header .m-rating {
   display: inline-block;
   vertical-align: middle;
 }
+.m-case-header .rating .comment{
+  color: #fff;
+  flex: 1 ;
+  margin-left: 150rpx ;
+  justify-content: space-between;
+}
+.m-case-header .rating .comment .avatar{
 
+  width: 30rpx;
+  height: 30rpx;
+  float: left;
+  margin-right: 15rpx;
+  border-radius: 30rpx;
+  vertical-align: bottom;
+
+}
 .button-hover {
   background-color: #0097a7;
 }
@@ -142,10 +151,10 @@ button {
   color: #fff;
 }
 
-.m-case-intro {
-  padding: 15px;
+.m-case-intro { 
+  padding: 15px ;  
   background-color: #fff;
-}
+} 
 
 .m-case-intro .content {
   color: #646464;

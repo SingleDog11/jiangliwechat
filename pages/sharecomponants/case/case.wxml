@@ -28,6 +28,7 @@
           <view class='state' wx:if="{{case.basic.state == '0'}}">状态：待审核</view>
           <view class='state' wx:if="{{case.basic.state == '1'}}">状态：待裁决</view>
           <view class='state' wx:if="{{case.basic.state == '2'}}">状态：已完成</view>
+          <view class='state' wx:if="{{case.basic.state == '3'}}">状态：正在申诉中..</view>
         </view>
       </view>
       <view class="bottom">

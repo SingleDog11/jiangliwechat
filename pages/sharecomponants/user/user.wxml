@@ -1,4 +1,4 @@
-<import src="../widget/rating.wxml" />
+<import src="../star/rating.wxml" />
 <template name="m-live">
   <view class="m-live" bindtap="onViewTap" data-id="{{ live.id }}">
     <image class="cover" src="{{ live.cover }}" background-size="cover"></image>
@@ -15,7 +15,7 @@
       </view>
       <view class="desc">
         <view>
-          <text>{{ live.outline || live.description }}</text>
+          <text>权重：{{user.weight || live.outline || live.description }}</text>
         </view>
       </view>
       <view class="detail">{{ live.liked_num }} 喜欢 / {{ live.seats_taken }} 参加</view>

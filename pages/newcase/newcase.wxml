@@ -5,65 +5,92 @@
   <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示:{{errormsg}}</view>
   <view class="weui-cells__title">请填写...</view>
   <view class="weui-cells weui-cells_after-title">
-    <form catchsubmit="formSubmit">
 
-      <!-- 填写案件名称 -->
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">案件名称</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input focus="true" value="{{title}}" bindblur="justInTimeSyTitle" maxlength="40" class="weui-input" name="title" placeholder="简短的输入案件核心内容"
-          />
-        </view>
+    <!-- 填写案件名称 -->
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">案件名称</view>
       </view>
-
-      <!-- 输入投诉人姓名 -->
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">投诉人</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input bindblur="justInTimeSyaccuser" class="weui-input" name="accuser" placeholder="输入投诉人" value="{{accuser}}" />
-        </view>
+      <view class="weui-cell__bd">
+        <input focus="true" value="{{title}}" bindblur="justInTimeSyTitle" maxlength="40" class="weui-input" name="title" placeholder="简短的输入案件核心内容"
+        />
       </view>
+    </view>
 
-      <!-- 选择应诉人 -->
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">应诉人</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input bindtap="justInTimeSyrespondent" class="weui-input" name="respondent" placeholder="输入应诉人" value="{{respondent}}" />
-        </view>
+    <!-- 输入投诉人姓名 -->
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">投诉人</view>
       </view>
-
-      <!-- 输入要索赔的金额 -->
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">索赔金额</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input type="digit" bindinput="justInTimeCheckDataAndNum" class="weui-input" name="orginalpay" placeholder="输入索赔金额" value="{{orginalpay}}"
-          />
-        </view>
+      <view class="weui-cell__bd">
+        <input disabled="false" bindblur="justInTimeSyaccuser" class="weui-input" name="accuser" placeholder="输入投诉人" value="{{accuser}}"
+        />
       </view>
+    </view>
 
-      <!-- 输入申诉的理由 -->
-      <view class="weui-cells__title">请申诉人申诉</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell">
-          <view class="weui-cell__bd">
-            <textarea maxlength="2000" bindblur="justInTimeCheckData" bindinput="justInTimeCountAndInput" class="accuserarea" name="description"
-              placeholder="请输入理由" fixed="true" style="height: 10em" value="{{description}}" />
-            <view class="weui-textarea-counter">{{wordnum}}/2000</view>
+    <!-- 选择应诉人 -->
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">应诉人</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input disabled="false" class="weui-input" name="respondent" placeholder="搜索应诉人" value="{{respondent}}"
+        />
+      </view>
+      <view class="weui-cell__bd" bindtap="searchrespondent">
+        <icon type="search" color="#4c4c4c" size="18" />
+      </view>
+    </view>
+
+    <!-- 输入要索赔的金额 -->
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">索赔金额</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input type="digit" bindinput="justInTimeCheckDataAndNum" class="weui-input" name="orginalpay" placeholder="输入索赔金额" value="{{orginalpay}}"
+        />
+      </view>
+    </view>
+    <!-- 图片取证 -->
+    <view class="weui-cells__title">取证图片</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__hd">
+              <view class="weui-uploader__title">图片上传</view>
+            </view>
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files" id="uploaderFiles">
+                <view class="weui-uploader__file" bindtap="previewImage">
+                  <image class="weui-uploader__img" src="{{ imageSrc }}" mode="aspectFill" />
+                </view>
+
+                <view class="weui-uploader__input-box" wx:if="{{ !imageSrc }}">
+                  <view class="weui-uploader__input" bindtap="chooseImageTap"></view>
+                </view>
+              </view>
+            </view>
           </view>
         </view>
       </view>
-      <view class="weui-btn-area">
-        <button type="primary" formType="submit">确定并发布</button> 
-        <button type="default" bindtap = "onCache" wx:if="{{isfabu=='false'}}">保存为草稿</button>
+    </view>
+    <!-- 输入申诉的理由 -->
+    <view class="weui-cells__title">请申诉人申诉</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea maxlength="2000" bindinput="justInTimeCountAndInput" class="accuserarea" name="description" placeholder="请输入理由"
+            style="height: 10em" value="{{description}}" />
+          <view class="weui-textarea-counter">{{wordnum}}/2000</view>
+        </view>
       </view>
-    </form>
+    </view>
+
+    <view class="weui-btn-area">
+      <button type="primary" bindtap="submit">确定并发布</button>
+      <button type="default" bindtap="onCache" wx:if="{{isfabu=='false'}}">保存为草稿</button>
+    </view>
   </view>
 </view>

@@ -2,6 +2,8 @@
   "pages": [
     "pages/main/main",
     "pages/detail/detail",
+    "pages/detail/descdetail",
+    "pages/caseInfo/comment/comment",
     "pages/tipinformation/tipinformation",
     "pages/caseInfo/caseInfo",
     "pages/tpcase/tpcase",

@@ -12,7 +12,7 @@
         </view>
         <view class="content">
           <view class="username">{{ user.name }}</view>
-          <view class="headline">{{ user.headline || user.bio }}</view>
+          <view class="headline">权重：{{user.weight || user.headline}}</view>
         </view>
         <view class="desc">
           <text class="label">个人简介</text>
@@ -28,4 +28,5 @@
   <block wx:for="{{ caselist }}" wx:for-item="case" wx:key="case.id">
     <template is="m_case" data="{{case: case}}" />
   </block> 
+   <view class="all" bindtap="viewCaseList" wx:if="{{user.case_number > 2}}">全部</view>
 </scroll-view>

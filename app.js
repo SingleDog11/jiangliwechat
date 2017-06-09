@@ -25,11 +25,9 @@ App({
     // console.log(config.loginUrl);
     qcloud.setLoginUrl(config.loginUrl);
     // 获取userinfo
-    that.getUserInfo(function (userInfo) {
-      that.Login(userInfo);
-    }
-    );
-    // 登陆
+    // that.getUserInfo(function (userInfo) {
+    //   that.Login(userInfo);
+    // }); 
 
   },
 
@@ -39,7 +37,7 @@ App({
   globalData: {
     hasLogin: false,
     openid: null,
-    userid: null, 
+    userid: null,
     cc: null,
     userInfo: null,
   },
@@ -56,6 +54,7 @@ App({
       typeof cb == "function" && cb(this.globalData.userInfo)
     }
     else {
+      that.showBusy("正在请求数据...");
       //调用登录接口
       wx.login({
         success: function (res) {
@@ -75,22 +74,26 @@ App({
    */
   Login: function (ui) {
     const that = this;
+
     qcloud.login({
       data: ui,
-      method:"post",
+      method: "post",
       success(result) {
         console.log(result)
-        if (result != "error") {
+        if (result) {
+          wx.hideToast();
           // 修改全局变量hasLogin
           that.globalData.hasLogin = true;
           that.globalData.openid = result.openid;
           that.globalData.userid = result.userid;
         }
         else {
+          wx.hideToast();
           console.log("server fail");
         }
       },
       fail(error) {
+        wx.hideToast();
         console.log("login fail");
       }
     });

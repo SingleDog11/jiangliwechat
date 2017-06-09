@@ -1,5 +1,5 @@
 @import '../sharecomponants/mystar/mystar.wxss';
-@import '../sharecomponants/case/case.wxss';
+@import '../sharecomponants/case/case_small.wxss';
 
 page{
     background-color: #f0f0f0;

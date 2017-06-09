@@ -1,4 +1,4 @@
-@import "../../components/widget/rating.wxss";
+@import "../star/rating.wxss";
 
 .m-live {
   overflow: hidden;

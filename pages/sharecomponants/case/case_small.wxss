@@ -2,7 +2,8 @@
   position: relative;
   margin: 20rpx;
   border-bottom: 1px solid #eaeaea;
-  padding-bottom: 20rpx;
+  padding-bottom: 20rpx; 
+  
 }
 
 .m_case .cover {
@@ -32,6 +33,11 @@
   font-size: 30rpx;
   line-height: 30rpx;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .m_case .rating {

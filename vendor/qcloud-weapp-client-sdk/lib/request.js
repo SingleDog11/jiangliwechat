@@ -65,16 +65,16 @@ function request(options) {
 
     // console.log(requireLogin);
     // console.log(options.data);
-    if (!requireLogin) {
-        doRequestWithLogin();
-    } else {
-        doRequest();
-    }
-
+    // if (!requireLogin) {
+    //     doRequestWithLogin();
+    // } else {
+    //     doRequest();
+    // }
+    doRequest();
     // 登录后再请求
-    function doRequestWithLogin() {
-        loginLib.login({ success: doRequest, fail: callFail });
-    }
+    // function doRequestWithLogin() {
+    //     loginLib.login({ success: doRequest, fail: callFail });
+    // }
 
     // 实际进行请求的方法
     function doRequest() {

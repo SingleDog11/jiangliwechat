@@ -19,35 +19,47 @@ Page({
       title: self.data.user.name,
     });
   },
+  onShow() {
+    this.requireCaseList();
+  },
   onLoad(options) {
-    // console.log(app.globalData.userid);
+
+  },
+  /**
+   * 请求该用户所创建的案件列表
+   */
+  requireCaseList: function () {
     const id = app.globalData.userid;
     const data = { userId: id };
-    const self = this; 
+    const self = this;
     qcloud.request({
       login: app.globalData.hasLogin,
       url: config.requestGetUserById,
       data,
       success: (res) => {
-        // console.log(res);
+        console.log(res);
         let rs = res.data;
-        let caselist = [], user = [];
+        let caselist = [];
 
+        /**
+         * 数据规格化处理
+         */
         let gender = "Ta";
         if (rs.gender === '0') {
           gender = "她";
         } else if (rs.gedner === '1') {
           gender = "他";
         }
-
         rs.gender = gender;
+        rs.description = res.description == null ? "您实在是太懒了" : res.description;
+
         rs.caselist.map((item) => {
           item.hiddenUser = true;
           caselist.push({ basic: item });
         });
         // console.log(caselist);
-        user = rs;
-        self.setData({ user, caselist }) 
+        let user = rs;
+        self.setData({ user, caselist })
       },
     });
   },
@@ -66,7 +78,9 @@ Page({
    * 单击全部案件
    * @param {*} e 
    */
-  viewCaseList(e){
-    
+  viewCaseList(e) {
+    wx.navigateTo({
+      url: "../tpcase/tpcase",
+    })
   }
 });

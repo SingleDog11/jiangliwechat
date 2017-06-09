@@ -1,0 +1,20 @@
+<view class="container">
+    <!--<view wx:if="{{hasimage}}" bindtap="previewImage">-->
+        <image wx:if="{{hasimage}}" bindtap="previewImage" class="header-image" src="{{imageUrl}}"></image>
+    <!--</view>-->
+    <view class="author-data">
+        <image class="author-image" src="{{avatar}}"></image>
+        <text class="author">{{author}}</text>
+        <text class="const-text">发表于</text>
+        <text class="date">{{dateTime}}</text>
+    </view>
+    <text class="title">{{title}}</text>
+    <view class="tool">
+        <view class="circle-image">
+            <image catchtap="onShareTap" class="share-image" src="/images/icon/share.png"></image>
+        </view>
+        <view class="horizon"></view>
+    </view>
+    <text class="detail">{{content}}</text>
+
+</view>

@@ -4,13 +4,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
+  /*justify-content: space-between;*/
+  /*padding: 200rpx 0;*/
   box-sizing: border-box;
 } 
 page {
-  font: 14px "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti;
+  font: 15px 'MicroSoft Yahei',"Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, STHeiti;
   line-height: 1.5;
+  background: #efefef;
 }
 .clearfix:after{
   content : '';

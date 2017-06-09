@@ -1,20 +1,10 @@
-<view class="page">
-    <view class="page__hd">
-        <view class="page__title">{{speaker}}</view>
-    </view>
-    <view class="page__bd">
-        <view class="weui-article">
-            <view class="weui-article__section">
-                <view class="weui-article__p">
-                    时间：{{time}}
-                </view>
-                <view class="weui-article__p">
-                    第{{turn}}轮申诉
-                </view>
-                <view class="weui-article__p">
-                    内容：{{content}}
-                </view> 
-            </view>
+<form bindsubmit="onSubmit">
+    <view class="container">
+        <view class='row'>
+            <textarea class='text' maxlength="5000" auto-height="true" placeholder-class="placeholder" name="content" value="" placeholder="点击添加文本" />
         </view>
-    </view> 
-</view>
+        <view class='bottom'>
+            <button formType="submit" class='btn success'>保存</button>
+        </view>
+    </view>
+</form>

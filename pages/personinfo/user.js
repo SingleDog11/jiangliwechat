@@ -41,10 +41,14 @@ Page({
         }
 
         rs.gender = gender;
+        rs.headline = res.headline == null ? "这个人太懒了…什么也没留下" : res.headline;
+        rs.description = res.description == null ? "这个人太懒了…什么也没留下" : res.description;
+
+        console.log(rs.caselist)
         rs.caselist.map((item) => {
           item.pic_url = item.cover;
           item.hiddenUser = true;
-          caselist.push(item);
+          caselist.push({ basic: item });
         });
         user = rs;
         self.setData({ user, caselist })
@@ -54,7 +58,7 @@ Page({
   },
   onViewTap(e) {
     const ds = e.currentTarget.dataset;
-    const t = ds['type'] === 'case' ? `case/case?id=${ds.id}` : 'personinfo/user'
+    const t = ds['type'] === 'case' ? `caseInfo/caseInfo?id=${ds.id}` : 'personinfo/user'
     wx.navigateTo({
       url: `../${t}`,
     });

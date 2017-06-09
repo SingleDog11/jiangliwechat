@@ -1,11 +1,7 @@
-// 引入配置
 var config = require('../../config');
-
-// 引入sdk
 var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
-
 const app = getApp();
-
+const constants = require('../../utils/constants');
 Page({
   data: {
     caseInfoId: 0,
@@ -16,16 +12,19 @@ Page({
     seeAllInfo: false,
     btnMsg: '查看全部',
     caseInfo: {},
+    isrespondent: false,
+
+    iscomplaint: false,
   },
   onLoad: function (options) {
-    // 判断是否为主人权限
-    var isownertemp = options.isowner;
     var caseInfoId = options.id;
     this.setData({
-      isowner: isownertemp,
       caseInfoId: caseInfoId,
     })
   },
+  /**
+   * 在页面显示的时候请求案件详细信息
+   */
   onShow: function () {
     var that = this;
 
@@ -34,10 +33,13 @@ Page({
       url: config.requestCaseById,
       data: { "caseId": that.data.caseInfoId },
       success: function (res) {
-        // console.log(res);
+        console.log(res);
         that.setData({
           caseInfo: res.data,
-        }) 
+          isowner: res.data.user.id == app.globalData.userid,
+          isrespondent: res.data.respondent.id == app.globalData.userid,
+          iscomplaint: res.data.basic.state == constants.COMPLAIN,
+        })
       }
     })
   },
@@ -59,10 +61,10 @@ Page({
   /**
    * 判断是新增还是修改
    */
-  isNew: function (name) {
-    var comments = this.data.caseInfo.comments;
-    for (var i = 0; i < comments.length; i++) {
-      if (comments[i].openid == name) {
+  isNew: function (id) {
+    var involves = this.data.caseInfo.involves;
+    for (var i = 0; i < involves.length; i++) {
+      if (involves[i].user.id == id) {
         //表示修改
         return false;
       }
@@ -70,16 +72,15 @@ Page({
     return true;
   },
   /**
-   * 进入裁判界面
-   * @param event 
+   * 进入裁判界面 
    */
   gojudge: function (event) {
     //首先判断是进行修改还是新增。直接再评论去查看有没有跟本账号一样
-    var openidformapp = app.globalData.openid;
-    var isnew = this.isNew(openidformapp);
+    var userid = app.globalData.userid;
+    var isnew = this.isNew(userid);
     // console.log(isnew);
     var urltemp = "";
-    urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.Ver_id +
+    urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.basic.id +
       '&isnew=' + isnew;
     wx.navigateTo({
       url: urltemp,
@@ -93,8 +94,8 @@ Page({
     var casetemp = e.currentTarget.dataset.case;
     // 传递参数,此时应该传递一个最满意的点。
     wx.navigateTo({
-      url: './chart/chart?perid=' + casetemp.Par_id + '&partid=' + casetemp.Participator_id +
-      '&amount=' + casetemp.Amountpaid,
+      url: './chart/chart?cid=' + casetemp.basic.id + '&uid=' + casetemp.user.id +
+      '&amount=' + casetemp.basic.orginalpay,
     })
   },
   /**
@@ -102,15 +103,55 @@ Page({
    */
   openDetail: function (e) {
     // console.log(e);
+    var title = "";
+    var occupy = "";
+    var avatar = "";
+    var author = "";
+    var imageUrl = "";
+    if (e.currentTarget.dataset.id == 1) {
+      console.log(this.data.caseInfo)
+      //案件详情 
+      occupy = this.data.caseInfo.basic.description;
+      title = this.data.caseInfo.basic.title;
+      author = this.data.caseInfo.user.nickname;
+      avatar = this.data.caseInfo.user.avatar_url;
+      imageUrl = this.data.caseInfo.imageSrc;
+    }
+    else if (e.currentTarget.dataset.id == 2) {
+      occupy = this.data.caseInfo.respondentturnone;
+      title = "申诉阶段：第一轮[应诉人]申诉";
+      author = this.data.caseInfo.respondent.nickname;
+      avatar = this.data.caseInfo.respondent.avatar_url;
+
+    } else if (e.currentTarget.dataset.id == 3) {
+      occupy = this.data.caseInfo.userturnone;
+      title = "申诉阶段：第一轮[投诉人]申诉";
+      author = this.data.caseInfo.user.nickname;
+      avatar = this.data.caseInfo.user.avatar_url;
+    } else if (e.currentTarget.dataset.id == 4) {
+      occupy = this.data.caseInfo.respondentturntwo;
+      title = "申诉阶段：第二轮[应诉人]申诉";
+      author = this.data.caseInfo.respondent.nickname;
+      avatar = this.data.caseInfo.respondent.avatar_url;
+
+    } else {
+      occupy = this.data.caseInfo.userturntwo;
+      title = "申诉阶段：第二轮[投诉人]申诉";
+      author = this.data.caseInfo.user.nickname;
+      avatar = this.data.caseInfo.user.avatar_url;
+    }
+
     // 存缓存
     qcloud.setDetailCache({
-      speaker: this.data.caseInfo.Accuser_client,
-      time: this.data.caseInfo.data,
-      content: this.data.caseInfo.Statement,
-      turn: 1,
+      author: author,
+      dateTime: this.data.caseInfo.basic.start_at,
+      content: occupy,
+      avatar: avatar,
+      title: title,
+      imageUrl: imageUrl
     })
     wx.navigateTo({
-      url: "../detail/detail",
+      url: "../detail/descdetail",
     })
   },
   /**
@@ -118,12 +159,7 @@ Page({
    */
   gochange: function (e) {
     qcloud.setCaseCache({
-      verid: this.data.caseInfo.Ver_id,
-      title: this.data.caseInfo.Complain_title,
-      Accuser: this.data.caseInfo.Accuser_client,
-      defendant: this.data.caseInfo.Defendant_client,
-      claim: this.data.caseInfo.Claim,
-      statement: this.data.caseInfo.Statement
+      id: this.data.caseInfo.basic.id,
     });
     wx.navigateTo({
       url: '../newcase/newcase?draft=true&hasfabu=true',
@@ -137,8 +173,25 @@ Page({
     var casetemp = e.currentTarget.dataset.case;
     // 传递参数,此时应该传递一个最满意的点。
     wx.navigateTo({
-      url: './chart/chart?perid=' + casetemp.Par_id + '&partid=' + casetemp.Participator_id +
+      url: './chart/chart?perid=' + casetempid + '&partid=' + casetemp.Participator_id +
       '&amount=' + casetemp.Amountpaid + '&group=true',
     })
-  }
+  },
+  /**
+   * 查看评论列表
+   */
+  commentView: function (e) {
+    console.log(e)
+    wx.navigateTo({
+      url: './comment/comment?cid=' + this.data.caseInfoId,
+    })
+  },
+  /**
+   * 申诉
+   */
+  complaint: function (e) {
+    wx.navigateTo({
+      url: '../detail/detail?id=' + this.data.caseInfoId,
+    })
+  },
 })

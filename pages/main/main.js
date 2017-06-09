@@ -21,6 +21,11 @@ Page({
         cases: [],
     },
 
+    onLoad: function () {
+        app.getUserInfo(function (userInfo) {
+            app.Login(userInfo);
+        });
+    },
     /**
      * 请求获取案件
      */
@@ -43,7 +48,7 @@ Page({
             },
             success: function (res) {
                 wx.hideNavigationBarLoading();
-                // console.log(res); 
+                console.log(res); 
                 if (res.data.length == 0) {
                     // 如果返回的是0，则
                     that.setData({
@@ -58,7 +63,7 @@ Page({
                     that.setData({
                         cases: searchList,
                         hasContent: searchList.length != 0,
-                        searchLoading: true, 
+                        searchLoading: true,
                     })
                 }
             },
@@ -72,7 +77,7 @@ Page({
      * 单击search栏
      * @param {*传递的变量} event 
      */
-    searchclick(event) { 
+    searchclick(event) {
         wx.navigateTo({
             url: "../search/search",
         });
@@ -81,14 +86,14 @@ Page({
      * 单击案件的事件
      * @param {*变量} e 
      */
-    onViewTap(e) { 
+    onViewTap(e) {
         const ds = e.currentTarget.dataset;
         const t = ds['type'] === 'case' ? 'caseInfo/caseInfo' : 'personinfo/user';
         console.log(`../${t}?id=${ds.id}`);
         wx.navigateTo({
             url: `../${t}?id=${ds.id}`,
         });
-    }, 
+    },
     /**
      * 加载更多
      */

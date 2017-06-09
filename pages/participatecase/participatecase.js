@@ -32,7 +32,7 @@ Page({
     // 赋值类型
     dotType: 2,
     // 赔偿类型
-    payType: 0,
+    payType: 1,
 
     // 合理赔偿
     rationalpay: 0,
@@ -44,7 +44,8 @@ Page({
     originalpay: 0,
     // 理由
     reason: "",
-
+    // 请求的url
+    url: config.requestCreateInvolve,
     radioItems: [
       { name: '单点赋值', value: '1' },
       { name: '三点赋值', value: '2', checked: true }
@@ -56,18 +57,16 @@ Page({
 
   },
   onLoad: function (options) {
-    const that = this ;
+    const that = this;
     var isnew = options.isnew;
     // console.log(isnew);
     if (isnew == 'false') {
       // 这是修改界面，提示用户.
       app.showModel('warn', '您已经裁决过，通过此界面您可以更新您的裁决。');
-      wx.setNavigationBarTitle({
-        title: '更新裁决',
-        success: function (res) {
-          // success
-        }
-      })
+      wx.setNavigationBarTitle({ title: '更新裁决', })
+      this.setData({ url: config.requestModifiedInvolve })
+    }
+    else {
     }
     // 页面初始化 options 带来本案件的id 
     qcloud.request({
@@ -76,17 +75,16 @@ Page({
       data: { "id": options.caseinfoid },
       success: function (res) {
         // 得到了案件的发起者,修改标题栏。
-        var casetemp = res.data[0];
+        var casetemp = res.data;
         wx.setNavigationBarTitle({
-          title: "针对" + casetemp.Accuser_client + "的案件进行裁决",
+          title: "针对" + casetemp.user.nickname + "的案件进行裁决",
         });
         that.setData({
           caseinfo: casetemp,
-          originalpay: casetemp.Claim,
+          originalpay: casetemp.originalpay,
         })
       }
     })
-
   },
 
   // 输入满意金额结束后触发事件
@@ -160,9 +158,9 @@ Page({
     var count = e.detail.value.length;
     this.setData({
       wordnum: count,
-      reason : e.detail.value ,
+      reason: e.detail.value,
     })
-  }, 
+  },
   // 点击提交
   postinfo: function () {
     if (this.data.showTopTips) {
@@ -173,26 +171,21 @@ Page({
     app.showBusy("正在提交...");
     qcloud.request({
       login: app.globalData.hasLogin,
-      url: config.requestPutNewComments,
+      url: that.data.url,
       data: {
-        caseid: that.data.caseinfo.Ver_id,
-        ptvalution: that.data.dotType,// 赋值方式 2，代表三点赋值
-        ptPunish: that.data.payType, // 惩罚方式
-        ptSatifyPay: that.data.rationalpay,
-        ptSatifynoPay: that.data.satisfication,
-        ptSatifyDoublePay: that.data.doublesatisfication,
-        originalpay: that.data.originalpay,
-        reason: that.data.reason,
+        userid: app.globalData.userid,
+        caseid: that.data.caseinfo.basic.id,
+        modedot: that.data.dotType,// 赋值方式 2，代表三点赋值
+        modepay: that.data.payType, // 惩罚方式
+        mostSatisfied: that.data.rationalpay,
+        nonSatisfied: that.data.satisfication,
+        doublePay: that.data.doublesatisfication,
+        assignmentExplain: that.data.reason,
       },
       success: function (res) {
-        // console.log(res);
-        if (res.data.isok) {
-          app.showSuccess("提交成功");
-          wx.navigateBack();
-        }
-        else {
-          app.showModel("error", res.data.content);
-        }
+        // console.log(res); 
+        app.showSuccess("提交成功");
+        wx.navigateBack();
       },
       fail: function (e) {
         app.showModel("提交失败", e);

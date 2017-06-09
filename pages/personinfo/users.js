@@ -27,7 +27,7 @@ Page({
   getusersfromnet: function () {
     const that = this;
 
-    if (that.data.q.trim == "") {
+    if (!that.data.q) {
       return;
     }
     wx.showNavigationBarLoading();

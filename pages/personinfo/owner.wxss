@@ -71,7 +71,7 @@
   margin-top: 60rpx;
 }
 
-.desc .label {
+.desc .label { 
   width: 60px;
   margin-right: 37px;
   font-weight: 500;

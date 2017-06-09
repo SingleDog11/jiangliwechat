@@ -1,14 +1,10 @@
 <import src='../sharecomponants/star/rating.wxml' />
-<import src='../sharecomponants/case/case.wxml' />
+<import src='../sharecomponants/case/case_small.wxml' />
 <view class='pagecontainer'>
 
   <!-- 搜索框 -->
-
-  <view class='search'>
-    <icon type="search" color="#4c4c4c" size="18"></icon>
-    <input type="text" maxlength="100" placeholder="请输入搜索的案件" placeholder-style="color:#999999" />
-  </view>
-  <view class='navitem sort' bindtap='navitation' data-id='02' wx:if="{{funcIdentity == '02'}}">
+ 
+  <view class='navitem sort' bindtap='navitation' data-id='02'>
     {{btnMsg}}
     <image src="{{selectedNav === '02' ? '../../images/arrow_up.png' : '../../images/arrow_down.png'}}"></image>
   </view>
@@ -17,7 +13,7 @@
   <view class='wrap' wx:if="{{hasContent}}">
     <scroll-view class='scroller' style="width:{{width}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">
       <block wx:for='{{caseslist}}' wx:for-item='case' wx:key='*this'>
-        <template is="case" data="{{case:case , flag:funcIdentity == '02'}}" />
+        <template is="m_case" data="{{case:case}}" />
       </block>
     </scroll-view>
 
