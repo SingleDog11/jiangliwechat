@@ -9,11 +9,12 @@
             </view>
             <view class="list_header_right" data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}" data-name="{{item.username}}">{{item.created_at}}</view>
         </view>
-        <view class="comment_content" data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}" data-name="{{item.username}}">
-            <view wx:if="{{item.pid!=0}}" class="response_comment" data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}"
-                data-name="{{item.username}}">
-                <view data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}" data-name="{{item.username}}">回复</view>
-                <view class="float_none" data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}" data-name="{{item.username}}">{{item.pusername}}</view>:</view>
+        <view class="comment_content">
+            <view wx:if="{{item.pid!=0}}" class="response_comment">
+                <view>回复</view>
+                <view class="float_none" data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}" data-name="{{item.username}}">{{item.pusername}}</view>
+                :
+            </view>
             <text wx:if="{{item.content=='*******该内容已被屏蔽********'}}" class="font_grap" data-commentId="{{item.id}}" data-id="{{item.id}}"
                 data-uid="{{item.uid}}" data-name="{{item.username}}">{{item.content}}</text>
             <text wx:else data-commentId="{{item.id}}" data-id="{{item.id}}" data-uid="{{item.uid}}" data-name="{{item.username}}">{{item.content}}</text>
@@ -22,7 +23,7 @@
 </view>
 <view class="Response_layer" wx:if="{{isToResponse}}" bindtap="hiddenResponse"></view>
 <view class="comment_box" wx:if="{{isToResponse}}">
-    <form bindsubmit="publishComment" >
+    <form bindsubmit="publishComment">
         <input placeholder="{{plaContent}}" name="commContent" value="{{responeContent}}" />
         <button type="default" hover-class="other-button-hover" formType="submit" disabled="{{isdisabled}}" loading="{{commentLoading}}"> 发送 </button>
     </form>

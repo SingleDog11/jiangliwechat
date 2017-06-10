@@ -38,7 +38,7 @@ Page({
     let that = this;
 
     if (that.data.searchLoading && !that.data.searchLoadingComplete) {
-      console.log(that.data.currentPage);
+      // console.log(that.data.currentPage);
       that.setData({
         searchLoading: false,
       })
@@ -77,11 +77,13 @@ Page({
         else {
           var searchList = [];
           that.data.hasContent == false ? searchList = res.data : searchList = that.data.cases.concat(res.data);
+          var isend = res.data.length < 20;
           that.setData({
             cases: searchList,
+            searchLoading: !isend,
+            searchLoadingComplete: isend,
             hasContent: searchList.length != 0,
-            currentPage: that.data.currentPage + 1,
-            searchLoading: true,
+            currentPage: that.data.currentPage + 1, 
           })
         }
       },
@@ -110,6 +112,7 @@ Page({
           state: self.data.status,
         },
         success: function (res) {
+          // console.log(res);
           let cases = res.data;
           self.setData({ cases });
         },

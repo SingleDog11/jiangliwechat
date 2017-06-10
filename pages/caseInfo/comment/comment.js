@@ -63,7 +63,7 @@ Page({
       },
       success: function (res) {
         wx.hideNavigationBarLoading();
-        console.log(res);
+        // console.log(res);
         if (res.data.length == 0) {
           // 如果返回的是0，则
           that.setData({
@@ -168,10 +168,9 @@ Page({
           that.setData({ commentLoading: false, isdisabled: false })
 
           if (res.statusCode == 200) {
-            // 创建成功
-            console.log(res);
+            // 创建成功 
             var searchList = [];
-            that.data.hasContent == false ? searchList = res.data : searchList = that.data.commentList.concat(res.data);
+            that.data.hasContent == false ? searchList.push(res.data) : searchList = that.data.commentList.concat(res.data);
             that.setData({
               commentList: searchList,
               hasContent: searchList.length != 0,

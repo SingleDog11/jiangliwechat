@@ -33,8 +33,9 @@ Page({
         dateTime: detail.dateTime,
         title: detail.title,
         imageUrl: that.transUrl(detail.imageUrl),
-        hasimage: detail.imageUrl != undefined,
-      }) 
+        hasimage: detail.imageUrl != undefined || detail.imageUrl != "",
+      })
+      console.log(detail);
       qcloud.clearDetailCache();
     }
   },

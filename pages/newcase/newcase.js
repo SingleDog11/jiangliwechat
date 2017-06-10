@@ -128,10 +128,38 @@ Page({
         state: 0,
         accuserid: app.globalData.userid,
       }
-      // console.log(transdata);
+      // console.log(that.data.imageSrc)
       app.showBusy("正在提交...");
-      that.uploadtest(transdata, e.url);
+      if (!that.data.imageSrc) {
+        that.uploadCase(transdata, e.url);
+      }
+      else {
+        that.uploadtest(transdata, e.url);
+      }
     }
+  },
+  uploadCase(formdata, url) {
+    let that = this;
+    qcloud.request({
+      login: true,
+      url: url,
+      method: "post",
+      data: formdata,
+      success: function (res) {
+        // console.log(res);
+        if (res.statusCode == 200) {
+          app.showSuccess("数据已经提交");
+          qcloud.clearCaseCache();
+          wx.navigateBack();
+        }
+        else {
+          app.showModel('提交失败！', "服务器出问题了");
+        }
+      },
+      fail: function (error) {
+        app.showModel("提交失败！", error);
+      }
+    })
   },
   /**
    * 测试函数-上传文件
@@ -201,7 +229,7 @@ Page({
       description: value
     })
   },
-   
+
   /**
   * 应诉人选择
   */
@@ -255,7 +283,7 @@ Page({
        *    -- 待审核状态
        *    -- 新发布案件状态
        */
-      url = config.requestCreateNewCaseByPost;
+      url = config.requestPutNewCaseByPost;
     }
     this.formSubmit({
       url: url,
@@ -285,7 +313,7 @@ Page({
   previewImage: function (e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+      urls: [this.data.files] // 需要预览的图片http链接列表
     })
   },
   /**
@@ -325,5 +353,27 @@ Page({
       }
     })
   },
+  /**
+   * 删除图片
+   */
+  deleteImage: function (e) {
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['删除', '替换'],
+      success: function (res) {
+        if (!res.cancel) {
+          console.log(res.tapIndex)
+          if (res.tapIndex == 0) {
+            // 删除
+            that.setData({ imageSrc: null })
+          }
+          else {
+            // 替换
+            that.chooseImageTap();
+          }
+        }
+      }
+    });
+  }
 
 })

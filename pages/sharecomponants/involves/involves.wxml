@@ -17,7 +17,7 @@
           <view class='group'>
 
             <!-- 三点的详细信息 -->
-            <view wx:if="{{involve.modedot == 1}}">
+            <view wx:if="{{involve.modedot == 2}}">
               <view wx:if="{{involve.modepay == 1}}">
                 <view class='title'>需要赔偿的三点</view>
                 <view class='perdot'>
@@ -43,7 +43,7 @@
             </view>
 
             <!-- 单点赋值的显示方式 -->
-            <view wx:if="{{involve.modedot == 0}}">
+            <view wx:if="{{involve.modedot == 1}}">
               <view class='title'>需要赔偿的一点</view>
               <view class='perdot'>
                 <view class='name'>最好赔偿：</view>
@@ -54,7 +54,7 @@
             <view class="title">赋值说明：</view>
             <view class='msg'>{{involve.assignmentExplain}}</view>
             <view class="line"></view>
-            <view wx:if="{{involve.modedot == 1}}">
+            <view wx:if="{{involve.modedot == 2}}">
               <view class="title">个人满意度曲线：</view>
               <button class="weui-btn" type="primary" plain="true" bindtap="seeChart" data-case="{{involve}}">
                 点击查看

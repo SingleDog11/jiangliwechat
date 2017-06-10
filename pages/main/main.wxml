@@ -3,7 +3,7 @@
 <view class="page">
   <!-- 搜索条 -->
   <view class="search">
-    <icon type="search" color="#4c4c4c" size="18" />
+    <icon type="search" color="#4c4c4c" size="18" bindtap="searchclick" />
     <input type="text" maxlength="100" placeholder="输入要搜索的案件" placeholder-style="color:#999999" bindtap="searchclick"/>
   </view>
 

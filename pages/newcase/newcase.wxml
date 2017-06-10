@@ -34,8 +34,7 @@
         <view class="weui-label">应诉人</view>
       </view>
       <view class="weui-cell__bd">
-        <input disabled="false" class="weui-input" name="respondent" placeholder="搜索应诉人" value="{{respondent}}"
-        />
+        <input disabled="false" class="weui-input" name="respondent" placeholder="搜索应诉人" value="{{respondent}}" />
       </view>
       <view class="weui-cell__bd" bindtap="searchrespondent">
         <icon type="search" color="#4c4c4c" size="18" />
@@ -63,13 +62,15 @@
             </view>
             <view class="weui-uploader__bd">
               <view class="weui-uploader__files" id="uploaderFiles">
-                <view class="weui-uploader__file" bindtap="previewImage">
+                <!--没有使用for循环、暂时只能上传一张图片-->
+                <view class="weui-uploader__file" bindtap="previewImage" bindlongtap="deleteImage" wx:if="{{imageSrc}}">
                   <image class="weui-uploader__img" src="{{ imageSrc }}" mode="aspectFill" />
                 </view>
 
-                <view class="weui-uploader__input-box" wx:if="{{ !imageSrc }}">
+                <view class="weui-uploader__input-box">
                   <view class="weui-uploader__input" bindtap="chooseImageTap"></view>
                 </view>
+                
               </view>
             </view>
           </view>

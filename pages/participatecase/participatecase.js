@@ -72,10 +72,11 @@ Page({
     qcloud.request({
       login: app.globalData.hasLogin,
       url: config.requestCaseById,
-      data: { "id": options.caseinfoid },
+      data: { "caseid": options.caseinfoid },
       success: function (res) {
         // 得到了案件的发起者,修改标题栏。
         var casetemp = res.data;
+        console.log(casetemp);
         wx.setNavigationBarTitle({
           title: "针对" + casetemp.user.nickname + "的案件进行裁决",
         });
@@ -172,6 +173,7 @@ Page({
     qcloud.request({
       login: app.globalData.hasLogin,
       url: that.data.url,
+      method:"post",
       data: {
         userid: app.globalData.userid,
         caseid: that.data.caseinfo.basic.id,

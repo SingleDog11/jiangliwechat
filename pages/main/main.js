@@ -48,7 +48,7 @@ Page({
             },
             success: function (res) {
                 wx.hideNavigationBarLoading();
-                console.log(res); 
+                console.log(res);
                 if (res.data.length == 0) {
                     // 如果返回的是0，则
                     that.setData({
@@ -60,10 +60,16 @@ Page({
                 else {
                     var searchList = [];
                     that.data.hasContent == false ? searchList = res.data : searchList = that.data.cases.concat(res.data);
+                    /**
+                     * 判断是否已经达到数据底部
+                     */
+                    var isend = res.data.length < 20 ;
                     that.setData({
                         cases: searchList,
                         hasContent: searchList.length != 0,
-                        searchLoading: true,
+                        searchLoading: !isend,
+                        searchLoadingComplete : isend, 
+                        currentPage: that.data.currentPage + 1,
                     })
                 }
             },
@@ -89,7 +95,7 @@ Page({
     onViewTap(e) {
         const ds = e.currentTarget.dataset;
         const t = ds['type'] === 'case' ? 'caseInfo/caseInfo' : 'personinfo/user';
-        console.log(`../${t}?id=${ds.id}`);
+        // console.log(`../${t}?id=${ds.id}`);
         wx.navigateTo({
             url: `../${t}?id=${ds.id}`,
         });
@@ -99,11 +105,16 @@ Page({
      */
     loadmore: function () {
         let that = this;
-        if (that.data.searchLoading && !that.data.searchLoadingComplete) {
-            // console.log(that.data.currentPage);
+        var searchLoading = this.data.searchLoading
+        var searchLoadingComplete = this.data.searchLoadingComplete
+        console.log("searchLoading: " + this.data.searchLoading)
+        console.log("searchLoadingComplete: " + this.data.searchLoadingComplete)
+
+        if (searchLoading && !searchLoadingComplete) {
+            console.log(that.data.currentPage);
+            searchLoading = false;
             that.setData({
-                searchLoading: false,
-                currentPage: that.data.currentPage + 1,
+                searchLoading: searchLoading,
             })
             that.getCasesfromnet();
         }

@@ -3,7 +3,7 @@
   <view class='case' bindtap='onViewTap' data-type="case" data-id="{{case.basic.id}}" wx:if="{{flag || case.basic.state != 0 && case.basic.state != -1}}">
 
     <!--背景图-->
-    <image class="cover" src="../../../images/pn_cover.png" mode="aspectFill"></image>
+    <image class="cover" src="http://www.achangxin.cn/doc/pn_cover.png" mode="aspectFill"></image>
 
     <view class='info'>
       <view class='titleh2'>{{case.basic.title}}</view>
