@@ -1,6 +1,6 @@
 // 业务服务器的域名
-var host = 'https://98171334.qcloud.la';
-// var host = 'http://localhost:9305';
+var host = 'https://www.achangxin.cn';
+//var host = 'http://localhost:9305';
 
 // 域名相关配置
 var config = {
@@ -58,7 +58,7 @@ var config = {
     requestSetAppeal: `${host}/api/caseapi/SetAppeal`,
 
     // 获取某客户的满意度曲线
-    requestGetChart: `${host}/values/GetQXP`,
+    requestGetSinglePoints: `${host}/api/external/getSinglePoints`,
 
     // 获取个人参与的案件
     requestGetCaseListOwner: `${host}/api/caseapi/GetCaseListOfOwner`,

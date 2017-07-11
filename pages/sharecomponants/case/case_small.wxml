@@ -1,7 +1,7 @@
 <import src="../star/rating.wxml" />
 <template name="m_case">
   <view class="m_case" bindtap="onViewTap" data-id="{{ case.basic.id }}" data-type="case">
-    <image class="cover" src="../../../images/pn_covertemp.png" background-size="cover" bindtap="onViewTap"></image>
+    <image class="cover" src="../../../images/pn_covertemp.png" background-size="cover"></image>
     <view class="info">
       <view class="title">
         <text>{{ case.basic.title }}</text>
@@ -10,7 +10,7 @@
         <template is="m-rating" data="{{count:5, size: 'm'}}" />
       </view>
       <view wx:if="{{!case.hiddenUser}}" class="user">
-        <image class="avatar" src="{{ case.author.avatar_url }}"></image>
+        <image class="avatar" src="{{ case.author.avatar_url }}" data-id="{{case.author.id}}" bindtap="onViewTap"></image>
         <view class="name">{{ case.author.nickname }}</view>
       </view>
       <view class="desc">

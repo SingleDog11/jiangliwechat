@@ -33,7 +33,7 @@ Page({
       url: config.requestCaseById,
       data: { "caseId": that.data.caseInfoId },
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         that.setData({
           caseInfo: res.data,
           isowner: res.data.user.id == app.globalData.userid,
@@ -87,15 +87,18 @@ Page({
     })
   },
   /**
-   * 查看满意度曲线
+   * 查看个人满意度曲线
    */
   seeChart: function (e) {
-    // console.log(e);
-    var casetemp = e.currentTarget.dataset.case;
+    // console.log(this.data.caseInfo);
+
+    var cid = this.data.caseInfo.basic.id ;
+    var pid = e.currentTarget.dataset.id;
+    var amount = this.data.caseInfo.orginalpay;
     // 传递参数,此时应该传递一个最满意的点。
     wx.navigateTo({
-      url: './chart/chart?cid=' + casetemp.basic.id + '&uid=' + casetemp.user.id +
-      '&amount=' + casetemp.basic.orginalpay,
+      url: './chart/chart?cid=' + cid + '&pid=' + pid +
+      '&amount=' + amount,
     })
   },
   /**
@@ -109,7 +112,7 @@ Page({
     var author = "";
     var imageUrl = "";
     if (e.currentTarget.dataset.id == 1) {
-      console.log(this.data.caseInfo)
+      // console.log(this.data.caseInfo)
       //案件详情 
       occupy = this.data.caseInfo.basic.description;
       title = this.data.caseInfo.basic.title;
@@ -170,18 +173,19 @@ Page({
    */
   groupchart: function (e) {
     // console.log(e);
-    var casetemp = e.currentTarget.dataset.case;
+    var cid = this.data.caseInfo.basic.id;
+    var amount = this.data.caseInfo.orginalpay;
     // 传递参数,此时应该传递一个最满意的点。
     wx.navigateTo({
-      url: './chart/chart?perid=' + casetempid + '&partid=' + casetemp.Participator_id +
-      '&amount=' + casetemp.Amountpaid + '&group=true',
+      url: './chart/chart?cid=' + cid +
+      '&amount=' + amount + '&group=true',
     })
   },
   /**
    * 查看评论列表
    */
   commentView: function (e) {
-    console.log(e)
+    // console.log(e)
     wx.navigateTo({
       url: './comment/comment?cid=' + this.data.caseInfoId,
     })

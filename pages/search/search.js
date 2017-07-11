@@ -64,7 +64,7 @@ Page({
       },
       success: function (res) {
         wx.hideNavigationBarLoading();
-        // console.log(res);
+        console.log(res);
         // console.log(res.data.length);
         if (res.data.length == 0) {
           // 如果返回的是0，则

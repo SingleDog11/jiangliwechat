@@ -53,9 +53,9 @@ Page({
     return rightx;
   },
   onLoad: function (options) {
-    // 获得案件id和参与者id
-    var caseid = options.perid;
-    var partid = options.partid;
+    // 获得案件id和该裁决id
+    var caseid = options.cid;
+    var partid = options.pid;
     var userAmount = options.amount;
     var group = options.group;
     this.setData({
@@ -72,10 +72,9 @@ Page({
       }
     }
     else {
-      urltemp = config.requestGetChart,
-      data = {
-        caseid:caseid ,
-        clid : partid ,
+      urltemp = config.requestGetSinglePoints,
+      data = { 
+        pid : partid ,
       }
     }
     // 获取满意度曲线。
@@ -89,14 +88,15 @@ Page({
       data: data,
       success: function (res) {
         // console.log(res);
-        if (res.data.success == 1) {
+        var orignaldata = JSON.parse(res.data);
+        if (orignaldata.success == 1) {
           app.showSuccess("获取成功");
-          points = res.data.data.curve;
-
+          points = orignaldata.data.curve;
           /**
            * 找到点集中最大的那个……
            */
           var maxx = that.getLargePoint(points);
+          console.log(maxx);
           var average = (parseFloat(userAmount) + parseFloat(maxx)) / 2;
           that.setData({
             pictureAmount: maxx,
@@ -139,7 +139,7 @@ Page({
       animation: true,
       background: '#f5f5f5',
       series: [{
-        name: '满意度',
+        name: '金额',
         data: simulationData.data,
         format: function (val, name) {
           return val;

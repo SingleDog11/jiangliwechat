@@ -108,12 +108,12 @@
   <view class='judge' wx:if="{{!iscomplaint}}">
     <!-- 投诉人视角-->
     <view wx:if="{{isowner == true}}">
-      <view class='gojudge' bindtap='gochange' wx:if="{{caseInfo.basic.state == 0}}">修改信息</view>
+      <view class='gojudge' bindtap='gochange' wx:if="{{caseInfo.basic.state == 1}}">修改信息</view>
     </view>
     <!--吃瓜群众视角-->
-    <view class='gojudge' bindtap='gojudge' wx:if="{{caseInfo.basic.state == 1}}">立即裁决</view>
-    <view class='other' bindtap='groupchart' wx:if="{{caseInfo.basic.state == 2}}">群体曲线</view>
-    <view class='gojudge' wx:if="{{caseInfo.basic.state == 2}}">已经完成的案件不可裁决</view>
-    <view class='gojudge' wx:if="{{caseInfo.basic.state == 0}}">未经审核的案件不可裁决</view>
+    <view class='gojudge' bindtap='gojudge' wx:if="{{caseInfo.basic.state == 2}}">立即裁决</view>
+    <view class='other' bindtap='groupchart' wx:if="{{caseInfo.basic.state == 3}}">群体曲线</view>
+    <view class='gojudge' wx:if="{{caseInfo.basic.state == 3}}">已经完成的案件不可裁决</view>
+    <view class='gojudge' wx:if="{{caseInfo.basic.state == 1}}">未经审核的案件不可裁决</view>
   </view>
 </view>

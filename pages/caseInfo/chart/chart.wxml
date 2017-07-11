@@ -6,7 +6,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">满意的金额</view>
+                    <view class="weui-label">满意金额：</view>
                 </view>
                 <view class="weui-cell__bd">
                     <view class="weui-label">{{userAmount}} 元</view>
@@ -15,7 +15,7 @@
 
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">曲线满意金额</view>
+                    <view class="weui-label">曲线最佳：</view>
                 </view>
                 <view class="weui-cell__bd">
                     <view class="weui-label">{{pictureAmount}} 元</view>
@@ -24,7 +24,7 @@
 
             <view class="weui-cell weui-cell_input" wx:if="{{isgroup == 'true'}}">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">平均金额</view>
+                    <view class="weui-label">平均金额：</view>
                 </view>
                 <view class="weui-cell__bd">
                     <view class="weui-label">{{averageAmount}} 元</view>

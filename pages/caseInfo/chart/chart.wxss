@@ -5,6 +5,6 @@
   color: #aaa;
 }
 .weui-cell {
-  display:  flex ;
+  /*display:  flex ;*/
   justify-content: space-between;
 }

@@ -283,7 +283,12 @@ Page({
        *    -- 待审核状态
        *    -- 新发布案件状态
        */
-      url = config.requestPutNewCaseByPost;
+      
+      if (this.data.imageSrc == null)
+        url = config.requestPutNewCaseByPost;
+      else {
+        url = config.requestCreateNewCaseByPost;
+      }
     }
     this.formSubmit({
       url: url,
