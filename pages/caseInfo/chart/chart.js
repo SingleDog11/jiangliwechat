@@ -96,7 +96,7 @@ Page({
            * 找到点集中最大的那个……
            */
           var maxx = that.getLargePoint(points);
-          console.log(maxx);
+          // console.log(maxx);
           var average = (parseFloat(userAmount) + parseFloat(maxx)) / 2;
           that.setData({
             pictureAmount: maxx,

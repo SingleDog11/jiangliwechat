@@ -1,6 +1,6 @@
 // 业务服务器的域名
-var host = 'https://www.achangxin.cn';
-//var host = 'http://localhost:9305';
+//var host = 'https://www.achangxin.cn';
+var host = 'http://localhost:9305';
 
 // 域名相关配置
 var config = {

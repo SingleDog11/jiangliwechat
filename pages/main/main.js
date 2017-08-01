@@ -6,6 +6,7 @@ var config = require('../../config');
 var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 // 获取app
 const app = getApp()
+const constants = require('../../utils/constants');
 
 Page({
     data: {
@@ -44,7 +45,7 @@ Page({
             url: config.requestCaseByPageAndState,
             data: {
                 page: that.data.currentPage, // 请求的页码
-                state: 1,// 1 请求正在裁决的案件
+                state: constants.PUBLISH,// 1 请求正在裁决的案件
             },
             success: function (res) {
                 wx.hideNavigationBarLoading();

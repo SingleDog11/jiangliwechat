@@ -33,7 +33,7 @@ Page({
         dateTime: detail.dateTime,
         title: detail.title,
         imageUrl: that.transUrl(detail.imageUrl),
-        hasimage: detail.imageUrl != undefined || detail.imageUrl != "",
+        hasimage: detail.imageUrl != null,
       })
       console.log(detail);
       qcloud.clearDetailCache();
