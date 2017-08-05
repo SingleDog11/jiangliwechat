@@ -4,7 +4,7 @@
   <!-- 搜索条 -->
   <view class="search">
     <icon type="search" color="#4c4c4c" size="18" bindtap="searchclick" />
-    <input type="text" maxlength="100" placeholder="输入要搜索的案件" placeholder-style="color:#999999" bindtap="searchclick"/>
+    <input type="text" maxlength="100" placeholder="输入要搜索的问题" placeholder-style="color:#999999" bindtap="searchclick"/>
   </view>
 
   <scroll-view class='list' style="width:{{width}}px;height:{{height}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">

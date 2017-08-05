@@ -1,7 +1,7 @@
 <import src="../star/rating.wxml" />
 <template name="m_case">
   <view class="m_case" bindtap="onViewTap" data-id="{{ case.basic.id }}" data-type="case">
-    <image class="cover" src="../../../images/pn_covertemp.png" background-size="cover"></image>
+    <image class="cover" src="http://achangxin.cn/content/custom/pn_cover.png" background-size="cover"></image>
     <view class="info">
       <view class="title">
         <text>{{ case.basic.title }}</text>

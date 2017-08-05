@@ -8,6 +8,8 @@ var config = require('../../config');
 //获取应用实例
 var app = getApp();
 
+const constants = require('../../utils/constants');
+
 Page({
   data: {
     // 判断是否为已发布案件
@@ -125,7 +127,7 @@ Page({
         originalpay: value.orginalpay,
         description: value.description,
         accuser: value.accuser,
-        state: 0,
+        state: constants.PENDING, // 发布的案件，审核状态
         accuserid: app.globalData.userid,
       }
       // console.log(that.data.imageSrc)
@@ -167,7 +169,7 @@ Page({
    */
   uploadtest(formdata, url) {
     let that = this;
-    console.log(that.data.imageSrc);
+    // console.log(that.data.imageSrc);
     wx.uploadFile({
       url: url,
       filePath: that.data.imageSrc,
@@ -307,7 +309,7 @@ Page({
       accuserid: this.data.accuserid,
       orginalpay: this.data.orginalpay,
       description: this.data.description,
-      state: -1,// 草稿
+      state: constants.DRAFT,// 草稿
       issuer: app.globalData.userInfo.nickName,
     }
     this.uploadtest(values, config.requestCreateNewCaseByPost);

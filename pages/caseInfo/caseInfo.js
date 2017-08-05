@@ -33,7 +33,7 @@ Page({
       url: config.requestCaseById,
       data: { "caseId": that.data.caseInfoId },
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         that.setData({
           caseInfo: res.data,
           isowner: res.data.user.id == app.globalData.userid,

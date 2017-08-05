@@ -37,7 +37,7 @@ Page({
       url: config.requestGetUserById,
       data,
       success: (res) => {
-        console.log(res);
+        // console.log(res);
         let rs = res.data;
         let caselist = [];
 

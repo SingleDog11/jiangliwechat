@@ -22,7 +22,7 @@
     </view>
   </view>
   <view class="m-case-count">
-    {{user.gender}}发起的案件({{ user.case_number }})
+    {{user.gender}}发起的问题({{ user.case_number }})
   </view>
   <view class="sep" wx:if="{{users}}"></view>
   <block wx:for="{{ caselist }}" wx:for-item="case" wx:key="case.id">

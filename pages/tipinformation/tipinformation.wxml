@@ -1,4 +1,6 @@
 <view class="page">
+<image src="http://www.achangxin.cn/content/custom/pn_cover.png"style=""></image>
+  <!-- 
     <view class="page__hd">
         <view class="page__title">《讲理平台投诉发布规则及注意事项》</view>
     </view>
@@ -30,7 +32,8 @@
             </view>
         </view>
     </view>
-    <view class="weui-flex"> 
-        <button class="weui-flex__item" type="primary" bindtap="btnagree">同意</button>
-    </view>
+        -->
+  <view class="weui-flex">
+    <button class="weui-flex__item" type="primary" bindtap="btnagree">同意</button>
+  </view>
 </view>

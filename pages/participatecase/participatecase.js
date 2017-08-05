@@ -76,7 +76,7 @@ Page({
       success: function (res) {
         // 得到了案件的发起者,修改标题栏。
         var casetemp = res.data;
-        console.log(casetemp);
+        // console.log(casetemp);
         wx.setNavigationBarTitle({
           title: "针对" + casetemp.user.nickname + "的案件进行裁决",
         });

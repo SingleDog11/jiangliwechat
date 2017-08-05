@@ -20,7 +20,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFF",
-    "navigationBarTitleText": "讲理",
+    "navigationBarTitleText": "和事佬",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -45,7 +45,7 @@
         "pagePath": "pages/tipinformation/tipinformation",
         "iconPath": "images/new_normal.png",
         "selectedIconPath": "images/new_pressed.png",
-        "text": "发布"
+        "text": "提问"
       }
     ]
   }

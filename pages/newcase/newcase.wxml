@@ -1,5 +1,5 @@
 <view class="page__hd">
-  <view class="page__desc">增加案件</view>
+  <view class="page__desc">提问</view>
 </view>
 <view class="page__bd">
   <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示:{{errormsg}}</view>
@@ -9,10 +9,10 @@
     <!-- 填写案件名称 -->
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">案件名称</view>
+        <view class="weui-label">标题</view>
       </view>
       <view class="weui-cell__bd">
-        <input focus="true" value="{{title}}" bindblur="justInTimeSyTitle" maxlength="40" class="weui-input" name="title" placeholder="简短的输入案件核心内容"
+        <input focus="true" value="{{title}}" bindblur="justInTimeSyTitle" maxlength="40" class="weui-input" name="title" placeholder="简短的输入问题核心内容"
         />
       </view>
     </view>
@@ -20,10 +20,10 @@
     <!-- 输入投诉人姓名 -->
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">投诉人</view>
+        <view class="weui-label">提问人</view>
       </view>
       <view class="weui-cell__bd">
-        <input disabled="false" bindblur="justInTimeSyaccuser" class="weui-input" name="accuser" placeholder="输入投诉人" value="{{accuser}}"
+        <input disabled="false" bindblur="justInTimeSyaccuser" class="weui-input" name="accuser" placeholder="输入提问人" value="{{accuser}}"
         />
       </view>
     </view>
@@ -31,10 +31,10 @@
     <!-- 选择应诉人 -->
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">应诉人</view>
+        <view class="weui-label">应答人</view>
       </view>
       <view class="weui-cell__bd">
-        <input disabled="false" class="weui-input" name="respondent" placeholder="搜索应诉人" value="{{respondent}}" />
+        <input disabled="false" class="weui-input" name="respondent" placeholder="搜索应答人" value="{{respondent}}" />
       </view>
       <view class="weui-cell__bd" bindtap="searchrespondent">
         <icon type="search" color="#4c4c4c" size="18" />
@@ -44,7 +44,7 @@
     <!-- 输入要索赔的金额 -->
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">索赔金额</view>
+        <view class="weui-label">赔偿</view>
       </view>
       <view class="weui-cell__bd">
         <input type="digit" bindinput="justInTimeCheckDataAndNum" class="weui-input" name="orginalpay" placeholder="输入索赔金额" value="{{orginalpay}}"
@@ -78,7 +78,7 @@
       </view>
     </view>
     <!-- 输入申诉的理由 -->
-    <view class="weui-cells__title">请申诉人申诉</view>
+    <view class="weui-cells__title">请提问人描述</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
@@ -90,7 +90,7 @@
     </view>
 
     <view class="weui-btn-area">
-      <button type="primary" bindtap="submit">确定并发布</button>
+      <button type="primary" bindtap="submit">确定并提问</button>
       <button type="default" bindtap="onCache" wx:if="{{isfabu=='false'}}">保存为草稿</button>
     </view>
   </view>
