@@ -1,11 +1,14 @@
 <view class="page">
-<image src="http://www.achangxin.cn/content/custom/pn_cover.png"style=""></image>
-  <!-- 
+    <!-- <image src="http://www.achangxin.cn/content/custom/pn_cover.png"style=""></image> -->
+
     <view class="page__hd">
-        <view class="page__title">《讲理平台投诉发布规则及注意事项》</view>
-    </view>
+        <!-- <view class="page__title">《讲理平台投诉发布规则及注意事项》</view> -->
+    </view> 
+
     <view class="page__bd">
+        <image src="../../images/peace.png" alt="" style="padding-top:40rpx;"/>
         <view class="weui-article">
+            <!--
             <view class="weui-article__h1">
                 一、讲理平台是公益性的网络媒体投诉服务平台，我们将采用大众评审的方式，为 每一个矛盾每一起纠纷提供最公正最公正的群众道德意见，共当事双方及相关人员参考决策。为此，您发布投诉帖时，请务必留意：
             </view>
@@ -30,10 +33,10 @@
                     6、请勿重复发帖。后续相关信息（包括图片），您只需使用原账号在原帖评论框提交，即可继续显示在投诉正文区域。
                 </view>
             </view>
+        -->
         </view>
     </view>
-        -->
-  <view class="weui-flex">
-    <button class="weui-flex__item" type="primary" bindtap="btnagree">同意</button>
-  </view>
+    <view class="weui-flex">
+        <button class="weui-flex__item" type="primary" bindtap="btnagree">同意</button>
+    </view>
 </view>

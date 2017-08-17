@@ -44,7 +44,7 @@
       </view>
     </view>
 
-    <view wx:if="{{payType != '2' && dotType == '2'}}">
+    <view wx:if="{{ dotType == '2'}}">
       <!-- 第二个赋值，条件：赔偿条件 不等于 2-->
       <view class="weui-cells__title">如果不赔偿，你的满意度为：</view>
       <view class="weui-cells weui-cells_after-title">
@@ -60,13 +60,13 @@
       </view>
 
       <!-- 第三个赋值，条件：赔偿条件 不等于 2 -->
-      <view class="weui-cells__title">如果赔偿金额是 [{{rationalpay*2}} 元] 你的满意度是：</view>
+      <view class="weui-cells__title">如果赔偿金额是 [{{ rationalpay*2 }} 元] 你的满意度是：</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__bd">
             <slider value="100" bindchange="slider3change" min="0" max="200" />
           </view>
-          <view class="mystyle">{{doublesatisfication}}</view>
+          <view class="mystyle">{{ doublesatisfication }}</view>
         </view>
         <view class="sliderimage">
           <image src="../../images/slider.png" mode="widthFix" style="width:{{imageWidth}}px" bindload="imageLoad"></image>
@@ -75,8 +75,8 @@
     </view>
     <!-- 互不赔偿 单点赋值 -->
     <!-- 第四个赋值，条件：赔偿条件 等于 2 -->
-    <view wx:if="{{payType == '2'}}">
-      <view class="weui-cells__title">如果赔偿金额是 [{{originalpay}} 元] 你的满意度是：</view>
+    <view wx:if="{{payType == '1'}}">
+      <view class="weui-cells__title">如果赔偿金额是 [{{ originalpay }} 元] 你的满意度是：</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__bd">

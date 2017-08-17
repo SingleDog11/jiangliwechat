@@ -23,15 +23,18 @@ Page({
     },
 
     onLoad: function () {
+        var that = this ;
         app.getUserInfo(function (userInfo) {
-            app.Login(userInfo);
+            app.Login(userInfo,function(){
+                 that.getCasesfromnet();
+            });
         });
     },
     /**
      * 请求获取案件
      */
     onShow: function () {
-        this.getCasesfromnet();
+       
     },
     /**
      * 从服务器请求案件的全部信息
@@ -107,9 +110,7 @@ Page({
     loadmore: function () {
         let that = this;
         var searchLoading = this.data.searchLoading
-        var searchLoadingComplete = this.data.searchLoadingComplete
-        console.log("searchLoading: " + this.data.searchLoading)
-        console.log("searchLoadingComplete: " + this.data.searchLoadingComplete)
+        var searchLoadingComplete = this.data.searchLoadingComplete 
 
         if (searchLoading && !searchLoadingComplete) {
             console.log(that.data.currentPage);

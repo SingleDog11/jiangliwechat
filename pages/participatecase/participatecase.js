@@ -32,7 +32,7 @@ Page({
     // 赋值类型
     dotType: 2,
     // 赔偿类型
-    payType: 1,
+    payType: 2,
 
     // 合理赔偿
     rationalpay: 0,
@@ -76,10 +76,11 @@ Page({
       success: function (res) {
         // 得到了案件的发起者,修改标题栏。
         var casetemp = res.data;
-        // console.log(casetemp);
+        console.log(casetemp);
         wx.setNavigationBarTitle({
           title: "针对" + casetemp.user.nickname + "的案件进行裁决",
         });
+        console.log("originalpay:" + casetemp.originalpay);
         that.setData({
           caseinfo: casetemp,
           originalpay: casetemp.originalpay,
@@ -92,17 +93,20 @@ Page({
   // 修改双倍金额。
   bindnumberinput: function (e) {
     // console.log("赔偿金额："+e.detail.value);
+    /**
+     * 互不赔偿 -- 单点赋值
+     */
     if (e.detail.value == 0) {
       //如果输入的金额为0，
       this.radioPayChange({
         detail: {
-          value: 2,
+          value: 1,
         }
       })
     }
     else {
       this.setData({
-        payType: 1,
+        payType: 2,
         isShowTwo: true,
         rationalpay: Number(e.detail.value),
       })
@@ -111,7 +115,7 @@ Page({
 
   // 单点赋值 or 三点赋值
   radioChange: function (e) {
-    // console.log('radio发生change事件，携带value值为：', e.detail.value);
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
     var radioItems = this.data.radioItems;
     for (var i = 0, len = radioItems.length; i < len; ++i) {
       radioItems[i].checked = radioItems[i].value == e.detail.value;
@@ -119,12 +123,13 @@ Page({
     this.setData({
       radioItems: radioItems,
       dotType: e.detail.value,
+      payType : e.detail.value,
     });
   },
 
   // 必须赔偿 or 不必赔偿 or 可以奖励
   radioPayChange: function (e) {
-    // console.log('radioPay发生change事件，携带value值为：', e.detail.value);
+    console.log('radioPay发生change事件，携带value值为：', e.detail.value);
     var payType = e.detail.value;
     var radioPayItems = this.data.radioPayItems;
     for (var i = 0, len = radioPayItems.length; i < len; ++i) {
@@ -133,6 +138,7 @@ Page({
     this.setData({
       radioPayItems: radioPayItems,
       payType: payType,
+      dotType : payType ,
       satisfication: 0,
     });
   },
@@ -201,6 +207,6 @@ Page({
     this.setData({
       imageWidth: wx.getSystemInfoSync().windowWidth,
     })
-    console.log(this.data.imageWidth);
+    // console.log(this.data.imageWidth);
   },
 })

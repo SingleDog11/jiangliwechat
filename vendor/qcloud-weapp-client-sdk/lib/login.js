@@ -105,13 +105,14 @@ var login = function login(options) {
             success: function (result) {
                 var data = {
                     session: {
-                        sessionId: result.data,
+                        sessionId: result.data.userid,
                         userInfo: userInfo,
+                        token: result.data.token,
                     }
                 };  
-                if (data.session.sessionId != "error" && data.session.sessionId != "") {
+                if (result.data != "error" && data.session.sessionId != "") {
                     Session.set(data.session);
-                    options.success(data.session.sessionId);
+                    options.success(result.data);
                 } else {
                     var errorMessage = '登录失败(' + data.error + ')：' + (data.message || '未知错误');
                     var noSessionError = new LoginError(constants.ERR_LOGIN_SESSION_NOT_RECEIVED, errorMessage);

@@ -1,5 +1,6 @@
 module.exports = {
     WX_HEADER_CODE: 'X-WX-Code',
+    WX_HEADER_TOKEN: 'X-WX-Token',
     WX_HEADER_ENCRYPTED_DATA: 'X-WX-Encrypted-Data',
     WX_HEADER_IV: 'X-WX-IV',
     WX_HEADER_ID: 'X-WX-Id',

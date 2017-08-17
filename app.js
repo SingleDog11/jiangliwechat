@@ -72,7 +72,7 @@ App({
    * 拉取openid
    * 拉取用户id
    */
-  Login: function (ui) {
+  Login: function (ui,cb) {
     const that = this;
 
     qcloud.login({
@@ -80,12 +80,13 @@ App({
       method: "post",
       success(result) {
         console.log(result)
-        if (result) {
+        if (result && result.openid != null) {
           wx.hideToast();
           // 修改全局变量hasLogin
           that.globalData.hasLogin = true;
           that.globalData.openid = result.openid;
           that.globalData.userid = result.userid;
+          typeof cb == "function" && cb();
         }
         else {
           wx.hideToast();

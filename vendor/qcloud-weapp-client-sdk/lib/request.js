@@ -15,6 +15,7 @@ var buildAuthHeader = function buildAuthHeader(session) {
     // }
     if (session && session.sessionId) {
         header[constants.WX_HEADER_ID] = session.sessionId;
+        header[constants.WX_HEADER_TOKEN] = session.token;
     }
     return header;
 };

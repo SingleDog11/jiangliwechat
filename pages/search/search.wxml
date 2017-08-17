@@ -18,8 +18,8 @@
 <scroll-view scroll-x="true" class="header">
   <view class="nav">
     <view class="{{ status == 5 ? 'selected' : ''}}" data-status="5" bindtap="onChangeTab">全部</view>
-    <view class="{{ status == 2 ? 'selected' : ''}}" data-status="2" bindtap="onChangeTab">已结束</view>
-    <view class="{{ status == 1 ? 'selected' : ''}}" data-status="1" bindtap="onChangeTab">未结束</view>
+    <view class="{{ status == 3 ? 'selected' : ''}}" data-status="3" bindtap="onChangeTab">已结束</view>
+    <view class="{{ status == 2 ? 'selected' : ''}}" data-status="2" bindtap="onChangeTab">未结束</view>
   </view>
 </scroll-view>
 <view class="search">

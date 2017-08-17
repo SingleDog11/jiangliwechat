@@ -33,7 +33,7 @@ Page({
       url: config.requestCaseById,
       data: { "caseId": that.data.caseInfoId },
       success: function (res) {
-        // console.log(res);
+        console.log(res);
         that.setData({
           caseInfo: res.data,
           isowner: res.data.user.id == app.globalData.userid,
@@ -75,16 +75,21 @@ Page({
    * 进入裁判界面 
    */
   gojudge: function (event) {
-    //首先判断是进行修改还是新增。直接再评论去查看有没有跟本账号一样
-    var userid = app.globalData.userid;
-    var isnew = this.isNew(userid);
-    // console.log(isnew);
-    var urltemp = "";
-    urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.basic.id +
-      '&isnew=' + isnew;
-    wx.navigateTo({
-      url: urltemp,
-    })
+    if (app.globalData.hasLogin == false) {
+      app.showModel("请求出错！", "未登陆，请先登陆")
+    }
+    else {
+      //首先判断是进行修改还是新增。直接再评论去查看有没有跟本账号一样
+      var userid = app.globalData.userid;
+      var isnew = this.isNew(userid);
+      // console.log(isnew);
+      var urltemp = "";
+      urltemp = '../participatecase/participatecase?caseinfoid=' + this.data.caseInfo.basic.id +
+        '&isnew=' + isnew;
+      wx.navigateTo({
+        url: urltemp,
+      })
+    }
   },
   /**
    * 查看个人满意度曲线
@@ -92,7 +97,7 @@ Page({
   seeChart: function (e) {
     // console.log(this.data.caseInfo);
 
-    var cid = this.data.caseInfo.basic.id ;
+    var cid = this.data.caseInfo.basic.id;
     var pid = e.currentTarget.dataset.id;
     var amount = this.data.caseInfo.orginalpay;
     // 传递参数,此时应该传递一个最满意的点。
@@ -194,8 +199,11 @@ Page({
    * 申诉
    */
   complaint: function (e) {
-    wx.navigateTo({
-      url: '../detail/detail?id=' + this.data.caseInfoId,
-    })
+    if (app.globalData.hasLogin)
+      wx.navigateTo({
+        url: '../detail/detail?id=' + this.data.caseInfoId,
+      });
+    else
+      app.showModel("请求出错！", "未登陆，请先登陆")
   },
 })

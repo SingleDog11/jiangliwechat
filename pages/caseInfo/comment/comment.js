@@ -37,7 +37,7 @@ Page({
     /**
      * 评论区内容
      */
-    publishContent:"",
+    publishContent: "",
   },
 
   /**
@@ -142,6 +142,9 @@ Page({
     const that = this;
     if (e.detail.value.commContent.trim() == "") {
       app.showModel("Error", "评论不能为空");
+    }
+    else if (app.globalData.hasLogin == false) {
+      app.showModel("请求出错！", "未登陆，请先登陆")
     }
     else {
       that.setData({
